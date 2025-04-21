@@ -4,221 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LSpoty - Your Music Companion</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <style>
-        :root {
-            --primary-color: #1DB954;
-            --dark-bg: #121212;
-            --card-bg: #282828;
-            --text-color: #FFFFFF;
-            --text-secondary: #B3B3B3;
-        }
 
-        body {
-            background-color: var(--dark-bg);
-            color: var(--text-color);
-            font-family: 'Montserrat', sans-serif;
-        }
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+    <!-- Nucleo Icons -->
+    <link href="<?= site_url('/assets/css/nucleo-icons.css') ?>" rel="stylesheet" />
+    <link href="<?= site_url('/assets/css/nucleo-svg.css') ?>" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Material Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- CSS Files -->
+    <link id="pagestyle" href="<?= site_url('/assets/css/material-dashboard.css?v=3.1.0') ?>" rel="stylesheet" />
 
-        .navbar {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 15px 0;
-        }
-
-        .navbar-brand {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .search-container {
-            background-color: var(--card-bg);
-            border-radius: 30px;
-            padding: 5px 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-container input {
-            background: transparent;
-            border: none;
-            color: var(--text-color);
-            outline: none;
-            width: 100%;
-            padding: 10px;
-        }
-
-        .search-container input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .search-container .btn {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-        }
-
-        .search-container .btn:hover {
-            color: var(--primary-color);
-        }
-
-        .nav-btn {
-            background-color: transparent;
-            color: var(--text-color);
-            border: none;
-            margin-left: 10px;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .nav-btn:hover {
-            background-color: var(--card-bg);
-            color: var(--primary-color);
-        }
-
-        .nav-btn.profile-btn {
-            width: auto;
-            border-radius: 30px;
-            padding: 5px 15px;
-        }
-
-        .category-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 30px 0 20px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 15px;
-            transition: all 0.3s;
-            height: 100%;
-        }
-
-        .card:hover {
-            background-color: #3E3E3E;
-            transform: translateY(-5px);
-        }
-
-        .card img {
-            border-radius: 5px;
-            width: 100%;
-            aspect-ratio: 1/1;
-            object-fit: cover;
-        }
-
-        .card-title {
-            font-weight: 600;
-            font-size: 1rem;
-            margin-top: 10px;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card-text {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .search-filter-btn {
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border: 1px solid var(--text-secondary);
-            border-radius: 20px;
-            padding: 5px 15px;
-            margin-right: 10px;
-            font-size: 0.9rem;
-        }
-
-        .search-filter-btn.active {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            color: black;
-        }
-
-        .search-filter-btn:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            color: black;
-        }
-
-        .search-results {
-            display: none;
-        }
-
-        #searchResults.active {
-            display: block;
-        }
-
-        .result-item {
-            background-color: var(--card-bg);
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-
-        .result-item:hover {
-            background-color: #3E3E3E;
-        }
-
-        .result-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 5px;
-            object-fit: cover;
-            margin-right: 15px;
-        }
-
-        .result-info {
-            flex-grow: 1;
-        }
-
-        .result-title {
-            font-weight: 600;
-            margin-bottom: 3px;
-        }
-
-        .result-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-        }
-
-        .result-action {
-            margin-left: 10px;
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
 </head>
-<body>
+<body class="bg-dark">
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-black position-sticky top-0" style="z-index: 1000;">
     <div class="container">
-        <a class="navbar-brand" href="/home">LSpoty</a>
+        <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="/home">LSpoty</a>
 
-        <div class="d-flex align-items-center ms-auto">
-            <a href="/my-playlists" class="nav-btn">
-                <i class="bi bi-music-note-list"></i>
+        <div class="d-flex align-items-center ms-auto gap-2">
+            <a href="/my-playlists" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
+                <i class="fa fa-music-note"></i>
             </a>
-            <a href="/profile" class="nav-btn profile-btn">
-                <i class="bi bi-person-circle me-2"></i>
-                <span class="d-none d-md-inline">Profile</span>
+            <a href="/profile" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
+                <i class="fa fa-user-circle"></i>
             </a>
-            <form action="/sign-out" method="POST" class="d-inline">
-                <button type="submit" class="nav-btn">
-                    <i class="bi bi-box-arrow-right"></i>
+            <form action="/sign-out" method="POST" class="d-inline" style="margin: 0 !important;">
+                <button type="submit" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white" style="margin: 0 !important;">
+                    <i class="fa fa-sign-out-alt"></i>
                 </button>
             </form>
         </div>
@@ -228,54 +45,59 @@
 <!-- Main Content -->
 <div class="container">
     <!-- Search Bar -->
-    <div class="row justify-content-center my-4">
+    <div class="row justify-content-center mt-4 mb-3">
         <div class="col-lg-8">
-            <form id="searchForm" class="search-container">
-                <input type="text" id="searchInput" name="query" placeholder="Search for tracks, albums, artists or playlists..." class="form-control">
-                <button type="submit" class="btn">
-                    <i class="bi bi-search"></i>
+            <form id="searchForm" class="input-group bg-gray-800 rounded-pill">
+                <input type="text" id="searchInput" name="query" placeholder="Search for tracks, albums, artists or playlists..." class="form-control border-0 bg-transparent text-white">
+                <button type="submit" class="btn btn-link text-secondary" style="margin: 0 !important;">
+                    <i class="fa fa-search"></i>
                 </button>
             </form>
 
-            <div class="mt-3 text-center search-filters">
-                <button type="button" class="search-filter-btn active" data-filter="tracks">Tracks</button>
-                <button type="button" class="search-filter-btn" data-filter="albums">Albums</button>
-                <button type="button" class="search-filter-btn" data-filter="artists">Artists</button>
-                <button type="button" class="search-filter-btn" data-filter="playlists">Playlists</button>
+            <div class="mt-3 text-center">
+                <div class="btn-group" role="group" aria-label="Search filters">
+                    <button type="button" class="btn btn-outline-success active rounded-pill px-3 mx-1" style="margin: 0 5px 0 0 !important;" data-filter="tracks">Tracks</button>
+                    <button type="button" class="btn btn-outline-success rounded-pill px-3 mx-1" style="margin: 0 5px 0 0 !important;" data-filter="albums">Albums</button>
+                    <button type="button" class="btn btn-outline-success rounded-pill px-3 mx-1" style="margin: 0 5px 0 0 !important;" data-filter="artists">Artists</button>
+                    <button type="button" class="btn btn-outline-success rounded-pill px-3 mx-1" style="margin: 0 0 0 0 !important;" data-filter="playlists">Playlists</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Search Results Section (hidden by default) -->
-    <div id="searchResults" class="search-results mb-5">
-        <h2 class="category-title">Search Results</h2>
-        <div class="row" id="resultsContainer">
-            <!-- Sample search results - This would be populated dynamically -->
-            <div class="col-12">
-                <div class="result-item">
-                    <img src="/api/placeholder/60/60" class="result-img" alt="Track cover">
-                    <div class="result-info">
-                        <div class="result-title">Bohemian Rhapsody</div>
-                        <div class="result-subtitle">Queen · A Night at the Opera</div>
-                    </div>
-                    <div class="result-action">
-                        <button class="btn btn-sm btn-outline-light" data-bs-toggle="tooltip" title="Add to playlist">
-                            <i class="bi bi-plus-lg"></i>
-                        </button>
+    <div id="searchResults" class="mb-4 d-none">
+        <h2 class="fw-bold fs-4 my-3 text-white text-center">Search Results</h2>
+        <div class="row justify-content-center" id="resultsContainer">
+            <div class="col-12 col-md-10 col-lg-8">
+                <!-- Sample search results -->
+                <div class="card card-plain bg-gray-800 mb-2">
+                    <div class="card-body p-3 d-flex align-items-center">
+                        <img src="/api/placeholder/60/60" class="rounded me-3" alt="Track cover">
+                        <div class="flex-grow-1">
+                            <h6 class="card-title mb-0 text-white">Bohemian Rhapsody</h6>
+                            <p class="card-text text-secondary mb-0 small">Queen · A Night at the Opera</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-light" data-bs-toggle="tooltip" title="Add to playlist">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12">
-                <div class="result-item">
-                    <img src="/api/placeholder/60/60" class="result-img" alt="Track cover">
-                    <div class="result-info">
-                        <div class="result-title">Yesterday</div>
-                        <div class="result-subtitle">The Beatles · Help!</div>
-                    </div>
-                    <div class="result-action">
-                        <button class="btn btn-sm btn-outline-light" data-bs-toggle="tooltip" title="Add to playlist">
-                            <i class="bi bi-plus-lg"></i>
-                        </button>
+
+                <div class="card card-plain bg-gray-800 mb-2">
+                    <div class="card-body p-3 d-flex align-items-center">
+                        <img src="/api/placeholder/60/60" class="rounded me-3" alt="Track cover">
+                        <div class="flex-grow-1">
+                            <h6 class="card-title mb-0 text-white">Yesterday</h6>
+                            <p class="card-text text-secondary mb-0 small">The Beatles · Help!</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-light" data-bs-toggle="tooltip" title="Add to playlist">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -285,200 +107,200 @@
     <!-- Main Home Content -->
     <div id="homeContent">
         <!-- Recently Played -->
-        <h2 class="category-title">Recently Played</h2>
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Album cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Album Title</h5>
-                        <p class="card-text">Artist Name</p>
+        <h2 class="fw-bold fs-4 my-3 text-white text-center">Recently Played</h2>
+        <div class="row justify-content-center g-3">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Album cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Album Title</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist Name</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Album cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Playlist Name</h5>
-                        <p class="card-text">By Creator</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Album cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">By Creator</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Album cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Song Title</h5>
-                        <p class="card-text">Artist Name</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Album cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Song Title</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist Name</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Album cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Album Title</h5>
-                        <p class="card-text">Artist Name</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Album cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Album Title</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist Name</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Album cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Playlist Name</h5>
-                        <p class="card-text">By Creator</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Album cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">By Creator</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Top Tracks -->
-        <h2 class="category-title">Top Tracks</h2>
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Track cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Track Title</h5>
-                        <p class="card-text">Artist Name</p>
+        <h2 class="fw-bold fs-4 my-3 text-white text-center">Top Tracks</h2>
+        <div class="row justify-content-center g-3">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Track cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Track Title</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist Name</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Track cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Track Title</h5>
-                        <p class="card-text">Artist Name</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Track cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Track Title</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist Name</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Track cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Track Title</h5>
-                        <p class="card-text">Artist Name</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Track cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Track Title</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist Name</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Track cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Track Title</h5>
-                        <p class="card-text">Artist Name</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Track cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Track Title</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist Name</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Track cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Track Title</h5>
-                        <p class="card-text">Artist Name</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Track cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Track Title</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist Name</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Featured Artists -->
-        <h2 class="category-title">Featured Artists</h2>
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Artist photo" class="rounded-circle">
-                    <div class="card-body p-0 pt-2 text-center">
-                        <h5 class="card-title">Artist Name</h5>
-                        <p class="card-text">Artist</p>
+        <h2 class="fw-bold fs-4 my-3 text-white text-center">Featured Artists</h2>
+        <div class="row justify-content-center g-3">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3 text-center">
+                        <img src="/api/placeholder/400/400" alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
+                        <h6 class="card-title mb-1 text-truncate text-white">Artist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Artist photo" class="rounded-circle">
-                    <div class="card-body p-0 pt-2 text-center">
-                        <h5 class="card-title">Artist Name</h5>
-                        <p class="card-text">Artist</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3 text-center">
+                        <img src="/api/placeholder/400/400" alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
+                        <h6 class="card-title mb-1 text-truncate text-white">Artist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Artist photo" class="rounded-circle">
-                    <div class="card-body p-0 pt-2 text-center">
-                        <h5 class="card-title">Artist Name</h5>
-                        <p class="card-text">Artist</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3 text-center">
+                        <img src="/api/placeholder/400/400" alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
+                        <h6 class="card-title mb-1 text-truncate text-white">Artist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Artist photo" class="rounded-circle">
-                    <div class="card-body p-0 pt-2 text-center">
-                        <h5 class="card-title">Artist Name</h5>
-                        <p class="card-text">Artist</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3 text-center">
+                        <img src="/api/placeholder/400/400" alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
+                        <h6 class="card-title mb-1 text-truncate text-white">Artist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Artist photo" class="rounded-circle">
-                    <div class="card-body p-0 pt-2 text-center">
-                        <h5 class="card-title">Artist Name</h5>
-                        <p class="card-text">Artist</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3 text-center">
+                        <img src="/api/placeholder/400/400" alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
+                        <h6 class="card-title mb-1 text-truncate text-white">Artist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">Artist</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Recommended Playlists -->
-        <h2 class="category-title">Recommended Playlists</h2>
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 mb-5">
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Playlist cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Playlist Name</h5>
-                        <p class="card-text">By Creator</p>
+        <h2 class="fw-bold fs-4 my-3 text-white text-center">Recommended Playlists</h2>
+        <div class="row justify-content-center g-3 mb-4">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Playlist cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">By Creator</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Playlist cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Playlist Name</h5>
-                        <p class="card-text">By Creator</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Playlist cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">By Creator</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Playlist cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Playlist Name</h5>
-                        <p class="card-text">By Creator</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Playlist cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">By Creator</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Playlist cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Playlist Name</h5>
-                        <p class="card-text">By Creator</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Playlist cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">By Creator</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="/api/placeholder/400/400" alt="Playlist cover">
-                    <div class="card-body p-0 pt-2">
-                        <h5 class="card-title">Playlist Name</h5>
-                        <p class="card-text">By Creator</p>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
+                    <div class="card-body p-3">
+                        <img src="/api/placeholder/400/400" alt="Playlist cover" class="img-fluid rounded mb-2 w-100">
+                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
+                        <p class="card-text text-secondary text-truncate small">By Creator</p>
                     </div>
                 </div>
             </div>
@@ -487,14 +309,18 @@
 </div>
 
 <!-- Footer -->
-<footer class="bg-dark text-center text-light py-4">
+<footer class="bg-black text-center text-light py-3 mt-3">
     <div class="container">
         <p class="mb-0">© 2025 LSpoty - All rights reserved</p>
     </div>
 </footer>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core JS Files -->
+<script src="<?= site_url('/assets/js/core/popper.min.js') ?>"></script>
+<script src="<?= site_url('/assets/js/core/bootstrap.min.js') ?>"></script>
+<script src="<?= site_url('/assets/js/plugins/perfect-scrollbar.min.js') ?>"></script>
+
+<!-- Custom Script -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Handle search form submission
@@ -502,22 +328,21 @@
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
         const homeContent = document.getElementById('homeContent');
-        const filterButtons = document.querySelectorAll('.search-filter-btn');
+        const filterButtons = document.querySelectorAll('[data-filter]');
 
         searchForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
             // Only show search results if there's text in the search box
             if (searchInput.value.trim() !== '') {
-                searchResults.classList.add('active');
-                homeContent.style.display = 'none';
+                searchResults.classList.remove('d-none');
+                homeContent.classList.add('d-none');
 
                 // In a real app, you would fetch data from the API here
-                // For now, we just show our hardcoded results
                 console.log('Searching for:', searchInput.value);
             } else {
-                searchResults.classList.remove('active');
-                homeContent.style.display = 'block';
+                searchResults.classList.add('d-none');
+                homeContent.classList.remove('d-none');
             }
         });
 
@@ -534,15 +359,17 @@
                 console.log('Filter selected:', this.dataset.filter);
 
                 // If there's a search query active, re-run the search with the new filter
-                if (searchResults.classList.contains('active')) {
+                if (!searchResults.classList.contains('d-none')) {
                     console.log('Re-searching with filter:', this.dataset.filter);
                 }
             });
         });
 
-        // Enable tooltips
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        // Initialize tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
     });
 </script>
 </body>
