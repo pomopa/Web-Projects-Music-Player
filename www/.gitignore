@@ -365,4 +365,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+app/Config/App.php
+
 # End of https://www.toptal.com/developers/gitignore/api/git,codeigniter,composer,phpstorm,visualstudiocode,macos,windows
