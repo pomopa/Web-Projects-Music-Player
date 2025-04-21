@@ -20,7 +20,8 @@ class SignUp extends BaseController
         $rules = [
             'email'        => 'required|valid_email|is_from_domain|max_length[40]|is_email_unique',
             'password'     => 'required|min_length[8]|special_password_rule|max_length[40]',
-            'repeat_password'  => 'required|matches[password]'
+            'repeat_password'  => 'required|matches[password]',
+            'username' => 'max_length[20]',
         ];
 
         $errors = [
@@ -40,14 +41,25 @@ class SignUp extends BaseController
             'repeat_password' => [
                 'required'   => 'The Repeat Password field is required.',
                 'matches'     => 'Passwords do not match.'
+            ],
+            'username' => [
+                'max_length' => 'The username must be less than 20 characters long.'
             ]
+            // TODO fer la validacio de la imatge
+
         ];
 
         if ($this->validate($rules, $errors)) {
             $userModel = new UserModel();
 
+            $username = $this->request->getPost('username');
+            if(empty($username)) {
+                $username = explode("@", $this->request->getPost('email'))[0];
+            }
+
             $data = [
                 'email'    => $this->request->getPost('email'),
+                'username' => $username,
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             ];
 
