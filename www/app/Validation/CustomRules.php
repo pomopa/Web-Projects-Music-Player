@@ -49,25 +49,6 @@ class CustomRules
     }
 
     /**
-     * Check if number is within limits
-     *
-     * @param string $str The input value.
-     * @return bool
-     */
-    public function is_withinLimits(string $str): bool
-    {
-        if (empty($str)) {
-            return true;
-        }
-
-        if (is_numeric($str) && $str >= 0 && $str <= 2000) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Check if the email is unique
      *
      * @param string $str The input value.
