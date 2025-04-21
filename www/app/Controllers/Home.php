@@ -6,6 +6,14 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        return view('welcome_message');
+        $session = session();
+
+        if($session->has('state')){
+            $state = $session->get('state');
+            if($state == 'LOGGED IN'){
+                return view('home_loggedin');
+            }
+        }
+        return view('home_not_loggedin');
     }
 }
