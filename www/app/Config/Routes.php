@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
-    $routes->get('', 'Home::index');
+    $routes->get('', 'LandingPage::landingPage');
 
     $routes->group('sign-up', ['filter' => 'NotLoggedFilter'], function ($routes) {
         $routes->get('', 'SignUp::showForm');

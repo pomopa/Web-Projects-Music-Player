@@ -15,7 +15,7 @@ class NotLoggedFilter implements FilterInterface
             $state = $session->get('state');
             if($state == 'LOGGED IN'){
                 $session->setFlashdata('error_message', 'You are already logged in.');
-                return redirect()->to('/');
+                return redirect()->to('/home');
             }
         }
     }

@@ -1,17 +1,17 @@
 <?= $this->extend('defaultForm') ?>
 
 <?= $this->section('headName') ?>
-Home
+Landing Page
 <?= $this->endSection() ?>
 
 <?= $this->section('sectionName') ?>
-Home
+Landing Page
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
 
 <div class="text-center p-4">
-    <h1 class="fw-bold text-primary-emphasis">Welcome
+    <h1 class="fw-bold text-primary-emphasis">Welcome to LSpoty!
         <?php
         $session = session();
         if(!$session->has('user')){

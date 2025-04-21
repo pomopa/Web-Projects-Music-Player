@@ -14,6 +14,28 @@ Sign-up
     <?= csrf_field() ?>
 
     <div class="input-group input-group-outline my-3">
+        <label class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" value="<?= set_value('username') ?>">
+    </div>
+
+    <?php if (!empty(\Config\Services::validation()->showError('username'))): ?>
+        <h6 class="missatgeError">
+            <?= \Config\Services::validation()->showError('username') ?>
+        </h6>
+    <?php endif; ?>
+
+    <div class="input-group input-group-outline my-3">
+        <label class="form-label">Profile Picture</label>
+        <input type="file" name="profilePicture" class="form-control" value="<?= set_value('profilePicture') ?>">
+    </div>
+
+    <?php if (!empty(\Config\Services::validation()->showError('profilePicture'))): ?>
+        <h6 class="missatgeError">
+            <?= \Config\Services::validation()->showError('profilePicture') ?>
+        </h6>
+    <?php endif; ?>
+
+    <div class="input-group input-group-outline my-3">
         <label class="form-label">Email</label>
         <input type="text" name="email" required class="form-control" value="<?= set_value('email') ?>">
     </div>
@@ -45,19 +67,6 @@ Sign-up
             <?= \Config\Services::validation()->showError('repeat_password') ?>
         </h6>
     <?php endif; ?>
-
-    <div class="input-group input-group-outline my-3">
-        <label class="form-label">Money</label>
-        <input type="text" name="money" class="form-control" value="<?= set_value('money') ?>">
-    </div>
-
-    <?php if (!empty(\Config\Services::validation()->showError('money'))): ?>
-        <h6 class="missatgeError">
-            <?= \Config\Services::validation()->showError('money') ?>
-        </h6>
-    <?php endif; ?>
-
-
 
     <div class="text-center">
         <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>

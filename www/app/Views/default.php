@@ -32,7 +32,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="../../../assets/img/favicon.png">
     <link rel="icon" type="image/png" href="../../../assets/propis/img/favicon.png">
-    <title>LSxpress -<?= $this->renderSection('headName') ?> </title>
+    <title>LSpoty -<?= $this->renderSection('headName') ?> </title>
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
     <!-- Nucleo Icons -->
@@ -55,7 +55,7 @@
     <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
         <div class="containerCentrat">
             <a href="/" title="Go to Home Page" class="navbar-brand text-center text-white text-decoration-none logo-big">
-                LSxpress
+                LSpoty
             </a>
         </div>
 </header>

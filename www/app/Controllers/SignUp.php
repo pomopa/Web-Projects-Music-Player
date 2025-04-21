@@ -20,8 +20,7 @@ class SignUp extends BaseController
         $rules = [
             'email'        => 'required|valid_email|is_from_domain|max_length[40]|is_email_unique',
             'password'     => 'required|min_length[8]|special_password_rule|max_length[40]',
-            'repeat_password'  => 'required|matches[password]',
-            'money' => 'is_numberOrEmpty|is_withinLimits'
+            'repeat_password'  => 'required|matches[password]'
         ];
 
         $errors = [
@@ -41,10 +40,6 @@ class SignUp extends BaseController
             'repeat_password' => [
                 'required'   => 'The Repeat Password field is required.',
                 'matches'     => 'Passwords do not match.'
-            ],
-            'money' => [
-                'is_numberOrEmpty' => 'Sorry, the money field must be a number.',
-                'is_withinLimits' => 'Sorry, the amount of money is either below or above the limits.'
             ]
         ];
 
@@ -53,13 +48,13 @@ class SignUp extends BaseController
 
             $data = [
                 'email'    => $this->request->getPost('email'),
-                'money'    => $this->request->getPost('money'),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             ];
 
             if ($userModel->insert($data)) {
                 return redirect()->to('/sign-up/success');
             } else {
+                die("puto");
                 return redirect()->back()->withInput()->with('errors', $userModel->errors());
             }
         } else {
