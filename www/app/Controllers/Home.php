@@ -26,7 +26,7 @@ class Home extends BaseController
             ]
         ]);
 
-        $topTracks = json_decode($response->getBody(), true)['results'];
+        return json_decode($response->getBody(), true)['results'];
     }
 
     private function getRecentTracks() {
@@ -39,7 +39,7 @@ class Home extends BaseController
             ]
         ]);
 
-        $recentTracks = json_decode($response->getBody(), true)['results'];
+        return json_decode($response->getBody(), true)['results'];
     }
 
     private function getTopPlaylists() {
@@ -52,7 +52,7 @@ class Home extends BaseController
             ]
         ]);
 
-        $playlists = json_decode($response->getBody(), true)['results'];
+        return json_decode($response->getBody(), true)['results'];
     }
 
     private function getTopArtists() {
@@ -65,7 +65,7 @@ class Home extends BaseController
             ]
         ]);
 
-        $topArtists = json_decode($response->getBody(), true)['results'];
+        return json_decode($response->getBody(), true)['results'];
     }
 
     private function getTopAlbums() {
@@ -78,7 +78,7 @@ class Home extends BaseController
             ]
         ]);
 
-        $popularAlbums = json_decode($response->getBody(), true)['results'];
+        return json_decode($response->getBody(), true)['results'];
     }
 
     public function index(): string
