@@ -76,7 +76,7 @@
                             © <script>
                                 document.write(new Date().getFullYear())
                             </script>,
-                            made by Joan Enric Peiró with <i class="fa fa-heart" aria-hidden="true"></i>
+                            made by Joan Enric, Pol and Roger with <i class="fa fa-heart" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
