@@ -28,7 +28,7 @@
 
         <div class="d-flex align-items-center ms-auto gap-2">
             <a href="/my-playlists" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
-                <i class="fa fa-music-note"></i>
+                <i class="fa fa-music"></i>
             </a>
             <a href="/profile" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
                 <i class="fa fa-user-circle"></i>
