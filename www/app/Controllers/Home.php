@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-
 use GuzzleHttp\Client;
 
 class Home extends BaseController
@@ -35,7 +34,7 @@ class Home extends BaseController
                 'client_id' => $this->apiKey,
                 'format'    => 'json',
                 'limit'     => 10,
-                'order'     => 'date_desc'
+                'order'     => 'releasedate_desc'
             ]
         ]);
 
@@ -83,6 +82,14 @@ class Home extends BaseController
 
     public function index(): string
     {
-        return view('home');
+        $data = [
+            'topTracks'     => $this->getTopTracks(),
+            'recentTracks'  => $this->getRecentTracks(),
+            'topPlaylists'  => $this->getTopPlaylists(),
+            'topArtists'    => $this->getTopArtists(),
+            'topAlbums'     => $this->getTopAlbums(),
+        ];
+
+        return view('home', $data);
     }
 }
