@@ -136,7 +136,6 @@
 
         <!-- Top Tracks -->
         <!-- Top Tracks con Swiper -->
-        <!-- Top Tracks con Swiper -->
         <h2 class="fw-bold fs-4 my-3 text-white text-center">Top Tracks</h2>
         <div class="swiper topTracksSwiper">
             <div class="swiper-wrapper">
@@ -165,104 +164,63 @@
             <div class="swiper-button-prev text-success"></div>
         </div>
 
-        <!-- Featured Artists -->
+        <!-- Featured Artists con Swiper -->
         <h2 class="fw-bold fs-4 my-3 text-white text-center">Featured Artists</h2>
-        <div class="row justify-content-center g-3">
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
-                    <div class="card-body p-3 text-center">
-                        <img src="/api/placeholder/400/400" alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
-                        <h6 class="card-title mb-1 text-truncate text-white">Artist Name</h6>
-                        <p class="card-text text-secondary text-truncate small">Artist</p>
+        <div class="swiper featuredArtistsSwiper">
+            <div class="swiper-wrapper">
+                <?php if (!empty($topArtists)): ?>
+                    <?php foreach ($topArtists as $artist): ?>
+                        <div class="swiper-slide">
+                            <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100">
+                                <div class="card-body p-3 text-center">
+                                    <img src="<?= esc(!empty($artist['image']) ? $artist['image'] : 'https://img.freepik.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-profile-picture-business-profile-woman-suitable-social-media-profiles-icons-screensavers-as-templatex9_719432-1339.jpg') ?>"
+                                         alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
+                                    <h6 class="card-title mb-1 text-truncate text-white"><?= esc($artist['name']) ?></h6>
+                                    <p class="card-text text-secondary text-truncate small">Artist</p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="swiper-slide">
+                        <div class="text-white text-center w-100">
+                            <p>No featured artists found.</p>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
-                    <div class="card-body p-3 text-center">
-                        <img src="/api/placeholder/400/400" alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
-                        <h6 class="card-title mb-1 text-truncate text-white">Artist Name</h6>
-                        <p class="card-text text-secondary text-truncate small">Artist</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
-                    <div class="card-body p-3 text-center">
-                        <img src="/api/placeholder/400/400" alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
-                        <h6 class="card-title mb-1 text-truncate text-white">Artist Name</h6>
-                        <p class="card-text text-secondary text-truncate small">Artist</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
-                    <div class="card-body p-3 text-center">
-                        <img src="/api/placeholder/400/400" alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
-                        <h6 class="card-title mb-1 text-truncate text-white">Artist Name</h6>
-                        <p class="card-text text-secondary text-truncate small">Artist</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
-                    <div class="card-body p-3 text-center">
-                        <img src="/api/placeholder/400/400" alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
-                        <h6 class="card-title mb-1 text-truncate text-white">Artist Name</h6>
-                        <p class="card-text text-secondary text-truncate small">Artist</p>
-                    </div>
-                </div>
-            </div>
+            <!-- Añadir controles de navegación -->
+            <div class="swiper-button-next text-success"></div>
+            <div class="swiper-button-prev text-success"></div>
         </div>
 
-        <!-- Recommended Playlists -->
         <h2 class="fw-bold fs-4 my-3 text-white text-center">Recommended Playlists</h2>
-        <div class="row justify-content-center g-3 mb-4">
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
-                    <div class="card-body p-3">
-                        <img src="/api/placeholder/400/400" alt="Playlist cover" class="img-fluid rounded mb-2 w-100">
-                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
-                        <p class="card-text text-secondary text-truncate small">By Creator</p>
+        <div class="swiper featuredPlaylistSwiper">
+            <div class="swiper-wrapper">
+                <?php if (!empty($topPlaylists)): ?>
+                    <?php foreach ($topPlaylists as $playlist): ?>
+                        <div class="swiper-slide">
+                            <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100">
+                                <div class="card-body p-3 text-center">
+                                    <img src="https://img.freepik.com/premium-psd/music-icon-user-interface-element-3d-render-illustration_516938-1693.jpg"
+                                         alt="Playlist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
+                                    <h6 class="card-title mb-1 text-truncate text-white"><?= esc($playlist['name']) ?></h6>
+                                    <p class="card-text text-secondary text-truncate small">Artist</p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="swiper-slide">
+                        <div class="text-white text-center w-100">
+                            <p>No featured playlists found.</p>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
-                    <div class="card-body p-3">
-                        <img src="/api/placeholder/400/400" alt="Playlist cover" class="img-fluid rounded mb-2 w-100">
-                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
-                        <p class="card-text text-secondary text-truncate small">By Creator</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
-                    <div class="card-body p-3">
-                        <img src="/api/placeholder/400/400" alt="Playlist cover" class="img-fluid rounded mb-2 w-100">
-                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
-                        <p class="card-text text-secondary text-truncate small">By Creator</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
-                    <div class="card-body p-3">
-                        <img src="/api/placeholder/400/400" alt="Playlist cover" class="img-fluid rounded mb-2 w-100">
-                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
-                        <p class="card-text text-secondary text-truncate small">By Creator</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="card card-plain bg-gray-800 h-100 transition-transform hover-elevation">
-                    <div class="card-body p-3">
-                        <img src="/api/placeholder/400/400" alt="Playlist cover" class="img-fluid rounded mb-2 w-100">
-                        <h6 class="card-title mb-1 text-truncate text-white">Playlist Name</h6>
-                        <p class="card-text text-secondary text-truncate small">By Creator</p>
-                    </div>
-                </div>
-            </div>
+            <!-- Añadir controles de navegación -->
+            <div class="swiper-button-next text-success"></div>
+            <div class="swiper-button-prev text-success"></div>
         </div>
     </div>
 </div>

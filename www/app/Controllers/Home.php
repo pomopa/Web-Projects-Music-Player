@@ -47,7 +47,7 @@ class Home extends BaseController
                 'client_id' => $this->apiKey,
                 'format'    => 'json',
                 'limit'     => 10,
-                'order'     => 'popularity_total'
+                'order'     => 'creationdate_desc'
             ]
         ]);
 
