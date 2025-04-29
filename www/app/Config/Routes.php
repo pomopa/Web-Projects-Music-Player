@@ -16,7 +16,7 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
 
     $routes->group('sign-in', ['filter' => 'NotLoggedFilter'], function ($routes) {
         $routes->get('', 'SignIn::showForm');
-        $routes->post('', 'SignIn::simpleSubmit');
+        $routes->post('', 'SignIn::simpleSubmit', ['filter' => 'files']);
     });
 
     $routes->get('sign-out', 'SignOut::signOut');
