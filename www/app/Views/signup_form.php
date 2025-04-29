@@ -15,7 +15,8 @@ Sign-up
 
     <div class="input-group input-group-outline my-3">
         <label class="form-label">Username</label>
-        <input type="text" name="username" class="form-control" value="<?= set_value('username') ?>">
+        <input type="text" name="username" class="form-control"
+            <?= request()->getPost('username') !== null ? 'value="' . esc(request()->getPost('username')) . '"' : '' ?>>
     </div>
 
     <?php if (!empty(\Config\Services::validation()->showError('username'))): ?>
@@ -25,9 +26,12 @@ Sign-up
     <?php endif; ?>
 
     <div class="input-group input-group-outline my-3">
-        <label class="form-label">Profile Picture</label>
-        <input type="file" name="profilePicture" class="form-control" value="<?= set_value('profilePicture') ?>">
+        <input type="file" name="profilePicture" id="profilePicture" class="d-none">
+        <label for="profilePicture" class="form-control mb-0 d-flex align-items-center" style="cursor: pointer;">
+            Profile Picture
+        </label>
     </div>
+
 
     <?php if (!empty(\Config\Services::validation()->showError('profilePicture'))): ?>
         <h6 class="missatgeError">
@@ -37,7 +41,8 @@ Sign-up
 
     <div class="input-group input-group-outline my-3">
         <label class="form-label">Email</label>
-        <input type="text" name="email" required class="form-control" value="<?= set_value('email') ?>">
+        <input type="text" name="email" required class="form-control"
+            <?= request()->getPost('email') !== null ? 'value="' . esc(request()->getPost('email')) . '"' : '' ?>>
     </div>
 
     <?php if (!empty(\Config\Services::validation()->showError('email'))): ?>
