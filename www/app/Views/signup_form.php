@@ -9,7 +9,7 @@ Sign-up
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<form action="<?= base_url('sign-up') ?>" method="post" accept-charset="utf-8" role="form" class="text-start">
+<form action="<?= base_url('sign-up') ?>" method="post" accept-charset="utf-8" role="form" class="text-start" enctype="multipart/form-data">
     <!-- CSRF protection -->
     <?= csrf_field() ?>
 
@@ -26,18 +26,15 @@ Sign-up
     <?php endif; ?>
 
     <div class="input-group input-group-outline my-3">
-        <input type="file" name="profilePicture" id="profilePicture" class="d-none">
+        <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept="image/*">
         <label for="profilePicture" class="form-control mb-0 d-flex align-items-center" style="cursor: pointer;">
             Profile Picture
         </label>
     </div>
 
-
-    <?php if (!empty(\Config\Services::validation()->showError('profilePicture'))): ?>
-        <h6 class="missatgeError">
-            <?= \Config\Services::validation()->showError('profilePicture') ?>
-        </h6>
-    <?php endif; ?>
+    <?php if (session()->getFlashdata('errorImage')): ?>
+        <div class="missatgeError"><?= esc(session()->getFlashdata('error')) ?></div>
+    <?php endif ?>
 
     <div class="input-group input-group-outline my-3">
         <label class="form-label">Email</label>

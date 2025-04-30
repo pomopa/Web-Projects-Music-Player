@@ -17,6 +17,8 @@ class FileFilter implements FilterInterface
                 ->with('error', 'Well, well, well... look who just tried to be clever. You must be real proud of yourself.')
                 ->withInput();
         }
+
+        return null;
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
