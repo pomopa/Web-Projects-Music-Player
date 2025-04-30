@@ -26,13 +26,13 @@ Sign-up
     <?php endif; ?>
 
     <div class="input-group input-group-outline my-3" id="fileInputGroup">
-        <label class="form-label no-shadow-label" style="color: #737373;">Profile Picture</label>
+        <label id="fileNameLabel" class="form-label no-shadow-label" style="color: #737373;">Profile Picture</label>
 
         <!-- input ocult -->
         <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept="image/*" onchange="handleImagePreview(this)">
 
         <!-- label clicable -->
-        <label for="profilePicture" class="form-control mb-0 d-flex align-items-center" style="cursor: pointer;">
+        <label for="profilePicture" class="form-control " style="cursor: pointer;">
             <span id="fileLabel">&nbsp;</span>
         </label>
     </div>
@@ -48,6 +48,7 @@ Sign-up
             const preview = document.getElementById('previewImage');
             const container = document.getElementById('previewContainer');
             const inputGroup = document.getElementById('fileInputGroup');
+            const profilePicture = document.getElementById('fileNameLabel');
 
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -58,7 +59,8 @@ Sign-up
                     fileLabel.textContent = input.files[0].name;
 
                     // Afegeix classe que fa pujar el label
-                    inputGroup.classList.add('is-filled');
+                    inputGroup.classList.add('is-focused');
+                    profilePicture.style.position = "relative";
                 }
 
                 reader.readAsDataURL(input.files[0]);
@@ -69,6 +71,7 @@ Sign-up
 
                 // Elimina la classe si es deselecciona
                 inputGroup.classList.remove('is-filled');
+                profilePicture.style.position = "";
             }
         }
     </script>
