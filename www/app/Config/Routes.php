@@ -10,7 +10,7 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
 
     $routes->group('sign-up', ['filter' => 'NotLoggedFilter'], function ($routes) {
         $routes->get('', 'SignUp::showForm');
-        $routes->post('', 'SignUp::simpleSubmit');
+        $routes->post('', 'SignUp::simpleSubmit', ['filter' => 'images']);
         $routes->get('success', 'SignUp::success');
     });
 

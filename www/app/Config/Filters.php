@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Filters\FileFilter;
+use App\Filters\ImageFilter;
 use App\Filters\LoggedFilter;
 use App\Filters\NotLoggedFilter;
 use CodeIgniter\Config\Filters as BaseFilters;
@@ -40,6 +41,7 @@ class Filters extends BaseFilters
         'LoggedFilter'  => LoggedFilter::class,
         'NotLoggedFilter' => NotLoggedFilter::class,
         'files'         => FileFilter::class,
+        'images'        => ImageFilter::class,
     ];
 
     /**
