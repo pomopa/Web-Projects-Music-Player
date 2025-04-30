@@ -25,11 +25,21 @@ Sign-up
         </h6>
     <?php endif; ?>
 
-    <div class="input-group input-group-outline my-3">
-        <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept="image/*">
-        <label for="profilePicture" class="form-control mb-0 d-flex align-items-center" style="cursor: pointer;">
-            Profile Picture
+    <div class="input-group input-group-outline my-3" id="fileInputGroup">
+        <label id="fileNameLabel" class="form-label no-shadow-label" style="color: #737373;">Profile Picture</label>
+
+        <!-- input ocult -->
+        <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept="image/*" onchange="handleImagePreview(this)">
+
+        <!-- label clicable -->
+        <label for="profilePicture" class="form-control " style="cursor: pointer;">
+            <span id="fileLabel">&nbsp;</span>
         </label>
+    </div>
+
+    <!-- Previsualització de la imatge seleccionada -->
+    <div id="previewContainer" class="mb-3" style="display: none;">
+        <img id="previewImage" src="#" alt="Preview" class="d-block mx-auto" style="max-width: 200px; border-radius: 8px;" />
     </div>
 
     <?php if (session()->getFlashdata('errorImage')): ?>
@@ -78,4 +88,7 @@ Sign-up
         <a href="<?= base_url('sign-in') ?>" class="text-primary text-gradient font-weight-bold">Sign in</a>
     </p>
 </form>
+
+<script src="../../../assets/js/signup.js"></script>
+
 <?= $this->endSection() ?>
