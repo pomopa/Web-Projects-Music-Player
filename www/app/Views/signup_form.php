@@ -25,12 +25,55 @@ Sign-up
         </h6>
     <?php endif; ?>
 
-    <div class="input-group input-group-outline my-3">
-        <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept="image/*">
+    <div class="input-group input-group-outline my-3" id="fileInputGroup">
+        <label class="form-label no-shadow-label" style="color: #737373;">Profile Picture</label>
+
+        <!-- input ocult -->
+        <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept="image/*" onchange="handleImagePreview(this)">
+
+        <!-- label clicable -->
         <label for="profilePicture" class="form-control mb-0 d-flex align-items-center" style="cursor: pointer;">
-            Profile Picture
+            <span id="fileLabel">&nbsp;</span>
         </label>
     </div>
+
+    <!-- Previsualització de la imatge seleccionada -->
+    <div id="previewContainer" class="mb-3" style="display: none;">
+        <img id="previewImage" src="#" alt="Preview" class="d-block mx-auto" style="max-width: 200px; border-radius: 8px;" />
+    </div>
+
+    <script>
+        function handleImagePreview(input) {
+            const fileLabel = document.getElementById('fileLabel');
+            const preview = document.getElementById('previewImage');
+            const container = document.getElementById('previewContainer');
+            const inputGroup = document.getElementById('fileInputGroup');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    container.style.display = 'block';
+                    fileLabel.textContent = input.files[0].name;
+
+                    // Afegeix classe que fa pujar el label
+                    inputGroup.classList.add('is-filled');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.src = '#';
+                fileLabel.textContent = 'Profile Picture';
+                container.style.display = 'none';
+
+                // Elimina la classe si es deselecciona
+                inputGroup.classList.remove('is-filled');
+            }
+        }
+    </script>
+
+
 
     <?php if (session()->getFlashdata('errorImage')): ?>
         <div class="missatgeError"><?= esc(session()->getFlashdata('error')) ?></div>
