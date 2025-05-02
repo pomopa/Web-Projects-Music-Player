@@ -9,10 +9,27 @@
     --lspoty-hover-bg: #3E3E3E;
 }
 
+/* Layout styles for sticky footer */
+html, body {
+    height: 100%;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--lspoty-dark) !important;
     color: var(--lspoty-text) !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+    margin-top: auto !important;
 }
 
 /* Navbar styles - reduced height */

@@ -226,7 +226,7 @@
 </div>
 
 <!-- Footer -->
-<footer class="bg-black text-center text-light py-3 mt-3">
+<footer class="bg-black text-center text-light py-3 mt-auto">
     <div class="container">
         <p class="mb-0">© 2025 LSpoty - All rights reserved</p>
     </div>
