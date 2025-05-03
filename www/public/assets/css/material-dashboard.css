@@ -11006,6 +11006,10 @@ fieldset:disabled .btn {
   font-size: 1rem !important;
 }
 
+.fs-7 {
+  font-size: 0.5rem;
+}
+
 .fst-italic {
   font-style: italic !important;
 }
@@ -11052,6 +11056,11 @@ fieldset:disabled .btn {
 
 .text-start {
   text-align: left !important;
+}
+
+.text-start p {
+  text-align: center;
+  display: block;
 }
 
 .text-end {
@@ -39761,5 +39770,6 @@ text,
     stroke-dashoffset: 250;
   }
 }
+
 
 /*# sourceMappingURL=dashboard-pro.css.map */

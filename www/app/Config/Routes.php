@@ -22,3 +22,5 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('sign-out', 'SignOut::signOut');
 });
 
+
+$routes->get('/home', 'Home::index');
