@@ -2,6 +2,10 @@
 
 namespace Config;
 
+use App\Filters\FileFilter;
+use App\Filters\ImageFilter;
+use App\Filters\LoggedFilter;
+use App\Filters\NotLoggedFilter;
 use CodeIgniter\Config\Filters as BaseFilters;
 use CodeIgniter\Filters\Cors;
 use CodeIgniter\Filters\CSRF;
@@ -34,8 +38,10 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
-        'LoggedFilter' => \App\Filters\LoggedFilter::class,
-        'NotLoggedFilter' => \App\Filters\NotLoggedFilter::class,
+        'LoggedFilter'  => LoggedFilter::class,
+        'NotLoggedFilter' => NotLoggedFilter::class,
+        'files'         => FileFilter::class,
+        'images'        => ImageFilter::class,
     ];
 
     /**
