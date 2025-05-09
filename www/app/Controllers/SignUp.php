@@ -6,6 +6,8 @@ use App\Models\UserModel;
 
 class SignUp extends BaseController
 {
+    private const UPLOADS_DIR = WRITEPATH . 'uploads';
+
     public function showForm()
     {
         helper(['form']);
@@ -53,9 +55,18 @@ class SignUp extends BaseController
                 $username = explode("@", $this->request->getPost('email'))[0];
             }
 
+            $file = $this->request->getFile('profilePicture');
+            $newName = $file->getRandomName();
+            if (!$file->move(self::UPLOADS_DIR, $newName)) {
+                session()->setFlashdata('errorImage', 'There was an error uploading your file.');
+                return redirect()->back();
+            }
+
+
             $data = [
                 'email'    => $this->request->getPost('email'),
                 'username' => $username,
+                'profile_pic' => $newName,
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             ];
 

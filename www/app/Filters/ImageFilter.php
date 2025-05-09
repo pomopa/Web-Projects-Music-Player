@@ -8,6 +8,8 @@ use CodeIgniter\Filters\FilterInterface;
 
 class ImageFilter implements FilterInterface
 {
+    private const MAX_FILE_SIZE = 2048000;
+
     public function before(RequestInterface $request, $arguments = null)
     {
         $files = $request->getFiles();
@@ -29,6 +31,13 @@ class ImageFilter implements FilterInterface
                 ->with('errorImage', 'The file could not be uploaded, try again later.')
                 ->withInput();
         }
+
+        if ($file->getSize() > self::MAX_FILE_SIZE) {
+            return redirect()->back()
+                ->with('errorImage', "The provided file is too big (maximum size allowed: 2MB)")
+                ->withInput();
+        }
+
 
         if (strpos($file->getMimeType(), 'image/') !== 0) {
             return redirect()->back()

@@ -24,4 +24,5 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('home', 'Home::index', ['filter' => 'logged']);
 
     $routes->get('profile', 'Profile::index');
+    $routes->post('profile', 'Profile::managePost');
 });
