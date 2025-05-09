@@ -20,7 +20,8 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     });
 
     $routes->get('sign-out', 'SignOut::signOut');
+
+    $routes->get('home', 'Home::index', ['filter' => 'logged']);
+
+    $routes->get('profile', 'Profile::index');
 });
-
-
-$routes->get('/home', 'Home::index', ['filter' => 'logged']);

@@ -8,14 +8,12 @@ class SignUp extends BaseController
 {
     public function showForm()
     {
-
         helper(['form']);
         return view('signup_form');
     }
 
     public function simpleSubmit()
     {
-
         helper(['form']);
         $rules = [
             'email'        => 'required|valid_email|is_from_domain|max_length[40]|is_email_unique',
@@ -45,8 +43,6 @@ class SignUp extends BaseController
             'username' => [
                 'max_length' => 'The username must be less than 20 characters long.'
             ]
-            // TODO fer la validacio de la imatge
-
         ];
 
         if ($this->validate($rules, $errors)) {
