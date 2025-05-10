@@ -81,7 +81,7 @@
                                 </div>
 
                                 <?php if (!empty(\Config\Services::validation()->showError('username'))): ?>
-                                    <h6 class="missatgeError">
+                                    <h6 class="error-message">
                                         <?= \Config\Services::validation()->showError('username') ?>
                                     </h6>
                                 <?php endif; ?>
@@ -95,7 +95,7 @@
                                 </div>
 
                                 <?php if (!empty(\Config\Services::validation()->showError('age'))): ?>
-                                    <h6 class="missatgeError">
+                                    <h6 class="error-message">
                                         <?= \Config\Services::validation()->showError('age') ?>
                                     </h6>
                                 <?php endif; ?>
@@ -109,7 +109,7 @@
                                 </div>
 
                                 <?php if (!empty(\Config\Services::validation()->showError('email'))): ?>
-                                    <h6 class="missatgeError">
+                                    <h6 class="error-message">
                                         <?= \Config\Services::validation()->showError('email') ?>
                                     </h6>
                                 <?php endif; ?>
@@ -123,7 +123,7 @@
                                 </div>
 
                                 <?php if (!empty(\Config\Services::validation()->showError('password'))): ?>
-                                    <h6 class="missatgeError">
+                                    <h6 class="error-message">
                                         <?= \Config\Services::validation()->showError('password') ?>
                                     </h6>
                                 <?php endif; ?>
@@ -137,7 +137,7 @@
                                 </div>
 
                                 <?php if (!empty(\Config\Services::validation()->showError('confirm_password'))): ?>
-                                    <h6 class="missatgeError">
+                                    <h6 class="error-message">
                                         <?= \Config\Services::validation()->showError('confirm_password') ?>
                                     </h6>
                                 <?php endif; ?>

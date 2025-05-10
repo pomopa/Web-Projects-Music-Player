@@ -220,3 +220,10 @@ footer.py-3 {
 .swiper-button-prev:after {
     font-size: 24px !important;
 }
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
