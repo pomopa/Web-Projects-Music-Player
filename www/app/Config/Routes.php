@@ -8,8 +8,6 @@ use CodeIgniter\Router\RouteCollection;
 $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('', 'LandingPage::landingPage', ['filter' => 'logged']);
 
-    // logged -> redirigeix si allredy logged in
-    // notlogged -> redirigeix si no esta logged
     $routes->group('sign-up', ['filter' => 'logged'], function ($routes) {
         $routes->get('', 'SignUp::showForm');
         $routes->post('', 'SignUp::simpleSubmit', ['filter' => 'images']);
@@ -27,7 +25,7 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
 
     $routes->group('profile', ['filter' => 'notlogged'], function ($routes) {
         $routes->get('', 'Profile::index');
-        $routes->post('', 'Profile::managePost');
+        $routes->post('', 'Profile::managePost', ['filter' => 'images']);
         $routes->get('picture', 'ProfilePicture::profileImage');
     });
 
