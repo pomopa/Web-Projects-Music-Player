@@ -21,8 +21,8 @@ Landing Page
 </div>
 
 <div class="d-flex justify-content-center gap-4 mt-4">
-    <button type="button" class="btn bg-primary text-white" onclick="window.location.href='/sign-in'">Sign-in</button>
-    <button type="button" class="btn bg-primary text-white" onclick="window.location.href='/sign-up'">Sign-up</button>
+    <button type="button" class="btn bg-primary text-white" onclick="window.location.href='/sign-in'">Sign in</button>
+    <button type="button" class="btn bg-primary text-white" onclick="window.location.href='/sign-up'">Sign up</button>
 </div>
 
 <?= $this->endSection() ?>
