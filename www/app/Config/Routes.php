@@ -28,5 +28,7 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->group('profile', ['filter' => 'notlogged'], function ($routes) {
         $routes->get('', 'Profile::index');
         $routes->post('', 'Profile::managePost');
+        $routes->get('picture', 'ProfilePicture::profileImage');
     });
+
 });
