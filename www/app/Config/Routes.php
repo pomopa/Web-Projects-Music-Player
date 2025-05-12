@@ -23,4 +23,11 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
 });
 
 
-$routes->get('/home', 'Home::index');
+
+$routes->group('home', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->get('', 'Home::index');
+    $routes->get('(:segment)/(:segment)', 'Home::search/$1/$2');
+});
+
+$routes->get('tracks', 'Track::index');
+$routes->get('artists', 'Artist::index');
