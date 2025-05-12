@@ -234,3 +234,35 @@
         font-size: 2rem;
     }
 }
+
+.equal-height-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Hacer que los cards se extiendan para llenar la altura disponible */
+.equal-height-row > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.equal-height-row .card {
+    flex: 1;
+    height: 100%;
+    margin-bottom: 0;
+}
+
+/* Aplicar estos estilos a los contenedores de información */
+.track-info-card,
+.artist-info-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Para dispositivos móviles */
+@media (max-width: 768px) {
+    .equal-height-row > div {
+        margin-bottom: 20px;
+    }
+}

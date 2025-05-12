@@ -160,6 +160,7 @@ $trackId = $track ? $track->id : 0;
                         <h4 class="text-white mb-0 fs-5"><?= esc($artistName) ?></h4>
                     </div>
                 </div>
+                <button class="btn btn-outline-success rounded-pill w-100">Visit Artist</button>
             </div>
         </div>
     </div>
