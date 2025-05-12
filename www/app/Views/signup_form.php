@@ -9,13 +9,14 @@ Sign-up
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<form action="<?= base_url('sign-up') ?>" method="post" accept-charset="utf-8" role="form" class="text-start">
+<form action="<?= base_url('sign-up') ?>" method="post" accept-charset="utf-8" role="form" class="text-start" enctype="multipart/form-data">
     <!-- CSRF protection -->
     <?= csrf_field() ?>
 
     <div class="input-group input-group-outline my-3">
         <label class="form-label">Username</label>
-        <input type="text" name="username" class="form-control" value="<?= set_value('username') ?>">
+        <input type="text" name="username" class="form-control"
+            <?= request()->getPost('username') !== null ? 'value="' . esc(request()->getPost('username')) . '"' : '' ?>>
     </div>
 
     <?php if (!empty(\Config\Services::validation()->showError('username'))): ?>
@@ -24,20 +25,31 @@ Sign-up
         </h6>
     <?php endif; ?>
 
-    <div class="input-group input-group-outline my-3">
-        <label class="form-label">Profile Picture</label>
-        <input type="file" name="profilePicture" class="form-control" value="<?= set_value('profilePicture') ?>">
+    <div class="input-group input-group-outline my-3" id="fileInputGroup">
+        <label id="fileNameLabel" class="form-label no-shadow-label" style="color: #737373;">Profile Picture</label>
+
+        <!-- input ocult -->
+        <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept="image/*" onchange="handleImagePreview(this)">
+
+        <!-- label clicable -->
+        <label for="profilePicture" class="form-control " style="cursor: pointer;">
+            <span id="fileLabel">&nbsp;</span>
+        </label>
     </div>
 
-    <?php if (!empty(\Config\Services::validation()->showError('profilePicture'))): ?>
-        <h6 class="missatgeError">
-            <?= \Config\Services::validation()->showError('profilePicture') ?>
-        </h6>
-    <?php endif; ?>
+    <!-- Previsualització de la imatge seleccionada -->
+    <div id="previewContainer" class="mb-3" style="display: none;">
+        <img id="previewImage" src="#" alt="Preview" class="d-block mx-auto" style="max-width: 200px; border-radius: 8px;" />
+    </div>
+
+    <?php if (session()->getFlashdata('errorImage')): ?>
+        <div class="missatgeError"><?= esc(session()->getFlashdata('error')) ?></div>
+    <?php endif ?>
 
     <div class="input-group input-group-outline my-3">
         <label class="form-label">Email</label>
-        <input type="text" name="email" required class="form-control" value="<?= set_value('email') ?>">
+        <input type="text" name="email" required class="form-control"
+            <?= request()->getPost('email') !== null ? 'value="' . esc(request()->getPost('email')) . '"' : '' ?>>
     </div>
 
     <?php if (!empty(\Config\Services::validation()->showError('email'))): ?>
@@ -76,4 +88,7 @@ Sign-up
         <a href="<?= base_url('sign-in') ?>" class="text-primary text-gradient font-weight-bold">Sign in</a>
     </p>
 </form>
+
+<script src="../../../assets/js/signup.js"></script>
+
 <?= $this->endSection() ?>

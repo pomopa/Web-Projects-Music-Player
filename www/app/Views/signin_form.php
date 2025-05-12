@@ -23,7 +23,8 @@ Sign-in
 
     <div class="input-group input-group-outline my-3">
         <label class="form-label">Email</label>
-        <input type="text" name="email" required class="form-control" value="<?= set_value('email') ?>">
+        <input type="text" name="email" required class="form-control"
+            <?= request()->getPost('email') !== null ? 'value="' . esc(request()->getPost('email')) . '"' : '' ?>>
     </div>
 
     <?php if (!empty(\Config\Services::validation()->showError('email'))): ?>
