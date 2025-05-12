@@ -73,7 +73,6 @@ class SignUp extends BaseController
             if ($userModel->insert($data)) {
                 return redirect()->to('/sign-up/success');
             } else {
-                die("puto");
                 return redirect()->back()->withInput()->with('errors', $userModel->errors());
             }
         } else {

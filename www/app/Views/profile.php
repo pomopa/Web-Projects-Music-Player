@@ -107,12 +107,6 @@
                                     <label class="form-label" for="email">Email (Cannot be changed)</label>
                                     <input type="email" id="email" class="form-control text-white" value="<?= $user->email ?>" readonly >
                                 </div>
-
-                                <?php if (!empty(\Config\Services::validation()->showError('email'))): ?>
-                                    <h6 class="error-message">
-                                        <?= \Config\Services::validation()->showError('email') ?>
-                                    </h6>
-                                <?php endif; ?>
                             </div>
 
                             <!-- New Password -->
