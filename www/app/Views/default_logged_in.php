@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?= $this->renderSection('title') ?>
+    <link rel="icon" type="image/png" href="<?= base_url('/assets/logo.png') ?>">
 
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
     <link href="<?= site_url('/assets/css/nucleo-icons.css') ?>" rel="stylesheet" />
@@ -24,7 +25,7 @@
                 <a href="/my-playlists" title="my-playlists-page" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
                     <i class="fa fa-music"></i>
                 </a>
-                <?php if(session()->getFlashdata('notProfilePage')): ?>
+                <?php if (current_url(true) != base_url(route_to('profile_view'))): ?>
                     <a href="/profile" title="profile-page" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
                         <i class="fa fa-user-circle"></i>
                     </a>

@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\HTTP\RedirectResponse;
+use Psr\Http\Message\ResponseInterface;
 
 class Profile extends BaseController
 {
@@ -22,12 +24,11 @@ class Profile extends BaseController
         $data = [
             'user' => $user
         ];
-        session()->setFlashdata('notProfilePage');
 
         return view('profile', $data);
     }
 
-    private function delete(): string
+    private function delete(): RedirectResponse
     {
         $session = session();
         $userID = $session->get('user');
@@ -42,9 +43,8 @@ class Profile extends BaseController
         }
         $session->destroy();
 
-        //redirect()->to('/');
         session()->setFlashdata('success', 'The user data was removed successfully.');
-        return view('landing');
+        return redirect()->to('/');
     }
 
     private function modify(): string
@@ -121,7 +121,7 @@ class Profile extends BaseController
         return $this->index();
     }
 
-    public function managePost(): string
+    public function managePost():string|RedirectResponse
     {
         $action = $this->request->getPost('action');
         if ($action == 'delete') {
