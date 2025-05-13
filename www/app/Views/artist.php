@@ -9,7 +9,6 @@ $website = $artist ? ($artist->website ?? '#') : '#';
 $followersCount = $artist ? ($artist->stats->followers_count ?? 0) : 0;
 $albumsCount = $artist ? (count($artist->albums) ?? 0) : 0;
 $tracksCount = $artist ? (count($artist->tracks) ?? 0) : 0;
-$isFollowing = $artist ? ($artist->is_following ?? false) : false;
 ?>
 
 <!DOCTYPE html>

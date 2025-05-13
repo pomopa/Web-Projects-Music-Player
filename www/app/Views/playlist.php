@@ -1,16 +1,16 @@
 <?php
 
-$artistId = $album ? $album->artist_id : 0;
-$albumName = $album ? $album->name : 'Album Not Found';
-$artistName = $album ? $album->artist_name : 'Unknown Artist';
-$albumImage = $album ? $album->image : '/api/placeholder/400/400';
-$artistImage = $album ? ($album->artist_image ?? '/api/placeholder/80/80') : '/api/placeholder/80/80';
-$releaseDate = $album ? date('Y-m-d', strtotime($album->releasedate)) : 'Unknown';
-$tracks = $album ? $album->tracks : [];
+$playlistId = $playlist ? $playlist->id : 0;
+$playlistName = $playlist ? $playlist->name : 'Playlist Not Found';
+$playlistImage = '/api/placeholder/400/400';
+$playlistCreator = $playlist ? $playlist->user_name : 'Unknown Creator';
+$playlistCreatorId = $playlist ? $playlist->user_id : 0;
+$creationDate = $playlist ? date('Y-m-d', strtotime($playlist->creationdate)) : 'Unknown';
+$tracks = $playlist ? $playlist->tracks : [];
 
-// Calculate total duration
+// Calculate total duration and track count
 $totalDuration = 0;
-if ($album && !empty($tracks)) {
+if ($playlist && !empty($tracks)) {
     foreach ($tracks as $track) {
         $totalDuration += $track->duration;
     }
@@ -24,7 +24,7 @@ $tracksCount = count($tracks);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LSpoty - <?= esc($albumName) ?></title>
+    <title>LSpoty - <?= esc($playlistName) ?></title>
 
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
@@ -39,8 +39,127 @@ $tracksCount = count($tracks);
     <link id="pagestyle" href="<?= site_url('/assets/css/material-dashboard.css?v=3.1.0') ?>" rel="stylesheet" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
-    <!-- Album Detail CSS -->
+    <!-- Album Detail CSS (reused for playlist details) -->
     <link rel="stylesheet" href="<?= site_url('/assets/css/album-detail.css') ?>">
+
+    <!-- Additional CSS for playlist page -->
+    <style>
+        /* Custom styles for playlist page */
+        .playlist-header {
+            margin-bottom: 2rem;
+        }
+
+        .playlist-cover {
+            width: 220px;
+            height: 220px;
+            border-radius: 4px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            object-fit: cover;
+        }
+
+        .playlist-stats {
+            display: flex;
+            gap: 15px;
+            color: var(--lspoty-text-secondary);
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .playlist-stats span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .track-item {
+            display: grid;
+            grid-template-columns: 40px 40px 1fr 80px 50px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .track-item:hover {
+            background-color: var(--lspoty-hover-bg);
+        }
+
+        .track-play-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--lspoty-text);
+            cursor: pointer;
+        }
+
+        .track-play-btn:hover {
+            color: var(--lspoty-primary);
+        }
+
+        .track-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-title a:hover {
+            color: var(--lspoty-primary) !important;
+        }
+
+        .track-duration {
+            text-align: right;
+            color: var(--lspoty-text-secondary);
+        }
+
+        .track-actions {
+            text-align: right;
+        }
+
+        .track-actions button {
+            background: none;
+            border: none;
+            color: var(--lspoty-text-secondary);
+            cursor: pointer;
+        }
+
+        .track-actions button:hover {
+            color: var(--lspoty-primary);
+        }
+
+        .saved-badge {
+            background-color: var(--lspoty-primary);
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 10px;
+        }
+
+        /* Creator card */
+        .creator-card {
+            background-color: var(--lspoty-card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .track-item {
+                grid-template-columns: 30px 30px 1fr 60px 40px;
+                padding: 8px 5px;
+            }
+
+            .playlist-cover {
+                width: 180px;
+                height: 180px;
+            }
+        }
+    </style>
 </head>
 <body class="bg-dark">
 <!-- Navigation -->
@@ -74,41 +193,31 @@ $tracksCount = count($tracks);
         </div>
     </div>
 
-    <div class="row album-header">
+    <div class="row playlist-header">
         <div class="col-lg-3 col-md-4 col-sm-12 d-flex justify-content-center justify-content-md-start mb-4 mb-md-0">
-            <img src="<?= esc($albumImage) ?>" alt="Album cover" class="album-cover">
+            <img src="<?= esc($playlistImage) ?>" alt="Playlist cover" class="playlist-cover">
         </div>
-        <div class="col-lg-9 col-md-8 col-sm-12 album-details">
-            <h1 class="text-white display-5 fw-bold mb-1"><?= esc($albumName) ?></h1>
-            <a href="/artist/<?= $artistId ?>" class="text-secondary fs-4 mb-3 d-block text-decoration-none hover-text-success">
-                <?= esc($artistName) ?>
+        <div class="col-lg-9 col-md-8 col-sm-12 playlist-details">
+            <div class="d-flex align-items-center">
+                <h1 class="text-white display-5 fw-bold mb-1"><?= esc($playlistName) ?></h1>
+
+            </div>
+
+            <a href="/user/<?= $playlistCreatorId ?>" class="text-secondary fs-5 mb-3 d-block text-decoration-none hover-text-success">
+                Created by <?= esc($playlistCreator) ?>
             </a>
 
-            <div class="album-stats">
-                <span><i class="fa fa-calendar"></i> <?= esc($releaseDate) ?></span>
+            <div class="playlist-stats">
+                <span><i class="fa fa-calendar"></i> Created: <?= esc($creationDate) ?></span>
                 <span><i class="fa fa-music"></i> <?= $tracksCount ?> tracks</span>
                 <span><i class="fa fa-clock"></i> <?= $formattedTotalDuration ?></span>
             </div>
 
-            <div class="album-actions">
-                <button class="action-btn primary" id="playAlbumButton">
-                    <i class="fa fa-play me-1"></i> Play Album
+            <div class="playlist-actions">
+                <button class="action-btn primary" id="playPlaylistButton">
+                    <i class="fa fa-play me-1"></i> Play Playlist
                 </button>
-                <button class="action-btn" id="addToQueueButton">
-                    <i class="fa fa-list me-1"></i> Add to Queue
-                </button>
-                <div class="dropdown">
-                    <button class="action-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-plus me-1"></i> Add to playlist
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="1">My Favorites</a></li>
-                        <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="2">Workout Mix</a></li>
-                        <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="3">Chill Vibes</a></li>
-                        <li><div class="dropdown-divider"></div></li>
-                        <li><a class="dropdown-item" href="/create-playlist"><i class="fa fa-plus-circle me-2"></i>Create new playlist</a></li>
-                    </ul>
-                </div>
+
                 <button class="action-btn" id="shareButton">
                     <i class="fa fa-share-alt me-1"></i> Share
                 </button>
@@ -126,6 +235,8 @@ $tracksCount = count($tracks);
                         <?php
                         $trackDuration = gmdate("i:s", $track->duration);
                         $trackId = $track->id;
+                        $artistName = $track->artist_name;
+                        $artistId = $track->artist_id;
                         ?>
                         <div class="track-item">
                             <div class="track-number"><?= $trackNumber ?></div>
@@ -136,6 +247,11 @@ $tracksCount = count($tracks);
                                 <a href="/track/<?= $trackId ?>" class="text-decoration-none text-white">
                                     <?= esc($track->name) ?>
                                 </a>
+                                <span class="text-secondary d-block small">
+                                    <a href="/artist/<?= $artistId ?>" class="text-decoration-none text-secondary hover-text-success">
+                                        <?= esc($artistName) ?>
+                                    </a>
+                                </span>
                             </div>
                             <div class="track-duration"><?= $trackDuration ?></div>
                             <div class="track-actions">
@@ -147,6 +263,17 @@ $tracksCount = count($tracks);
                                         <li><a class="dropdown-item" href="/track/<?= $trackId ?>"><i class="fa fa-info-circle me-2"></i>Track details</a></li>
                                         <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-plus me-2"></i>Add to playlist</a></li>
                                         <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-share-alt me-2"></i>Share track</a></li>
+                                        <?php if ($isOwner): ?>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <form action="/playlist/<?= $playlistId ?>/remove-track" method="POST">
+                                                    <input type="hidden" name="track_id" value="<?= $trackId ?>">
+                                                    <button type="submit" class="dropdown-item text-danger">
+                                                        <i class="fa fa-trash me-2"></i>Remove from playlist
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        <?php endif; ?>
                                     </ul>
                                 </div>
                             </div>
@@ -156,7 +283,8 @@ $tracksCount = count($tracks);
                 <?php else: ?>
                     <div class="p-4 text-center text-secondary">
                         <i class="fa fa-info-circle mb-2 fs-3"></i>
-                        <p>No tracks available for this album.</p>
+                        <p>No tracks available in this playlist.</p>
+
                     </div>
                 <?php endif; ?>
             </div>
@@ -166,38 +294,40 @@ $tracksCount = count($tracks);
     <div class="row mt-4 mb-5">
         <div class="col-md-4">
             <div class="bg-gray-800 rounded p-4 mb-4">
-                <h3 class="fw-bold fs-4 text-white mb-3">Artist</h3>
+                <h3 class="fw-bold fs-4 text-white mb-3">Playlist Creator</h3>
                 <div class="d-flex align-items-center mb-3">
-                    <img src="<?= esc($artistImage) ?>"
-                         alt="Artist image" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                    <img src="<?= site_url('/api/placeholder/60/60') ?>"
+                         alt="Creator avatar" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
                     <div>
-                        <h4 class="text-white mb-0 fs-5"><?= esc($artistName) ?></h4>
+                        <h4 class="text-white mb-0 fs-5"><?= esc($playlistCreator) ?></h4>
                     </div>
                 </div>
-                <a href="/artist/<?= $artistId ?>" class="btn btn-outline-success rounded-pill w-100">Visit Artist</a>
+                <a href="/user/<?= $playlistCreatorId ?>" class="btn btn-outline-success rounded-pill w-100">View Profile</a>
             </div>
         </div>
 
         <div class="col-md-8">
             <div class="bg-gray-800 rounded p-4 mb-4">
-                <h3 class="fw-bold fs-4 text-white mb-3">More Albums by <?= esc($artistName) ?></h3>
+                <h3 class="fw-bold fs-4 text-white mb-3">You Might Also Like</h3>
                 <div class="row g-3">
-                    <?php if(!empty($album->similarAlbums)): ?>
-                        <?php foreach($album->similarAlbums as $alb): ?>
+                    <?php if(!empty($playlist->similarPlaylists)): ?>
+                        <?php foreach($playlist->similarPlaylists as $pl): ?>
                             <div class="col-lg-3 col-md-4 col-6">
-                                <div class="card card-plain transition-transform hover-elevation">
-                                    <img src="<?= !empty($alb->image) ? esc($alb->image) : '/api/placeholder/150/150' ?>"
-                                         class="card-img-top rounded" alt="<?= esc($alb->name) ?> cover">
-                                    <div class="card-body p-2">
-                                        <h5 class="card-title fs-6 mb-0"><?= esc($alb->name) ?></h5>
-                                        <p class="card-text small"><?= esc($alb->releasedate) ?></p>
+                                <a href="/playlist/<?= $pl->id ?>" class="text-decoration-none">
+                                    <div class="card card-plain transition-transform hover-elevation">
+                                        <img src="<?= !empty($pl->image) ? esc($pl->image) : '/api/placeholder/150/150' ?>"
+                                             class="card-img-top rounded" alt="<?= esc($pl->name) ?> cover">
+                                        <div class="card-body p-2">
+                                            <h5 class="card-title fs-6 mb-0"><?= esc($pl->name) ?></h5>
+                                            <p class="card-text small">By <?= esc($pl->creator_name) ?></p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <div class="col-12">
-                            <p class="text-muted">No other albums found for this artist.</p>
+                            <p class="text-muted">No similar playlists found.</p>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -218,13 +348,13 @@ $tracksCount = count($tracks);
 <script src="<?= site_url('/assets/js/core/bootstrap.min.js') ?>"></script>
 <script src="<?= site_url('/assets/js/plugins/perfect-scrollbar.min.js') ?>"></script>
 
-<!-- Album Player JS -->
+<!-- Playlist Player JS -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Handle play album button
-        const playAlbumButton = document.getElementById('playAlbumButton');
-        if (playAlbumButton) {
-            playAlbumButton.addEventListener('click', function() {
+        // Handle play playlist button
+        const playPlaylistButton = document.getElementById('playPlaylistButton');
+        if (playPlaylistButton) {
+            playPlaylistButton.addEventListener('click', function() {
                 // Get first track play button and trigger click
                 const firstTrackPlayBtn = document.querySelector('.track-play-btn');
                 if (firstTrackPlayBtn) {
@@ -242,9 +372,7 @@ $tracksCount = count($tracks);
 
                 // Navigate to track page or play audio
                 if (trackUrl) {
-                    // You could implement audio player functionality here
                     console.log(`Playing track ID: ${trackId}, URL: ${trackUrl}`);
-                    // For now, let's navigate to the track page
                     window.location.href = `/track/${trackId}`;
                 }
             });
@@ -267,29 +395,23 @@ $tracksCount = count($tracks);
             });
         });
 
-        // Handle add to playlist functionality
-        const playlistItems = document.querySelectorAll('.playlist-add');
-        playlistItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const playlistId = this.getAttribute('data-playlist-id');
+        // Add to queue functionality
+        const addToQueueButton = document.getElementById('addToQueueButton');
+        if (addToQueueButton) {
+            addToQueueButton.addEventListener('click', function() {
                 // Implementation would depend on your backend API
-                console.log(`Adding album to playlist ID: ${playlistId}`);
-
-                // Show confirmation
-                alert(`Album added to playlist: ${this.textContent}`);
+                console.log('Adding playlist to queue');
+                alert('Playlist added to your queue!');
             });
-        });
+        }
 
         // Share button functionality
         const shareButton = document.getElementById('shareButton');
         if (shareButton) {
             shareButton.addEventListener('click', function() {
-                // Implementation would depend on your sharing options
-                // For now, let's just simulate copying a link
                 const currentUrl = window.location.href;
                 navigator.clipboard.writeText(currentUrl).then(() => {
-                    alert('Album link copied to clipboard!');
+                    alert('Playlist link copied to clipboard!');
                 });
             });
         }

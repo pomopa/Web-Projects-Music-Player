@@ -32,3 +32,4 @@ $routes->group('home', ['namespace' => 'App\Controllers'], function($routes) {
 $routes->get('tracks', 'Track::index');
 $routes->get('artists', 'Artist::index');
 $routes->get('albums', 'Album::index');
+$routes->get('playlists', 'Playlist::index');

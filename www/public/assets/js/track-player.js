@@ -116,26 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle like button functionality
-    if (likeButton) {
-        likeButton.addEventListener('click', function() {
-            const trackId = this.getAttribute('data-track-id');
-
-            // Toggle active class
-            this.classList.toggle('active');
-
-            // Check if the track is now liked
-            const isLiked = this.classList.contains('active');
-
-            // Update button text
-            this.innerHTML = isLiked ?
-                '<i class="fa fa-heart me-1 text-danger"></i> Liked' :
-                '<i class="fa fa-heart me-1"></i> Like';
-
-            // Here you would make an API call to like/unlike the track
-            console.log(`Track ${trackId} is now ${isLiked ? 'liked' : 'unliked'}`);
-        });
-    }
 
     // Handle share button functionality
     if (shareButton) {
