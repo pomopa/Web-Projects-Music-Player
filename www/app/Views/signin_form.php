@@ -5,7 +5,7 @@ Sign-in
 <?= $this->endSection() ?>
 
 <?= $this->section('sectionName') ?>
-Sign-in
+Sign in
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>

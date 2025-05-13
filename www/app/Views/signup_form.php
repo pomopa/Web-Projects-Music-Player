@@ -5,7 +5,7 @@ Sign-up
 <?= $this->endSection() ?>
 
 <?= $this->section('sectionName') ?>
-Sign-up
+Sign up
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
