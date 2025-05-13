@@ -12,10 +12,10 @@ class SignOut extends BaseController
             $state = $session->get('state');
             if($state == 'LOGGED IN'){
                 $session->destroy();
-                return view('home_not_loggedin');
+                return view('landing');
             }
         }
-        return view('home_not_loggedin');
+        return view('landing');
     }
 
 
