@@ -24,6 +24,12 @@
                             </div>
                         <?php endif; ?>
 
+                        <?php if(session()->getFlashdata('errorImage')): ?>
+                            <div class="alert alert-danger">
+                                <?= session()->getFlashdata('errorImage') ?>
+                            </div>
+                        <?php endif; ?>
+
                         <form action="<?= site_url('/profile') ?>" method="POST" enctype="multipart/form-data" class="row g-3">
                             <?= csrf_field() ?>
 

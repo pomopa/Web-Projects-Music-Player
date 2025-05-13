@@ -83,7 +83,7 @@ class Profile extends BaseController
             $user = (object) $this->userModel->find($userID['id']);
 
             $file = $this->request->getFile('profilePicture');
-            if (!empty($file) && !$file instanceof UploadedFile) {
+            if (!empty($file) && $file->getSize() !== 0) {
                 $newName = $file->getRandomName();
 
                 if (!empty($user->profile_pic)) {

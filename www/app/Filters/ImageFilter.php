@@ -27,7 +27,7 @@ class ImageFilter implements FilterInterface
 
         $file = $request->getFile('profilePicture');
 
-        if ($file instanceof UploadedFile) {
+        if ($file->getSize() === 0) {
             return null;
         }
 
@@ -47,6 +47,54 @@ class ImageFilter implements FilterInterface
         if (strpos($file->getMimeType(), 'image/') !== 0) {
             return redirect()->back()
                 ->with('errorImage', 'The uploaded file must be an image file.')
+                ->withInput();
+        }
+
+        $extension = strtolower($file->getClientExtension());
+        $detectedMimeType = $file->getMimeType();
+
+        $validMimeTypes = [
+            // Imatges
+            'jpg' => ['image/jpeg'],
+            'jpeg' => ['image/jpeg'],
+            'png' => ['image/png'],
+            'gif' => ['image/gif'],
+            'webp' => ['image/webp'],
+            'svg' => ['image/svg+xml'],
+            'bmp' => ['image/bmp'],
+            'ico' => ['image/x-icon', 'image/vnd.microsoft.icon'],
+            'tiff' => ['image/tiff'],
+            'tif' => ['image/tiff'],
+            ];
+        $equivalentExtensions = [
+            'jpg' => ['jpeg'],
+            'jpeg' => ['jpg'],
+            'tif' => ['tiff'],
+            'tiff' => ['tif']
+        ];
+
+        $correctExtension = null;
+        foreach ($validMimeTypes as $ext => $mimeTypes) {
+            if (in_array($detectedMimeType, $mimeTypes)) {
+                $correctExtension = $ext;
+                break;
+            }
+        }
+
+        if ($correctExtension === null) {
+            return redirect()->back()
+                ->with('errorImage', 'The uploaded file extension is invalid.')
+                ->withInput();
+        }
+
+        $isValid = ($extension === $correctExtension);
+        if (!$isValid && isset($equivalentExtensions[$correctExtension])) {
+            $isValid = in_array($extension, $equivalentExtensions[$correctExtension]);
+        }
+
+        if (!$isValid) {
+            return redirect()->back()
+                ->with('errorImage', 'The file extension is unexpected.')
                 ->withInput();
         }
 
