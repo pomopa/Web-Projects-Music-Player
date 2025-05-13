@@ -44,7 +44,6 @@ class ImageFilter implements FilterInterface
                 ->withInput();
         }
 
-
         if (strpos($file->getMimeType(), 'image/') !== 0) {
             return redirect()->back()
                 ->with('errorImage', 'The uploaded file must be an image file.')

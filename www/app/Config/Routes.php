@@ -33,7 +33,7 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     });
 
     $routes->group('profile', ['filter' => 'notlogged'], function ($routes) {
-        $routes->get('', 'Profile::index');
+        $routes->get('', 'Profile::index', ['as' => 'profile_view']);
         $routes->post('', 'Profile::managePost', ['filter' => 'images']);
         $routes->get('picture', 'ProfilePicture::profileImage');
     });
