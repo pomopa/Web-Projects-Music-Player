@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use CodeIgniter\HTTP\Files\UploadedFile;
+use function PHPUnit\Framework\isNull;
 
 class SignUp extends BaseController
 {
@@ -56,17 +58,19 @@ class SignUp extends BaseController
             }
 
             $file = $this->request->getFile('profilePicture');
-            $newName = $file->getRandomName();
-            if (!$file->move(self::UPLOADS_DIR, $newName)) {
-                session()->setFlashdata('errorImage', 'There was an error uploading your file.');
-                return redirect()->back();
+            $newName = null;
+            if (!empty($file) && $file->getSize() !== 0) {
+                $newName = $file->getRandomName();
+                if (!$file->move(self::UPLOADS_DIR, $newName)) {
+                    session()->setFlashdata('errorImage', 'There was an error uploading your file.');
+                    return redirect()->back();
+                }
             }
-
 
             $data = [
                 'email'    => $this->request->getPost('email'),
                 'username' => $username,
-                'profile_pic' => $newName,
+                'profile_pic' => isNull($newName) ? '' : $newName,
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             ];
 
