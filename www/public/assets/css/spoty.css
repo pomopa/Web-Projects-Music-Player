@@ -100,9 +100,11 @@ footer {
     transition: all 0.3s ease;
 }
 
+/* Modified hover effect to prevent overflow */
 .card.transition-transform.hover-elevation:hover {
     background-color: var(--lspoty-hover-bg);
-    transform: translateY(-5px);
+    transform: translateY(-5px); /* Reduced from -5px to -3px */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Added shadow for better visual effect */
 }
 
 .card .card-title {
@@ -193,15 +195,24 @@ footer.py-3 {
     }
 }
 
+/* Swiper container with improved spacing to prevent cutting off */
 .swiper {
     width: 100%;
-    padding: 10px 30px;
+    padding: 10px 30px 20px; /* Added padding-bottom to prevent cut-off */
     margin-bottom: 20px;
+    overflow: visible; /* Allow items to be visible outside the container */
 }
 
 .swiper-slide {
+    margin-top:5px;
     width: auto;
     height: auto;
+    cursor: pointer; /* Add pointer cursor for clickable elements */
+}
+
+/* Added cursor pointer to clickable card elements */
+.card.card-plain {
+    cursor: pointer;
 }
 
 .swiper-button-next,

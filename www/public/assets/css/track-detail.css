@@ -1,0 +1,268 @@
+/* Track Detail Page Specific Styles */
+
+/* Track header styling */
+.track-header {
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.track-cover {
+    width: 220px;
+    height: 220px;
+    border-radius: 4px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    object-fit: cover;
+}
+
+.track-details {
+    padding-left: 20px;
+}
+
+/* Tags styling */
+.tag {
+    background-color: rgba(29, 185, 84, 0.15);
+    color: var(--lspoty-primary);
+    border-radius: 12px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+/* Player container styling */
+.player-container {
+    background-color: var(--lspoty-card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Player controls styling */
+.player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: var(--lspoty-text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 5px;
+}
+
+.control-btn:hover {
+    color: var(--lspoty-primary);
+    transform: scale(1.1);
+}
+
+.control-btn.main {
+    font-size: 2.5rem;
+    color: var(--lspoty-primary);
+}
+
+/* Progress bar styling */
+.progress-container {
+    width: 100%;
+    height: 4px;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    margin: 0 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--lspoty-primary);
+    border-radius: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: width 0.1s linear;
+}
+
+.time-display {
+    color: var(--lspoty-text-secondary);
+    font-size: 0.8rem;
+    min-width: 45px;
+}
+
+/* Similar tracks styling */
+.similar-tracks .card {
+    margin-bottom: 15px;
+}
+
+/* Back button styling */
+.back-button {
+    background-color: transparent;
+    border: none;
+    color: var(--lspoty-text);
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    font-weight: 600;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.back-button:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.back-button i {
+    margin-right: 5px;
+}
+
+/* Action buttons container */
+.actions-container {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+/* Action button styling */
+.action-btn {
+    background-color: transparent;
+    color: var(--lspoty-text);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 5px 15px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.action-btn:hover {
+    background-color: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+}
+
+.action-btn.primary {
+    background-color: var(--lspoty-primary);
+    color: #000;
+    border: none;
+}
+
+.action-btn.primary:hover {
+    background-color: #19a349;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    background-color: var(--lspoty-card-bg);
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.dropdown-item {
+    color: var(--lspoty-text);
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--lspoty-hover-bg);
+    color: var(--lspoty-primary);
+}
+
+.dropdown-divider {
+    border-color: rgba(255,255,255,0.1);
+}
+
+/* Lyrics container styling */
+.lyrics-container {
+    white-space: pre-line;
+    line-height: 1.6;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.lyrics-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.lyrics-container::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+}
+
+.lyrics-container::-webkit-scrollbar-thumb {
+    background: var(--lspoty-primary);
+    border-radius: 10px;
+}
+
+/* Active states for buttons */
+.action-btn.active,
+.control-btn.active {
+    color: var(--lspoty-primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .track-cover {
+        width: 180px;
+        height: 180px;
+    }
+
+    .track-details {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .actions-container {
+        justify-content: center;
+    }
+
+    .player-controls {
+        padding: 0 10px;
+    }
+
+    .control-btn {
+        font-size: 1.2rem;
+    }
+
+    .control-btn.main {
+        font-size: 2rem;
+    }
+}
+
+.equal-height-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Hacer que los cards se extiendan para llenar la altura disponible */
+.equal-height-row > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.equal-height-row .card {
+    flex: 1;
+    height: 100%;
+    margin-bottom: 0;
+}
+
+/* Aplicar estos estilos a los contenedores de información */
+.track-info-card,
+.artist-info-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Para dispositivos móviles */
+@media (max-width: 768px) {
+    .equal-height-row > div {
+        margin-bottom: 20px;
+    }
+}

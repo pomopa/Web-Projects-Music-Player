@@ -1,0 +1,353 @@
+/* Artist detail page specific styles */
+
+/* Artist header section */
+.artist-header {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.artist-image {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    border: 2px solid #333;
+}
+
+.artist-details h1 {
+    margin-bottom: 0.5rem;
+}
+
+.verified-badge {
+    color: var(--lspoty-primary);
+    font-size: 1.5rem;
+    vertical-align: middle;
+}
+
+.artist-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--lspoty-text-secondary);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.artist-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--lspoty-text);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--lspoty-text-secondary);
+}
+
+/* Actions container */
+.actions-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--lspoty-text);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--lspoty-text);
+}
+
+.action-btn.primary {
+    background-color: var(--lspoty-primary);
+    color: #000;
+}
+
+.action-btn.primary:hover {
+    background-color: #19a348;
+    color: #000;
+    transform: scale(1.03);
+}
+
+/* Back button styling */
+.back-button {
+    background-color: transparent;
+    border: none;
+    color: var(--lspoty-text);
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    font-weight: 600;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.back-button:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.back-button i {
+    margin-right: 5px;
+}
+
+/* Genre tags */
+.genres-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.genre-tag {
+    background-color: rgba(29, 185, 84, 0.2);
+    color: var(--lspoty-primary);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Album cards */
+.card-img-top {
+    border-radius: 8px;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+}
+
+.play-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--lspoty-primary);
+    border: none;
+    color: #000;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+
+.card:hover .play-button {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.play-button:hover {
+    transform: scale(1.05);
+    background-color: #19a348;
+}
+
+/* Track list styling */
+.track-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.track-item {
+    display: grid;
+    grid-template-columns: 40px 40px 60px 1fr 80px 100px;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    transition: background-color 0.2s ease;
+    border-radius: 4px;
+}
+
+.track-item:hover {
+    background-color: var(--lspoty-hover-bg);
+}
+
+.track-number {
+    color: var(--lspoty-text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.track-play .play-track-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 1px solid var(--lspoty-text-secondary);
+    color: var(--lspoty-text);
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.track-play .play-track-btn:hover {
+    background-color: var(--lspoty-primary);
+    border-color: var(--lspoty-primary);
+    color: #000;
+    opacity: 1;
+}
+
+.track-image img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.track-info {
+    padding-left: 10px;
+    overflow: hidden;
+}
+
+.track-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--lspoty-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-album {
+    font-size: 0.8rem;
+    color: var(--lspoty-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-duration {
+    color: var(--lspoty-text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.track-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.track-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    color: var(--lspoty-text-secondary);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.track-action-btn:hover {
+    color: var(--lspoty-primary);
+    opacity: 1;
+}
+
+/* Similar artists section */
+.similar-artists .card-img-top {
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .artist-image {
+        width: 180px;
+        height: 180px;
+    }
+
+    .artist-stats {
+        gap: 1.5rem;
+    }
+
+    .track-item {
+        grid-template-columns: 30px 40px 50px 1fr 70px 60px;
+        padding: 0.5rem;
+    }
+
+    .track-image img {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 576px) {
+    .artist-header {
+        text-align: center;
+    }
+
+    .artist-stats {
+        justify-content: center;
+    }
+
+    .actions-container {
+        justify-content: center;
+    }
+
+    .track-item {
+        grid-template-columns: 30px 1fr 60px;
+    }
+
+    .track-number, .track-play, .track-image {
+        display: none;
+    }
+
+    .track-duration {
+        text-align: right;
+    }
+
+    .track-actions {
+        display: none;
+    }
+}
+
