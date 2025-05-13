@@ -1,0 +1,307 @@
+/* Album Detail Page Specific Styles */
+
+/* Album header styling */
+.album-header {
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.album-cover {
+    width: 280px;
+    height: 280px;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    object-fit: cover;
+}
+
+.album-details {
+    padding-left: 20px;
+}
+
+/* Track list styling */
+.track-list {
+    background-color: var(--lspoty-card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.track-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.track-item:hover {
+    background-color: var(--lspoty-hover-bg);
+}
+
+.track-item:last-child {
+    border-bottom: none;
+}
+
+.track-number {
+    width: 30px;
+    text-align: center;
+    color: var(--lspoty-text-secondary);
+    font-size: 0.9rem;
+}
+
+.track-play-btn {
+    color: var(--lspoty-text);
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    width: 30px;
+    text-align: center;
+    padding: 0;
+    display: none;
+}
+
+.track-item:hover .track-number {
+    display: none;
+}
+
+.track-item:hover .track-play-btn {
+    opacity: 1;
+    display: block;
+}
+
+.track-title {
+    flex-grow: 1;
+    padding: 0 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--lspoty-text);
+}
+
+.track-title a {
+    color: var(--lspoty-text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.track-title a:hover {
+    color: var(--lspoty-primary);
+}
+
+.track-duration {
+    color: var(--lspoty-text-secondary);
+    font-size: 0.85rem;
+    width: 50px;
+    text-align: right;
+}
+
+.track-actions {
+    width: 40px;
+    text-align: center;
+}
+
+.track-actions .dropdown-toggle {
+    background: none;
+    border: none;
+    color: var(--lspoty-text-secondary);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.track-item:hover .track-actions .dropdown-toggle {
+    opacity: 1;
+}
+
+/* Album stats styling */
+.album-stats {
+    color: var(--lspoty-text-secondary);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.album-stats i {
+    margin-right: 5px;
+}
+
+/* Album actions styling */
+.album-actions {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+/* Action button styling (reused from track-detail.css) */
+.action-btn {
+    background-color: transparent;
+    color: var(--lspoty-text);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 5px 15px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.action-btn:hover {
+    background-color: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+}
+
+.action-btn.primary {
+    background-color: var(--lspoty-primary);
+    color: #000;
+    border: none;
+}
+
+.action-btn.primary:hover {
+    background-color: #19a349;
+}
+
+/* Artist section styling */
+.artist-thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.hover-text-success:hover {
+    color: var(--lspoty-primary) !important;
+    text-decoration: none;
+}
+
+/* Album grid styling */
+.album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+}
+
+.album-grid-item {
+    transition: transform 0.2s ease;
+}
+
+.album-grid-item:hover {
+    transform: translateY(-5px);
+}
+
+.album-grid-cover {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Back button styling (reused from track-detail.css) */
+.back-button {
+    background-color: transparent;
+    border: none;
+    color: var(--lspoty-text);
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    font-weight: 600;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.back-button:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.back-button i {
+    margin-right: 5px;
+}
+
+/* Dropdown menu styling (reused from track-detail.css) */
+.dropdown-menu {
+    background-color: var(--lspoty-card-bg);
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.dropdown-item {
+    color: var(--lspoty-text);
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--lspoty-hover-bg);
+    color: var(--lspoty-primary);
+}
+
+.dropdown-divider {
+    border-color: rgba(255,255,255,0.1);
+}
+
+/* Active states for buttons */
+.action-btn.active,
+.control-btn.active {
+    color: var(--lspoty-primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .album-cover {
+        width: 220px;
+        height: 220px;
+    }
+
+    .album-details {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .album-actions {
+        justify-content: center;
+    }
+
+    .album-stats {
+        justify-content: center;
+    }
+
+    .track-title {
+        max-width: 160px;
+        padding: 0 8px;
+    }
+}
+
+@media (max-width: 576px) {
+    .album-cover {
+        width: 180px;
+        height: 180px;
+    }
+
+    .track-duration {
+        width: 40px;
+        font-size: 0.8rem;
+    }
+
+    .track-actions {
+        width: 30px;
+    }
+
+    .track-number {
+        width: 25px;
+        font-size: 0.8rem;
+    }
+
+    .album-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

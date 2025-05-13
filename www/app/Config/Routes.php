@@ -21,7 +21,16 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
 
     $routes->get('sign-out', 'SignOut::signOut');
 
-    $routes->get('home', 'Home::index', ['filter' => 'notlogged']);
+
+    $routes->get('tracks', 'Track::index');
+    $routes->get('artists', 'Artist::index');
+    $routes->get('albums', 'Album::index');
+    $routes->get('playlists', 'Playlist::index');
+    
+    $routes->group('home', ['filter' => 'notlogged'], function($routes) {
+        $routes->get('', 'Home::index');
+        $routes->get('(:segment)/(:segment)', 'Home::search/$1/$2');
+    });
 
     $routes->group('profile', ['filter' => 'notlogged'], function ($routes) {
         $routes->get('', 'Profile::index');
