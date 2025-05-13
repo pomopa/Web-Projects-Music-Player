@@ -27,7 +27,7 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('albums', 'Album::index');
     $routes->get('playlists', 'Playlist::index');
     
-    $routes->group('home', ['filter' => 'notlogged'], function($routes) {
+    $routes->group('home', ['namespace' => 'App\Controllers'], function($routes) {
         $routes->get('', 'Home::index');
         $routes->get('(:segment)/(:segment)', 'Home::search/$1/$2');
     });

@@ -67,6 +67,7 @@
                     </div>
                 </div>
             </div>
+        </div>
 
         <!-- Search Results Section (hidden by default) -->
         <div id="searchResults" class="mb-4 d-none">
@@ -76,6 +77,7 @@
                     <!-- Search results will be populated here -->
                 </div>
             </div>
+        </div>
 
         <!-- Main Home Content -->
         <div id="homeContent">
