@@ -22,18 +22,33 @@ class Profile extends BaseController
         $data = [
             'user' => $user
         ];
+        session()->setFlashdata('notProfilePage');
 
         return view('profile', $data);
     }
 
     private function delete(): string
     {
+        $session = session();
+        $userID = $session->get('user');
 
+        $user = (object) $this->userModel->find($userID['id']);
+        $this->userModel->delete($userID['id']);
+        if (!empty($user->profile_pic)) {
+            $oldPath = self::UPLOADS_DIR . '/' . $user->profile_pic;
+            if (file_exists($oldPath)) {
+                unlink($oldPath);
+            }
+        }
+        $session->destroy();
+
+        //redirect()->to('/');
+        session()->setFlashdata('success', 'The user data was removed successfully.');
+        return view('landing');
     }
 
     private function modify(): string
     {
-        session()->remove('success');
         helper(['form']);
 
         $rules = [

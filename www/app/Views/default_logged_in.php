@@ -24,9 +24,11 @@
                 <a href="/my-playlists" title="my-playlists-page" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
                     <i class="fa fa-music"></i>
                 </a>
-                <a href="/profile" title="profile-page" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
-                    <i class="fa fa-user-circle"></i>
-                </a>
+                <?php if(session()->getFlashdata('notProfilePage')): ?>
+                    <a href="/profile" title="profile-page" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
+                        <i class="fa fa-user-circle"></i>
+                    </a>
+                <?php endif; ?>
                 <form action="/sign-out" method="GET" class="d-inline" style="margin: 0 !important;">
                     <button type="submit" title="sign-out" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white" style="margin: 0 !important;">
                         <i class="fa fa-sign-out-alt"></i>

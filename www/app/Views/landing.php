@@ -18,6 +18,11 @@ Landing Page
         or <a href="/sign-up" class="text-decoration-none text-primary fw-semibold">registering</a>
         to access LSpoty and enjoy #TODO posar les features.
     </p>
+    <?php if(session()->getFlashdata('success')): ?>
+        <div class="alert alert-success">
+            <?= session()->getFlashdata('success') ?>
+        </div>
+    <?php endif; ?>
 </div>
 
 <div class="d-flex justify-content-center gap-4 mt-4">

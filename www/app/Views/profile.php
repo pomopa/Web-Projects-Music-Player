@@ -125,4 +125,5 @@
 
 <?= $this->section('javascript') ?>
     <script src="<?= site_url('/assets/js/profile.js') ?>"></script>
+    <script src="<?= site_url('/assets/js/commons.js') ?>"></script>
 <?= $this->endSection() ?>
