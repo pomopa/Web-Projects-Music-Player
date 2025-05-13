@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,11 +21,40 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
 </head>
+
 <body class="bg-dark">
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-black position-sticky top-0" style="z-index: 1000;">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black position-sticky top-0" style="z-index: 1000;">
+        <div class="container">
+            <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="/home">LSpoty</a>
+
+            <div class="d-flex align-items-center ms-auto gap-2">
+                <a href="/my-playlists" title="my-playlists-page" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
+                    <i class="fa fa-music"></i>
+                </a>
+                <a href="/profile" title="profile-page" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
+                    <i class="fa fa-user-circle"></i>
+                </a>
+                <form action="/sign-out" method="GET" class="d-inline" style="margin: 0 !important;">
+                    <button type="submit" title="sign-out" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white" style="margin: 0 !important;">
+                        <i class="fa fa-sign-out-alt"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
     <div class="container">
-        <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="/home">LSpoty</a>
+        <!-- Search Bar -->
+        <div class="row justify-content-center mt-4 mb-3">
+            <div class="col-lg-8">
+                <form id="searchForm" class="input-group bg-gray-800 rounded-pill">
+                    <input type="text" id="searchInput" name="query" placeholder="Search for tracks, albums, artists or playlists..." class="form-control border-0 bg-transparent text-white">
+                    <button type="submit" class="btn btn-link text-secondary" style="margin: 0 !important;">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
 
         <div class="d-flex align-items-center ms-auto gap-2">
             <a href="/my-playlists" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
@@ -65,7 +95,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- Search Results Section (hidden by default) -->
     <div id="searchResults" class="mb-4 d-none">
@@ -75,7 +104,6 @@
                 <!-- Search results will be populated here -->
             </div>
         </div>
-    </div>
 
     <!-- Main Home Content -->
     <div id="homeContent">
@@ -315,12 +343,15 @@
             </div>
         </div>
     </div>
-</div>
+</body>
 
 <!-- Footer -->
 <footer class="bg-black text-center text-light py-3 mt-auto">
-    <div class="container">
-        <p class="mb-0">© 2025 LSpoty - All rights reserved</p>
+    <div class="copyright text-center text-sm text-white">
+        © <script>
+            document.write(new Date().getFullYear())
+        </script>
+        Made by Joan Enric, Pol and Roger with <i class="fa fa-heart" aria-hidden="true"></i>
     </div>
 </footer>
 

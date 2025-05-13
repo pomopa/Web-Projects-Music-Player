@@ -210,3 +210,4 @@ $RECYCLE.BIN/
 # propis:
 
 www/app/Config/App.php
+writable/uploads/

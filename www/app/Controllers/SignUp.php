@@ -6,16 +6,16 @@ use App\Models\UserModel;
 
 class SignUp extends BaseController
 {
+    private const UPLOADS_DIR = WRITEPATH . 'uploads';
+
     public function showForm()
     {
-
         helper(['form']);
         return view('signup_form');
     }
 
     public function simpleSubmit()
     {
-
         helper(['form']);
         $rules = [
             'email'        => 'required|valid_email|is_from_domain|max_length[40]|is_email_unique',
@@ -45,8 +45,6 @@ class SignUp extends BaseController
             'username' => [
                 'max_length' => 'The username must be less than 20 characters long.'
             ]
-            // TODO fer la validacio de la imatge
-
         ];
 
         if ($this->validate($rules, $errors)) {
@@ -57,16 +55,24 @@ class SignUp extends BaseController
                 $username = explode("@", $this->request->getPost('email'))[0];
             }
 
+            $file = $this->request->getFile('profilePicture');
+            $newName = $file->getRandomName();
+            if (!$file->move(self::UPLOADS_DIR, $newName)) {
+                session()->setFlashdata('errorImage', 'There was an error uploading your file.');
+                return redirect()->back();
+            }
+
+
             $data = [
                 'email'    => $this->request->getPost('email'),
                 'username' => $username,
+                'profile_pic' => $newName,
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             ];
 
             if ($userModel->insert($data)) {
                 return redirect()->to('/sign-up/success');
             } else {
-                die("puto");
                 return redirect()->back()->withInput()->with('errors', $userModel->errors());
             }
         } else {
