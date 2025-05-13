@@ -41,17 +41,17 @@
         <?= $this->renderSection('content') ?>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-black text-center text-light py-3 mt-auto">
-        <div class="copyright text-center text-sm text-white">
-            © <script>
-                document.write(new Date().getFullYear())
-            </script>
-            Made by Joan Enric, Pol and Roger with <i class="fa fa-heart" aria-hidden="true"></i>
-        </div>
-    </footer>
-
 </body>
+
+<!-- Footer -->
+<footer class="bg-black text-center text-light py-3 mt-auto">
+    <div class="copyright text-center text-sm text-white">
+        © <script>
+            document.write(new Date().getFullYear())
+        </script>
+        Made by Joan Enric, Pol and Roger with <i class="fa fa-heart" aria-hidden="true"></i>
+    </div>
+</footer>
 
 <!-- Core JS Files -->
 <script src="<?= site_url('/assets/js/core/popper.min.js') ?>"></script>

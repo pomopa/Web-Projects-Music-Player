@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use CodeIgniter\HTTP\Files\UploadedFile;
 
 class Profile extends BaseController
 {
@@ -66,8 +67,8 @@ class Profile extends BaseController
             $userID = $session->get('user');
             $user = (object) $this->userModel->find($userID['id']);
 
-            $file = $this->request->getFile('profile_picture');
-            if (!empty($file)) {
+            $file = $this->request->getFile('profilePicture');
+            if (!empty($file) && !$file instanceof UploadedFile) {
                 $newName = $file->getRandomName();
 
                 if (!empty($user->profile_pic)) {

@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
@@ -25,6 +26,11 @@ class ImageFilter implements FilterInterface
         }
 
         $file = $request->getFile('profilePicture');
+
+        if ($file instanceof UploadedFile) {
+            return null;
+        }
+
         // Aquesta comprovació no acostuma a saltar però comprova que el fitxer s'hagi penjat correctament. No treure.
         if (!$file->isValid()) {
             return redirect()->back()
