@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?= $this->renderSection('title') ?>
-    <link rel="icon" type="image/png" href="<?= base_url('/assets/logo.png') ?>">
+    <link rel="icon" type="image/png" href="<?= base_url('assets/img/logo.png') ?>">
 
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
     <link href="<?= site_url('/assets/css/nucleo-icons.css') ?>" rel="stylesheet" />
