@@ -26,10 +26,8 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('albums', 'Album::index', ['as' => 'albums_view']);
     
     $routes->group('playlist', ['filter' => 'notlogged'], function($routes) {
-        $routes->get('(:num)', 'Playlist::view/$1', ['as' => 'playlist_view']);
+        $routes->get('(:id)', 'Playlist::view/$1', ['as' => 'playlist_view']);
     });
-
-    $routes->get('my-playlists', 'MyPlaylist::index', ['as' => 'my-playlist_view']);
     
     $routes->group('home', ['filter' => 'notlogged'], function($routes) {
         $routes->get('', 'Home::index', ['as' => 'home_view']);
@@ -43,6 +41,11 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     });
 
     $routes->group('my-playlists', ['filter' => 'notlogged'], function ($routes) {
+        $routes->get('', 'MyPlaylist::generalView', ['as' => 'my-playlist_general_view']);
+        $routes->get('(:id)', 'MyPlaylist::specificView/$1', ['as' => 'my-playlist_specific_view']);
+        $routes->post('(:id)', 'MyPlaylist::specificPost/$1', ['as' => 'my-playlist_specific_post']);
+
+
         $routes->put('(:id)', 'MyPlaylist::putPlaylist/$1', ['as' => 'my-playlist_put']);
         $routes->put('(:id)/track/(:id)', 'MyPlaylist::putTrack/$1/$2', ['as' => 'my-playlist_put_song']);
         $routes->delete('(:id)', 'MyPlaylist::deletePlaylist/$1', ['as' => 'my-playlist_delete']);
