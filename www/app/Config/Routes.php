@@ -39,4 +39,11 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
         $routes->get('picture', 'ProfilePicture::profileImage', ['as' => 'profile_picture']);
     });
 
+    $routes->group('my-playlists', ['filter' => 'notlogged'], function ($routes) {
+        $routes->put('(:id)', 'MyPlaylist::putPlaylist/$1', ['as' => 'my-playlist_put']);
+        $routes->put('(:id)/track/(:id)', 'MyPlaylist::putTrack/$1/$2', ['as' => 'my-playlist_put_song']);
+        $routes->delete('(:id)', 'MyPlaylist::deletePlaylist/$1', ['as' => 'my-playlist_delete']);
+        $routes->delete('(:id)/track/(:id)', 'MyPlaylist::deleteTrack/$1/$2', ['as' => 'my-playlist_delete_song']);
+    });
+
 });
