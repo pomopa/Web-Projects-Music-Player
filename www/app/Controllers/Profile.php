@@ -44,7 +44,7 @@ class Profile extends BaseController
         $session->destroy();
 
         session()->setFlashdata('success', 'The user data was removed successfully.');
-        return redirect()->to('/');
+        return redirect()->to(base_url(route_to('landing_view')));
     }
 
     private function modify(): string

@@ -15,11 +15,11 @@ class NotLoggedFilter implements FilterInterface
             $state = $session->get('state');
             if($state != 'LOGGED IN'){
                 $session->setFlashdata('error_message', 'You must be logged in to access the previous page.');
-                return redirect()->to('/');
+                return redirect()->to(base_url(route_to('landing_view')));
             }
         } else {
             $session->setFlashdata('error_message', 'You must be logged in to access the previous page.');
-            return redirect()->to('/');
+            return redirect()->to(base_url(route_to('landing_view')));
         }
         return null;
     }
