@@ -153,7 +153,11 @@ if (empty($track->artist_image)){
                         <h4 class="text-white mb-0 fs-5"><?= esc($track->artist_name) ?></h4>
                     </div>
                 </div>
-                <button class="btn btn-outline-success rounded-pill w-100">Visit Artist</button>
+                <?php $artistUrl = site_url('/artist/' . $track->artist_id); ?>
+                <button class="btn btn-outline-success rounded-pill w-100"
+                        onclick="window.location.href='<?= $artistUrl ?>'">
+                    Visit Artist
+                </button>
             </div>
         </div>
     </div>

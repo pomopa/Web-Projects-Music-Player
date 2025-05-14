@@ -163,14 +163,4 @@ document.addEventListener('DOMContentLoaded', function() {
             audioPlayer.currentTime = audioPlayer.duration;
         });
     }
-
-
-
-    // Follow artist button functionality
-    const visitArtistBtn = document.querySelector('.btn-outline-success');
-    if (visitArtistBtn) {
-        visitArtistBtn.addEventListener('click', function() {
-            window.location.href""
-        });
-    }
 });

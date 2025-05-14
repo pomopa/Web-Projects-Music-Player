@@ -95,21 +95,6 @@ $tracksCount = count($tracks);
                 <button class="action-btn primary" id="playAlbumButton">
                     <i class="fa fa-play me-1"></i> Play Album
                 </button>
-                <button class="action-btn" id="addToQueueButton">
-                    <i class="fa fa-list me-1"></i> Add to Queue
-                </button>
-                <div class="dropdown">
-                    <button class="action-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-plus me-1"></i> Add to playlist
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="1">My Favorites</a></li>
-                        <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="2">Workout Mix</a></li>
-                        <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="3">Chill Vibes</a></li>
-                        <li><div class="dropdown-divider"></div></li>
-                        <li><a class="dropdown-item" href="/create-playlist"><i class="fa fa-plus-circle me-2"></i>Create new playlist</a></li>
-                    </ul>
-                </div>
                 <button class="action-btn" id="shareButton">
                     <i class="fa fa-share-alt me-1"></i> Share
                 </button>
@@ -137,10 +122,11 @@ $tracksCount = count($tracks);
                                 <a href="/track/<?= $trackId ?>" class="text-decoration-none text-white">
                                     <?= esc($track->name) ?>
                                 </a>
+                                <!-- Progress will be added here dynamically -->
                             </div>
                             <div class="track-duration"><?= $trackDuration ?></div>
                             <div class="track-actions">
-                                <div class="dropdown">
+                                <div class="dropdown position-relative">
                                     <button class="dropdown-toggle" type="button" id="trackDropdown<?= $trackId ?>" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
@@ -186,8 +172,8 @@ $tracksCount = count($tracks);
                     <?php if(!empty($album->similarAlbums)): ?>
                         <?php foreach($album->similarAlbums as $alb): ?>
                             <div class="col-lg-3 col-md-4 col-6">
-                                <div class="card card-plain transition-transform hover-elevation">
-                                    <img src="<?= !empty($alb->image) ? esc($alb->image) : '/api/placeholder/150/150' ?>"
+                                <div class="card card-plain transition-transform hover-elevation" data-album-id="<?= $alb->id ?>">
+                                    <img src="<?= esc($alb->image)?>"
                                          class="card-img-top rounded" alt="<?= esc($alb->name) ?> cover">
                                     <div class="card-body p-2">
                                         <h5 class="card-title fs-6 mb-0"><?= esc($alb->name) ?></h5>
@@ -218,83 +204,6 @@ $tracksCount = count($tracks);
 <script src="<?= site_url('/assets/js/core/popper.min.js') ?>"></script>
 <script src="<?= site_url('/assets/js/core/bootstrap.min.js') ?>"></script>
 <script src="<?= site_url('/assets/js/plugins/perfect-scrollbar.min.js') ?>"></script>
-
-<!-- Album Player JS -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Handle play album button
-        const playAlbumButton = document.getElementById('playAlbumButton');
-        if (playAlbumButton) {
-            playAlbumButton.addEventListener('click', function() {
-                // Get first track play button and trigger click
-                const firstTrackPlayBtn = document.querySelector('.track-play-btn');
-                if (firstTrackPlayBtn) {
-                    firstTrackPlayBtn.click();
-                }
-            });
-        }
-
-        // Handle individual track play buttons
-        const trackPlayButtons = document.querySelectorAll('.track-play-btn');
-        trackPlayButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const trackId = this.getAttribute('data-track-id');
-                const trackUrl = this.getAttribute('data-track-url');
-
-                // Navigate to track page or play audio
-                if (trackUrl) {
-                    // You could implement audio player functionality here
-                    console.log(`Playing track ID: ${trackId}, URL: ${trackUrl}`);
-                    // For now, let's navigate to the track page
-                    window.location.href = `/track/${trackId}`;
-                }
-            });
-        });
-
-        // Implement hover effect to show play button and hide number
-        const trackItems = document.querySelectorAll('.track-item');
-        trackItems.forEach(item => {
-            const number = item.querySelector('.track-number');
-            const playBtn = item.querySelector('.track-play-btn');
-
-            item.addEventListener('mouseenter', function() {
-                if (number) number.style.display = 'none';
-                if (playBtn) playBtn.style.display = 'block';
-            });
-
-            item.addEventListener('mouseleave', function() {
-                if (number) number.style.display = 'block';
-                if (playBtn) playBtn.style.display = 'none';
-            });
-        });
-
-        // Handle add to playlist functionality
-        const playlistItems = document.querySelectorAll('.playlist-add');
-        playlistItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const playlistId = this.getAttribute('data-playlist-id');
-                // Implementation would depend on your backend API
-                console.log(`Adding album to playlist ID: ${playlistId}`);
-
-                // Show confirmation
-                alert(`Album added to playlist: ${this.textContent}`);
-            });
-        });
-
-        // Share button functionality
-        const shareButton = document.getElementById('shareButton');
-        if (shareButton) {
-            shareButton.addEventListener('click', function() {
-                // Implementation would depend on your sharing options
-                // For now, let's just simulate copying a link
-                const currentUrl = window.location.href;
-                navigator.clipboard.writeText(currentUrl).then(() => {
-                    alert('Album link copied to clipboard!');
-                });
-            });
-        }
-    });
-</script>
+<script src="<?= site_url('/assets/js/album-player.js') ?>"></script>
 </body>
 </html>
