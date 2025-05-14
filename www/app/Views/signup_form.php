@@ -26,10 +26,10 @@ Sign up
     <?php endif; ?>
 
     <div class="input-group input-group-outline my-3" id="fileInputGroup">
-        <label id="fileNameLabel" class="form-label no-shadow-label" style="color: #737373;">Profile Picture</label>
+        <label id="fileNameLabel" class="form-label no-shadow-label" style="color: #737373;">Profile Picture (must be jpeg, jpg, png or gif)</label>
 
         <!-- input ocult -->
-        <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept="image/*" onchange="handleImagePreview(this)">
+        <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept=".jpeg,.jpg,.png,.gif,image/jpeg,image/png,image/gif" onchange="handleImagePreview(this)">
 
         <!-- label clicable -->
         <label for="profilePicture" class="form-control " style="cursor: pointer;">

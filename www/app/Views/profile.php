@@ -47,9 +47,10 @@
                                     <label for="profilePicture" class="position-absolute bottom-0 end-0 btn btn-sm btn-success rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; padding: 0;">
                                         <i class="fa fa-camera"></i>
                                     </label>
-                                    <input type="file" id="profilePicture" name="profilePicture" class="d-none" accept="image/*">
+                                    <input type="file" id="profilePicture" name="profilePicture" class="d-none" accept=".jpeg,.jpg,.png,.gif,image/jpeg,image/png,image/gif">
                                 </div>
                                 <small class="text-light mt-2 d-block">Click the camera icon to change your profile picture</small>
+                                <small class="text-light mt-2 d-block">The allowed image types are jpg, jpeg, png or gif</small>
                             </div>
 
                             <!-- Username -->
