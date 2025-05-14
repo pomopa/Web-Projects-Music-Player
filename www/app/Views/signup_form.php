@@ -9,7 +9,7 @@ Sign up
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<form action="<?= base_url('sign-up') ?>" method="post" accept-charset="utf-8" role="form" class="text-start" enctype="multipart/form-data">
+<form action="<?= base_url(route_to('sign-up_submit')) ?>" method="post" accept-charset="utf-8" role="form" class="text-start" enctype="multipart/form-data">
     <!-- CSRF protection -->
     <?= csrf_field() ?>
 
@@ -85,7 +85,7 @@ Sign up
     </div>
     <p class="mt-4 text-sm text-center">
         Already have an account?
-        <a href="<?= base_url('sign-in') ?>" class="text-primary text-gradient font-weight-bold">Sign in</a>
+        <a href="<?= base_url(route_to('sign-in_view')) ?>" class="text-primary text-gradient font-weight-bold">Sign in</a>
     </p>
 </form>
 

@@ -12,10 +12,10 @@ class SignOut extends BaseController
             $state = $session->get('state');
             if($state == 'LOGGED IN'){
                 $session->destroy();
-                return redirect()->to('/');
+                return redirect()->to(base_url(route_to('landing_view')));
             }
         }
-        return redirect()->to('/');
+        return redirect()->to(base_url(route_to('landing_view')));
     }
 
 

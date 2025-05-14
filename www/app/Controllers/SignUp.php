@@ -75,7 +75,7 @@ class SignUp extends BaseController
             ];
 
             if ($userModel->insert($data)) {
-                return redirect()->to('/sign-up/success');
+                return redirect()->to(base_url(route_to('sign-up_success')));
             } else {
                 return redirect()->back()->withInput()->with('errors', $userModel->errors());
             }

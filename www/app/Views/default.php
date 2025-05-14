@@ -54,7 +54,7 @@
 <header>
     <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
         <div class="containerCentrat">
-            <a href="/" title="Go to Home Page" class="navbar-brand text-center text-white text-decoration-none logo-big">
+            <a href="<?= base_url(route_to('landing_view')) ?>" title="Go to Home Page" class="navbar-brand text-center text-white text-decoration-none logo-big">
                 LSpoty
             </a>
         </div>
