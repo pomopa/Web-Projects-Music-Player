@@ -21,11 +21,14 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
 
     $routes->get('sign-out', 'SignOut::signOut', ['filter' => 'notlogged', 'as' => 'sign-out_logic']);
 
-
     $routes->get('tracks', 'Track::index', ['as' => 'tracks_view']);
     $routes->get('artists', 'Artist::index', ['as' => 'artists_view']);
     $routes->get('albums', 'Album::index', ['as' => 'albums_view']);
-    $routes->get('playlists', 'Playlist::index', ['as' => 'playlist_view']);
+    
+    $routes->group('playlist', ['filter' => 'notlogged'], function($routes) {
+        $routes->get('(:num)', 'Playlist::view/$1', ['as' => 'playlist_view']);
+    });
+
     $routes->get('my-playlists', 'MyPlaylist::index', ['as' => 'my-playlist_view']);
     
     $routes->group('home', ['filter' => 'notlogged'], function($routes) {
