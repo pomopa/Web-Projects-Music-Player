@@ -29,6 +29,10 @@
     margin-right: 8px;
     margin-bottom: 8px;
 }
+a:hover {
+    color: #1db954 !important; /* Verde tipo Spotify */
+    transition: color 0.2s ease-in-out;
+}
 
 /* Player container styling */
 .player-container {

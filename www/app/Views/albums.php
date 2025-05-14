@@ -3,12 +3,13 @@
 $artistId = $album ? $album->artist_id : 0;
 $albumName = $album ? $album->name : 'Album Not Found';
 $artistName = $album ? $album->artist_name : 'Unknown Artist';
-$albumImage = $album ? $album->image : '/api/placeholder/400/400';
-$artistImage = $album ? ($album->artist_image ?? '/api/placeholder/80/80') : '/api/placeholder/80/80';
+$albumImage = $album ? $album->image : '';
+if (empty($album->artist_image)) {
+    $album->artist_image = 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg';
+}
+$artistImage = $album->artist_image;
 $releaseDate = $album ? date('Y-m-d', strtotime($album->releasedate)) : 'Unknown';
 $tracks = $album ? $album->tracks : [];
-
-// Calculate total duration
 $totalDuration = 0;
 if ($album && !empty($tracks)) {
     foreach ($tracks as $track) {

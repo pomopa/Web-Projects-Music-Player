@@ -81,7 +81,7 @@ class Album extends BaseController
                 $albums = array_filter($data->results, function($album) use ($excludeAlbumId) {
                     return $album->id != $excludeAlbumId;
                 });
-                return array_slice($albums, 0, 3);
+                return array_slice($albums, 0, 4);
             }
 
             return [];

@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             speed: 600,
             watchSlidesProgress: true,
             preventClicksPropagation: false,
-            preventClicks: false,
+            preventClicks: true,
             slideToClickedSlide: true,
             navigation: {
                 nextEl: navigationSelectors.nextEl,
