@@ -54,23 +54,14 @@ class ImageFilter implements FilterInterface
         $detectedMimeType = $file->getMimeType();
 
         $validMimeTypes = [
-            // Imatges
             'jpg' => ['image/jpeg'],
             'jpeg' => ['image/jpeg'],
             'png' => ['image/png'],
             'gif' => ['image/gif'],
-            'webp' => ['image/webp'],
-            'svg' => ['image/svg+xml'],
-            'bmp' => ['image/bmp'],
-            'ico' => ['image/x-icon', 'image/vnd.microsoft.icon'],
-            'tiff' => ['image/tiff'],
-            'tif' => ['image/tiff'],
             ];
         $equivalentExtensions = [
             'jpg' => ['jpeg'],
             'jpeg' => ['jpg'],
-            'tif' => ['tiff'],
-            'tiff' => ['tif']
         ];
 
         $correctExtension = null;
@@ -83,7 +74,7 @@ class ImageFilter implements FilterInterface
 
         if ($correctExtension === null) {
             return redirect()->back()
-                ->with('errorImage', 'The uploaded file extension is invalid.')
+                ->with('errorImage', 'The uploaded file extension must either be png, jpg, jpeg or gif.')
                 ->withInput();
         }
 
