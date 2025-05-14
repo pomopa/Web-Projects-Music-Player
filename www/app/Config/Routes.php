@@ -25,8 +25,14 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('tracks', 'Track::index');
     $routes->get('artists', 'Artist::index');
     $routes->get('albums', 'Album::index');
-    $routes->get('playlists', 'Playlist::index');
-    
+
+    $routes->get('playlist', 'Playlist::index');
+
+    $routes->group('playlist', ['filter' => 'notlogged'], function($routes) {
+        //$routes->get('', 'Playlist::index');
+        $routes->get('(:num)', 'Playlist::view/$1');
+    });
+
     $routes->group('home', ['filter' => 'notlogged'], function($routes) {
         $routes->get('', 'Home::index');
         $routes->get('(:segment)/(:segment)', 'Home::search/$1/$2');
