@@ -26,8 +26,6 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('artists', 'Artist::index');
     $routes->get('albums', 'Album::index');
 
-    $routes->get('playlist', 'Playlist::index');
-
     $routes->group('playlist', ['filter' => 'notlogged'], function($routes) {
         //$routes->get('', 'Playlist::index');
         $routes->get('(:num)', 'Playlist::view/$1');
