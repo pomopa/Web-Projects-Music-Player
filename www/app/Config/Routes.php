@@ -29,7 +29,16 @@ $routes->group('home', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('(:segment)/(:segment)', 'Home::search/$1/$2');
 });
 
-$routes->get('tracks', 'Track::index');
-$routes->get('artists', 'Artist::index');
-$routes->get('albums', 'Album::index');
-$routes->get('playlists', 'Playlist::index');
+$routes->group('track', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->get('(:segment)', 'Track::index/$1');
+});
+$routes->group('artist', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->get('(:segment)', 'Artist::index/$1');
+});
+$routes->group('album', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->get('(:segment)', 'Album::index/$1');
+});
+$routes->group('playlist', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->get('(:segment)', 'Playlist::index/$1');
+});
+

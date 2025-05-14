@@ -14,11 +14,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <!-- Material Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+
     <!-- CSS Files -->
     <link id="pagestyle" href="<?= site_url('/assets/css/material-dashboard.css?v=3.1.0') ?>" rel="stylesheet" />
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 </head>
 <body class="bg-dark">
 <!-- Navigation -->
@@ -79,8 +81,6 @@
 
     <!-- Main Home Content -->
     <div id="homeContent">
-        <!-- Category-specific content sections -->
-
         <!-- Tracks Section -->
         <div id="tracksSection" class="category-section">
             <!-- Recently Uploaded Tracks -->
@@ -90,7 +90,7 @@
                     <?php if (!empty($recentTracks)): ?>
                         <?php foreach ($recentTracks as $track): ?>
                             <div class="swiper-slide">
-                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100">
+                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100" data-url="/track/<?= esc($track['id']) ?>">
                                     <div class="card-body p-3">
                                         <img src="<?= esc($track['album_image']) ?>" alt="Album cover" class="img-fluid rounded mb-2 w-100">
                                         <h6 class="card-title mb-1 text-truncate text-white"><?= esc($track['name']) ?></h6>
@@ -118,7 +118,7 @@
                     <?php if (!empty($topTracks)): ?>
                         <?php foreach ($topTracks as $track): ?>
                             <div class="swiper-slide">
-                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100">
+                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100" data-url="/track/<?= esc($track['id']) ?>">
                                     <div class="card-body p-3">
                                         <img src="<?= esc($track['album_image']) ?>" alt="Track cover" class="img-fluid rounded mb-2 w-100">
                                         <h6 class="card-title mb-1 text-truncate text-white"><?= esc($track['name']) ?></h6>
@@ -148,7 +148,7 @@
                     <?php if (!empty($topAlbums)): ?>
                         <?php foreach ($topAlbums as $album): ?>
                             <div class="swiper-slide">
-                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100">
+                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100" data-url="/album/<?= esc($album['id']) ?>">
                                     <div class="card-body p-3">
                                         <img src="<?= esc($album['image']) ?>" alt="Album cover" class="img-fluid rounded mb-2 w-100">
                                         <h6 class="card-title mb-1 text-truncate text-white"><?= esc($album['name']) ?></h6>
@@ -175,7 +175,7 @@
                     <?php if (!empty($newAlbums)): ?>
                         <?php foreach ($newAlbums as $album): ?>
                             <div class="swiper-slide">
-                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100">
+                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100" data-url="/album/<?= esc($album['id']) ?>">
                                     <div class="card-body p-3">
                                         <img src="<?= esc($album['image']) ?>" alt="Album cover" class="img-fluid rounded mb-2 w-100">
                                         <h6 class="card-title mb-1 text-truncate text-white"><?= esc($album['name']) ?></h6>
@@ -205,7 +205,7 @@
                     <?php if (!empty($topArtists)): ?>
                         <?php foreach ($topArtists as $artist): ?>
                             <div class="swiper-slide">
-                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100">
+                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100" data-url="/artist/<?= esc($artist['id']) ?>">
                                     <div class="card-body p-3 text-center">
                                         <img src="<?= esc(!empty($artist['image']) ? $artist['image'] : 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg') ?>"
                                              alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
@@ -233,7 +233,7 @@
                     <?php if (!empty($newArtists)): ?>
                         <?php foreach ($newArtists as $artist_n): ?>
                             <div class="swiper-slide">
-                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100">
+                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100" data-url="/artist/<?= esc($artist_n['id']) ?>">
                                     <div class="card-body p-3 text-center">
                                         <img src="<?= esc(!empty($artist_n['image']) ? $artist_n['image'] : 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg') ?>"
                                              alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
@@ -264,7 +264,7 @@
                     <?php if (!empty($newPlaylists)): ?>
                         <?php foreach ($newPlaylists as $playlist): ?>
                             <div class="swiper-slide">
-                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100">
+                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100" data-url="/playlist/<?= esc($playlist['id']) ?>">
                                     <div class="card-body p-3 text-center">
                                         <img src="https://img.freepik.com/premium-psd/music-icon-user-interface-element-3d-render-illustration_516938-1693.jpg"
                                              alt="Playlist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
@@ -292,7 +292,7 @@
                     <?php if (!empty($oldPlaylists)): ?>
                         <?php foreach ($oldPlaylists as $playlist): ?>
                             <div class="swiper-slide">
-                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100">
+                                <div class="card card-plain bg-gray-800 transition-transform hover-elevation h-100" data-url="/playlist/<?= esc($playlist['id']) ?>">
                                     <div class="card-body p-3 text-center">
                                         <img src="https://img.freepik.com/premium-psd/music-icon-user-interface-element-3d-render-illustration_516938-1693.jpg"
                                              alt="Playlist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
@@ -328,11 +328,7 @@
 <script src="<?= site_url('/assets/js/core/popper.min.js') ?>"></script>
 <script src="<?= site_url('/assets/js/core/bootstrap.min.js') ?>"></script>
 <script src="<?= site_url('/assets/js/home.js') ?>"></script>
-<script src="<?= site_url('/assets/js/search.js') ?>"></script>
 <script src="<?= site_url('/assets/js/plugins/perfect-scrollbar.min.js') ?>"></script>
-<!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-<!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 </body>
 </html>

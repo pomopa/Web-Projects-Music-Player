@@ -41,8 +41,8 @@ class Playlist extends BaseController
         }
     }
 
-    public function index(){
-        $playlist = $this->getPlaylist(102);
+    public function index($id){
+        $playlist = $this->getPlaylist($id);
         $playlist->tracks = [];
         return view('playlist', ['playlist' => $playlist]);
     }

@@ -91,10 +91,22 @@ class Album extends BaseController
         }
     }
 
-    public function index(){
-        $album = $this->getAlbum(24);
-        $album->tracks = $this->getAlbumTracks(24);
+    private function getAlbumArtist($id){
+        $response = $this->client->request('GET', 'artists', [
+            'query' => [
+                'client_id' => $this->apiKey,
+                'format'    => 'json',
+                'id'        => $id,
+            ]
+        ]);
+        return json_decode($response->getBody(), false)->results[0]->image;
+    }
+
+    public function index($id){
+        $album = $this->getAlbum($id);
+        $album->tracks = $this->getAlbumTracks($id);
         $album->similarAlbums = $this->getArtistAlbums($album->artist_id, $album->id);
+        $album->artist_image = $this->getAlbumArtist($album->artist_id);
         return view('albums', ['album' => $album]);
     }
 }

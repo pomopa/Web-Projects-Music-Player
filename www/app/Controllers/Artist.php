@@ -93,12 +93,8 @@ class Artist extends BaseController
     }
 
 
-    public function index($id = null)
+    public function index($id)
     {
-        if (!$id) {
-            $id = 103;
-        }
-
         $artist = $this->getArtistInfo($id);
 
         if (!$artist) {

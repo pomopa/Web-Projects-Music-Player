@@ -6,7 +6,6 @@ $defaultImage = 'https://static.vecteezy.com/system/resources/thumbnails/004/511
 $artistImage = ($artist && !empty($artist->image)) ? $artist->image : $defaultImage;
 $joinDate = $artist ? date('F Y', strtotime($artist->joindate)) : 'Unknown';
 $website = $artist ? ($artist->website ?? '#') : '#';
-$followersCount = $artist ? ($artist->stats->followers_count ?? 0) : 0;
 $albumsCount = $artist ? (count($artist->albums) ?? 0) : 0;
 $tracksCount = $artist ? (count($artist->tracks) ?? 0) : 0;
 ?>
@@ -94,13 +93,6 @@ $tracksCount = $artist ? (count($artist->tracks) ?? 0) : 0;
             </div>
 
             <div class="actions-container mt-4">
-                <button class="action-btn primary <?= $isFollowing ? 'followed btn-success' : '' ?>" id="followButton" data-artist-id="<?= $artistId ?>">
-                    <?php if ($isFollowing): ?>
-                        <i class="fa fa-check me-1"></i> Following
-                    <?php else: ?>
-                        <i class="fa fa-user-plus me-1"></i> Follow
-                    <?php endif; ?>
-                </button>
                 <?php if ($website != '#'): ?>
                     <a href="<?= esc($website) ?>" target="_blank" class="action-btn">
                         <i class="fa fa-external-link-alt me-1"></i> Website

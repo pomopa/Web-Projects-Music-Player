@@ -2,15 +2,12 @@
 $trackName = $track ? $track->name : 'Track Not Found';
 $artistName = $track ? $track->artist_name : 'Unknown Artist';
 $albumName = $track ? $track->album_name : 'Unknown Album';
-$albumImage = $track ? $track->album_image : '/api/placeholder/400/400';
+$albumImage = $track->album_image;
 $artistImage = $track ? ($track->artist_image ?? 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg') : 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg';
 $releaseDate = $track ? date('Y-m-d', strtotime($track->releasedate)) : 'Unknown';
 $duration = $track ? gmdate("i:s", $track->duration) : '0:00';
 $audio = $track ? $track->audio : '';
-$genre = $track ? ($track->musicinfo->tags->genres[0] ?? 'Unknown') : 'Unknown';
 $license = $track ? $track->license_ccurl : 'Unknown';
-
-// ID para funcionalidad JavaScript
 $trackId = $track ? $track->id : 0;
 ?>
 
@@ -20,8 +17,6 @@ $trackId = $track ? $track->id : 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LSpoty - <?= esc($trackName) ?></title>
-
-    <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
     <!-- Nucleo Icons -->
     <link href="<?= site_url('/assets/css/nucleo-icons.css') ?>" rel="stylesheet" />

@@ -27,10 +27,21 @@ class Track extends BaseController
         return json_decode($response->getBody(), false);
     }
 
-    public function index(): string
-    {
-        $data = $this->getTrackInfo(169);
+    private function getTrackArtist($id){
+        $response = $this->client->request('GET', 'artists', [
+            'query' => [
+                'client_id' => $this->apiKey,
+                'format'    => 'json',
+                'id'        => $id,
+            ]
+        ]);
+        return json_decode($response->getBody(), false);
+    }
 
+    public function index($id): string
+    {
+        $data = $this->getTrackInfo($id);
+        $data->results[0]->artist_image = $this->getTrackArtist($data->results[0]->artist_id)->results[0]->image;
         return view('track', ['track' => $data->results[0]]);
     }
 
