@@ -14,7 +14,7 @@ Sign-up
 <br>
 <p class="mt-4 text-sm text-center">
     If you are not automatically redirected you can do it manually by clicking on the
-    <a href="<?= site_url('') ?>" class="text-primary text-gradient font-weight-bold">link</a>
+    <a href="<?= base_url(route_to('landing_view')) ?>" class="text-primary text-gradient font-weight-bold">link</a>
 </p>
 <?= $this->endSection() ?>
 
