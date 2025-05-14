@@ -38,7 +38,6 @@ class Artist extends BaseController
 
             return null;
         } catch (GuzzleException $e) {
-            log_message('error', 'Error fetching artist info: ' . $e->getMessage());
             return null;
         }
     }
@@ -53,6 +52,8 @@ class Artist extends BaseController
                     'format'     => 'json',
                     'artist_id'  => $artistId,
                     'imagesize'  => 300,
+                    'limit'      => 'all',
+                    'fullcount'  => true,
                     'order'      => 'releasedate_desc',
                     'include'    => 'stats',
                 ]
@@ -60,12 +61,12 @@ class Artist extends BaseController
             $data = json_decode($response->getBody(), false);
 
             if (isset($data->results) && count($data->results) > 0) {
-                return $data->results;
+                $data->fullcount = $data->headers->results_fullcount;
+                return $data;
             }
 
             return [];
         } catch (GuzzleException $e) {
-            log_message('error', 'Error fetching artist albums: ' . $e->getMessage());
             return [];
         }
     }
@@ -87,7 +88,6 @@ class Artist extends BaseController
             }
             return [];
         } catch (GuzzleException $e) {
-            log_message('error', 'Error fetching artist tracks: ' . $e->getMessage());
             return [];
         }
     }
@@ -103,7 +103,13 @@ class Artist extends BaseController
         }
 
         $artist->albums = $this->getArtistAlbums($id);
+        $artist->fullcount = $artist->albums->fullcount;
+        $artist->albums = $artist->albums->results;
         $artist->tracks = $this->getArtistTracks($id);
+        $defaultImage = 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg';
+        if (empty($artist->image)) {
+            $artist->image = $defaultImage;
+        }
 
         return view('artist', ['artist' => $artist]);
     }

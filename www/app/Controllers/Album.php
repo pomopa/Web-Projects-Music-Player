@@ -36,7 +36,6 @@ class Album extends BaseController
 
             return [];
         } catch (GuzzleException $e) {
-            log_message('error', 'Error fetching albums: ' . $e->getMessage());
             return [];
         }
     }
@@ -47,6 +46,7 @@ class Album extends BaseController
                 'query' => [
                     'client_id'  => $this->apiKey,
                     'format'     => 'json',
+                    'limit'      => 'all',
                     'album_id'  => $id,
                 ]
             ]);
@@ -58,12 +58,11 @@ class Album extends BaseController
 
             return [];
         } catch (GuzzleException $e) {
-            log_message('error', 'Error fetching album tracks: ' . $e->getMessage());
             return [];
         }
     }
 
-    private function getArtistAlbums($artistId, $excludeAlbumId = null){
+    private function getArtistAlbums($artistId, $excludeAlbum){
         try {
             $response = $this->client->request('GET', 'albums', [
                 'query' => [
@@ -78,15 +77,14 @@ class Album extends BaseController
             $data = json_decode($response->getBody(), false);
 
             if (isset($data->results) && count($data->results) > 0) {
-                $albums = array_filter($data->results, function($album) use ($excludeAlbumId) {
-                    return $album->id != $excludeAlbumId;
+                $albums = array_filter($data->results, function($album) use ($excludeAlbum) {
+                    return $album->id != $excludeAlbum;
                 });
                 return array_slice($albums, 0, 4);
             }
 
             return [];
         } catch (GuzzleException $e) {
-            log_message('error', 'Error fetching artist albums: ' . $e->getMessage());
             return [];
         }
     }
@@ -107,6 +105,16 @@ class Album extends BaseController
         $album->tracks = $this->getAlbumTracks($id);
         $album->similarAlbums = $this->getArtistAlbums($album->artist_id, $album->id);
         $album->artist_image = $this->getAlbumArtist($album->artist_id);
+        if (empty($album->artist_image)) {
+            $album->artist_image = 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg';
+        }
+        $album->totalDuration = 0;
+        if ($album && !empty($album->tracks)) {
+            foreach ($album->tracks as $track) {
+                $album->totalDuration += $track->duration;
+            }
+        }
+
         return view('albums', ['album' => $album]);
     }
 }

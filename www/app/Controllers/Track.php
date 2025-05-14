@@ -42,6 +42,9 @@ class Track extends BaseController
     {
         $data = $this->getTrackInfo($id);
         $data->results[0]->artist_image = $this->getTrackArtist($data->results[0]->artist_id)->results[0]->image;
+        if (empty($data->results[0]->artist_image)) {
+            $data->results[0]->artist_image = 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg';
+        }
         return view('track', ['track' => $data->results[0]]);
     }
 

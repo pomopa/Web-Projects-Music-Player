@@ -1,31 +1,9 @@
-<?php
-
-$artistId = $album ? $album->artist_id : 0;
-$albumName = $album ? $album->name : 'Album Not Found';
-$artistName = $album ? $album->artist_name : 'Unknown Artist';
-$albumImage = $album ? $album->image : '';
-if (empty($album->artist_image)) {
-    $album->artist_image = 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg';
-}
-$artistImage = $album->artist_image;
-$releaseDate = $album ? date('Y-m-d', strtotime($album->releasedate)) : 'Unknown';
-$tracks = $album ? $album->tracks : [];
-$totalDuration = 0;
-if ($album && !empty($tracks)) {
-    foreach ($tracks as $track) {
-        $totalDuration += $track->duration;
-    }
-}
-$formattedTotalDuration = gmdate("H:i:s", $totalDuration);
-$tracksCount = count($tracks);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LSpoty - <?= esc($albumName) ?></title>
+    <title>LSpoty - <?= esc($album->name) ?></title>
 
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
@@ -77,18 +55,18 @@ $tracksCount = count($tracks);
 
     <div class="row album-header">
         <div class="col-lg-3 col-md-4 col-sm-12 d-flex justify-content-center justify-content-md-start mb-4 mb-md-0">
-            <img src="<?= esc($albumImage) ?>" alt="Album cover" class="album-cover">
+            <img src="<?= esc($album->image) ?>" alt="Album cover" class="album-cover">
         </div>
         <div class="col-lg-9 col-md-8 col-sm-12 album-details">
-            <h1 class="text-white display-5 fw-bold mb-1"><?= esc($albumName) ?></h1>
-            <a href="/artist/<?= $artistId ?>" class="text-secondary fs-4 mb-3 d-block text-decoration-none hover-text-success">
-                <?= esc($artistName) ?>
+            <h1 class="text-white display-5 fw-bold mb-1"><?= esc($album->name) ?></h1>
+            <a href="/artist/<?= $album->artist_id ?>" class="text-secondary fs-4 mb-3 d-block text-decoration-none hover-text-success">
+                <?= esc($album->artist_name) ?>
             </a>
 
             <div class="album-stats">
-                <span><i class="fa fa-calendar"></i> <?= esc($releaseDate) ?></span>
-                <span><i class="fa fa-music"></i> <?= $tracksCount ?> tracks</span>
-                <span><i class="fa fa-clock"></i> <?= $formattedTotalDuration ?></span>
+                <span><i class="fa fa-calendar"></i> <?= esc(date('Y-m-d', strtotime($album->releasedate))) ?></span>
+                <span><i class="fa fa-music"></i> <?= count($album->tracks) ?> tracks</span>
+                <span><i class="fa fa-clock"></i> <?= gmdate("H:i:s", $album->totalDuration) ?></span>
             </div>
 
             <div class="album-actions">
@@ -106,9 +84,9 @@ $tracksCount = count($tracks);
         <div class="col-12">
             <h2 class="fw-bold fs-4 text-white mb-3">Tracks</h2>
             <div class="track-list">
-                <?php if (!empty($tracks)): ?>
+                <?php if (!empty($album->tracks)): ?>
                     <?php $trackNumber = 1; ?>
-                    <?php foreach ($tracks as $track): ?>
+                    <?php foreach ($album->tracks as $track): ?>
                         <?php
                         $trackDuration = gmdate("i:s", $track->duration);
                         $trackId = $track->id;
@@ -155,19 +133,19 @@ $tracksCount = count($tracks);
             <div class="bg-gray-800 rounded p-4 mb-4">
                 <h3 class="fw-bold fs-4 text-white mb-3">Artist</h3>
                 <div class="d-flex align-items-center mb-3">
-                    <img src="<?= esc($artistImage) ?>"
+                    <img src="<?= esc($album->artist_image) ?>"
                          alt="Artist image" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
                     <div>
-                        <h4 class="text-white mb-0 fs-5"><?= esc($artistName) ?></h4>
+                        <h4 class="text-white mb-0 fs-5"><?= esc($album->artist_name) ?></h4>
                     </div>
                 </div>
-                <a href="/artist/<?= $artistId ?>" class="btn btn-outline-success rounded-pill w-100">Visit Artist</a>
+                <a href="/artist/<?= $album->artist_id ?>" class="btn btn-outline-success rounded-pill w-100">Visit Artist</a>
             </div>
         </div>
 
         <div class="col-md-8">
             <div class="bg-gray-800 rounded p-4 mb-4">
-                <h3 class="fw-bold fs-4 text-white mb-3">More Albums by <?= esc($artistName) ?></h3>
+                <h3 class="fw-bold fs-4 text-white mb-3">More Albums by <?= esc($album->artist_name) ?></h3>
                 <div class="row g-3">
                     <?php if(!empty($album->similarAlbums)): ?>
                         <?php foreach($album->similarAlbums as $alb): ?>

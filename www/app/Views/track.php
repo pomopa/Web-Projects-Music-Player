@@ -1,9 +1,3 @@
-<?php
-if (empty($track->artist_image)){
-    $track->artist_image = 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg';
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

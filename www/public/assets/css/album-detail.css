@@ -273,7 +273,7 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .album-cover {
         width: 220px;
         height: 220px;
