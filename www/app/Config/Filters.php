@@ -38,8 +38,8 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
-        'LoggedFilter'  => LoggedFilter::class,
-        'NotLoggedFilter' => NotLoggedFilter::class,
+        'logged'  => LoggedFilter::class,
+        'notlogged' => NotLoggedFilter::class,
         'files'         => FileFilter::class,
         'images'        => ImageFilter::class,
     ];

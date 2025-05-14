@@ -18,6 +18,7 @@ class NotLoggedFilter implements FilterInterface
                 return redirect()->to('/home');
             }
         }
+        return null;
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)

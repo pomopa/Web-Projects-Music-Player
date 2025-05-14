@@ -72,11 +72,11 @@
             <div class="container">
                 <div class="row2 align-items-center justify-content-lg-evenly">
                     <div class="col-12 col-md-6 my-auto">
-                        <div class="copyright text-center text-sm text-white text-lg-start">
+                        <div class="copyright text-center text-sm text-white">
                             © <script>
                                 document.write(new Date().getFullYear())
-                            </script>,
-                            made by Joan Enric, Pol and Roger with <i class="fa fa-heart" aria-hidden="true"></i>
+                            </script>
+                            Made by Joan Enric, Pol and Roger with <i class="fa fa-heart" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
