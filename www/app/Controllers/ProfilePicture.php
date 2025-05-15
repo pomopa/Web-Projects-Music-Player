@@ -8,7 +8,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 class ProfilePicture extends BaseController
 {
     private UserModel $userModel;
-    private const UPLOADS_DIR = WRITEPATH . 'uploads';
+    private const UPLOADS_DIR = WRITEPATH . 'uploads/';
 
     public function __construct(){
         $this->userModel = new UserModel();
@@ -20,7 +20,7 @@ class ProfilePicture extends BaseController
         $userID = $session->get('user');
         $user = (object) $this->userModel->find($userID['id']);
 
-        $path = self::UPLOADS_DIR . '/' . $user->profile_pic;
+        $path = self::UPLOADS_DIR . $userID['id'] . '/profile/' . $user->profile_pic;
 
         $mime = mime_content_type($path);
 

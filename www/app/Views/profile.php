@@ -36,7 +36,7 @@
                             <!-- Profile Picture -->
                             <div class="col-12 text-center mb-4">
                                 <div class="mx-auto position-relative" style="width: 150px; height: 150px;">
-                                    <?php if(!empty($user->profile_pic) && file_exists(WRITEPATH . 'uploads/' . $user->profile_pic)): ?>
+                                    <?php if(!empty($user->profile_pic) && file_exists(WRITEPATH . 'uploads/' . $user->id . '/profile/' . $user->profile_pic)): ?>
                                         <img src="<?= base_url(route_to('profile_picture')) ?>" class="rounded-circle img-fluid border border-success" style="width: 150px; height: 150px; object-fit: cover;" alt="Profile Picture">
                                     <?php else: ?>
                                         <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center border border-success" style="width: 150px; height: 150px;">

@@ -8,7 +8,7 @@ use function PHPUnit\Framework\isNull;
 
 class SignUp extends BaseController
 {
-    private const UPLOADS_DIR = WRITEPATH . 'uploads';
+    private const UPLOADS_DIR = WRITEPATH . 'uploads/';
 
     public function showForm()
     {
@@ -53,28 +53,42 @@ class SignUp extends BaseController
             $userModel = new UserModel();
 
             $username = $this->request->getPost('username');
-            if(empty($username)) {
+            if (empty($username)) {
                 $username = explode("@", $this->request->getPost('email'))[0];
-            }
-
-            $file = $this->request->getFile('profilePicture');
-            $newName = null;
-            if (!empty($file) && $file->getSize() !== 0) {
-                $newName = $file->getRandomName();
-                if (!$file->move(self::UPLOADS_DIR, $newName)) {
-                    session()->setFlashdata('errorImage', 'There was an error uploading your file.');
-                    return redirect()->back();
-                }
             }
 
             $data = [
                 'email'    => $this->request->getPost('email'),
                 'username' => $username,
-                'profile_pic' => isNull($newName) ? '' : $newName,
+                'profile_pic' => '', // provisionalment buit
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             ];
 
             if ($userModel->insert($data)) {
+                $userID = $userModel->getInsertID();
+
+                $profilePath = $userID . '/profile/';
+                $basePath = self::UPLOADS_DIR . $userID . '/';
+                $fullPathProfile = self::UPLOADS_DIR . $profilePath;
+                $fullPathPlaylists = self::UPLOADS_DIR . $userID . '/playlists/';
+
+                mkdir($basePath, 0755, true);
+                mkdir($fullPathPlaylists, 0755, true);
+                mkdir($fullPathProfile, 0755, true);
+
+                $file = $this->request->getFile('profilePicture');
+                $newName = null;
+
+                if (!empty($file) && $file->getSize() !== 0) {
+                    $newName = $file->getRandomName();
+
+                    if (!$file->move(self::UPLOADS_DIR, $profilePath . $newName)) {
+                        session()->setFlashdata('errorImage', 'There was an error uploading your file.');
+                        return redirect()->back();
+                    }
+
+                    $userModel->update($userID, ['profile_pic' => $newName]);
+                }
                 return redirect()->to(base_url(route_to('sign-up_success')));
             } else {
                 return redirect()->back()->withInput()->with('errors', $userModel->errors());

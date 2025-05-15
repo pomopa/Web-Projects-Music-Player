@@ -5,25 +5,80 @@ namespace App\Controllers;
 use App\Models\PlaylistModel;
 use App\Models\TrackModel;
 use App\Models\TrackPlaylistModel;
+use GuzzleHttp\Client;
+use function PHPUnit\Framework\isNull;
 
 class MyPlaylist extends BaseController
 {
     private TrackModel $trackModel;
     private PlaylistModel $playlistModel;
     private TrackPlaylistModel $trackPlaylistModel;
+    private Client $client;
+    private string $apiKey = "aab3b83e";
+    private const UPLOADS_DIR = WRITEPATH . 'uploads/';
 
     public function __construct(){
         $this->trackModel = new TrackModel();
         $this->playlistModel = new PlaylistModel();
         $this->trackPlaylistModel = new TrackPlaylistModel();
+        $this->client = new Client([
+            'base_uri' => 'https://api.jamendo.com/v3.0/',
+        ]);
     }
 
     public function index() {
 
     }
 
+    public function viewPlaylist(int $playlistID) {
+
+    }
+
+    public function createPlaylist() {
+        helper(['form']);
+        $rules = [
+            'name'        => 'required|max_length[255]',
+        ];
+
+        $errors = [
+            'email' => [
+                'required'    => 'The name field is required.',
+                'max_length' => 'The name must be less than 255 characters long.'
+            ]
+        ];
+
+        if ($this->validate($rules, $errors)) {
+            $session = session();
+            $userID = $session->get('user');
+
+            $file = $this->request->getFile('cover');
+            $newName = null;
+            if (!empty($file) && $file->getSize() !== 0) {
+                $newName = $userID['id'] . '/playlists/' . $file->getRandomName();
+                if (!$file->move(self::UPLOADS_DIR, $newName)) {
+                    session()->setFlashdata('errorImage', 'There was an error uploading your file.');
+                    return redirect()->back();
+                }
+            }
+
+
+            $data = [
+                'name'    => $this->request->getPost('name'),
+                'cover' => isNull($newName) ? '' : $newName,
+                'user_id' => $userID['id'],
+            ];
+
+            if ($this->playlistModel->insert($data)) {
+                return redirect()->to(base_url(route_to('my-playlist_view')));
+            } else {
+                return redirect()->back()->withInput()->with('errors', $this->playlistModel->errors());
+            }
+        } else {
+            return redirect()->back();
+        }
+    }
+
     public function putTrack(string $trackID, int $playlistID) {
-        //TODO Afegir la canço a la BBDD si no existeix
         if ($this->trackPlaylistModel->where('playlist_id', $playlistID)->where('track_id', $trackID)->first()) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
@@ -31,11 +86,60 @@ class MyPlaylist extends BaseController
             ]);
         }
 
-        if (!$this->trackModel->find($trackID) || !$this->playlistModel->find($playlistID)) {
+        if (!$this->playlistModel->find($playlistID)) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
-                'message' => 'The provided playlist or track ID does not exist in the system.'
+                'message' => 'The provided playlist does not exist in the system.'
             ]);
+        }
+
+        if (!$this->trackModel->find($trackID)) {
+            try {
+                $response = $this->client->get('tracks', [
+                    'query' => [
+                        'client_id' => $this->apiKey,
+                        'id' => $trackID,
+                        'format' => 'json'
+                    ]
+                ]);
+
+                $data = json_decode($response->getBody(), true);
+
+                if (empty($data['results'])) {
+                    return $this->response->setStatusCode(404)->setJSON([
+                        'status' => 'error',
+                        'message' => 'The given track id does not exist in our system.'
+                    ]);
+                }
+
+                $trackData = $data['results'][0];
+
+                $newTrack = [
+                    'id' => $trackData['id'],
+                    'name' => $trackData['name'],
+                    'cover' => $trackData['image'],
+                    'artist_id' => $trackData['artist_id'],
+                    'artist_name' => $trackData['artist_name'],
+                    'album_id' => $trackData['album_id'],
+                    'album_name' => $trackData['album_name'],
+                    'duration' => $trackData['duration'],
+                    'player_url' => $trackData['audio'],
+                ];
+
+                if (!$this->trackModel->insert($newTrack)) {
+                    return $this->response->setStatusCode(500)->setJSON([
+                        'status' => 'error',
+                        'message' => 'Failed to save track.',
+                        'errors' => $this->trackModel->errors()
+                    ]);
+                }
+
+            } catch (\Exception $e) {
+                return $this->response->setStatusCode(500)->setJSON([
+                    'status' => 'error',
+                    'message' => 'Connection error.'
+                ]);
+            }
         }
 
         if (!$this->trackPlaylistModel->insert(['playlist_id' => $playlistID, 'track_id' => $trackID])) {
@@ -71,6 +175,15 @@ class MyPlaylist extends BaseController
             ]);
         }
 
+        $otherAssociations = $this->trackPlaylistModel
+            ->where('track_id', $trackID)
+            ->where('playlist_id !=', $playlistID)
+            ->countAllResults();
+
+        if ($otherAssociations === 0) {
+            $this->trackModel->delete($trackID);
+        }
+
         return $this->response->setStatusCode(200)->setJSON([
             'status'  => 'success',
             'message' => 'Track deleted successfully from the playlist.'
@@ -85,7 +198,24 @@ class MyPlaylist extends BaseController
             ]);
         }
 
-        $this->trackModel->where('playlist_id', $playlistID)->delete();
+        $tracks = $this->trackPlaylistModel
+            ->where('playlist_id', $playlistID)
+            ->findAll();
+
+        foreach ($tracks as $track) {
+            $trackID = $track['track_id'];
+
+            $otherAssociations = $this->trackPlaylistModel
+                ->where('track_id', $trackID)
+                ->where('playlist_id !=', $playlistID)
+                ->countAllResults();
+
+            if ($otherAssociations === 0) {
+                $this->trackModel->delete($trackID);
+            }
+        }
+
+        $this->trackPlaylistModel->where('playlist_id', $playlistID)->delete();
 
         if (!$this->playlistModel->delete($playlistID)) {
             return $this->response->setStatusCode(400)->setJSON([

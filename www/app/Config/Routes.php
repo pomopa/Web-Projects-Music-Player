@@ -21,12 +21,10 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
 
     $routes->get('sign-out', 'SignOut::signOut', ['filter' => 'notlogged', 'as' => 'sign-out_logic']);
 
-
     $routes->get('tracks', 'Track::index', ['as' => 'tracks_view']);
     $routes->get('artists', 'Artist::index', ['as' => 'artists_view']);
     $routes->get('albums', 'Album::index', ['as' => 'albums_view']);
     $routes->get('playlists', 'Playlist::index', ['as' => 'playlist_view']);
-    $routes->get('my-playlists', 'MyPlaylist::index', ['as' => 'my-playlist_view']);
     
     $routes->group('home', ['filter' => 'notlogged'], function($routes) {
         $routes->get('', 'Home::index', ['as' => 'home_view']);
@@ -40,10 +38,16 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     });
 
     $routes->group('my-playlists', ['filter' => 'notlogged'], function ($routes) {
-        $routes->put('(:id)', 'MyPlaylist::putPlaylist/$1', ['as' => 'my-playlist_put']);
-        $routes->put('(:id)/track/(:id)', 'MyPlaylist::putTrack/$1/$2', ['as' => 'my-playlist_put_song']);
-        $routes->delete('(:id)', 'MyPlaylist::deletePlaylist/$1', ['as' => 'my-playlist_delete']);
-        $routes->delete('(:id)/track/(:id)', 'MyPlaylist::deleteTrack/$1/$2', ['as' => 'my-playlist_delete_song']);
+        $routes->get('', 'MyPlaylist::index', ['as' => 'my-playlist_view']);
+        $routes->get('(:num)', 'MyPlaylist::viewPlaylist/$1', ['as' => 'my-playlist_exact_view']);
+
+        $routes->put('(:num)', 'MyPlaylist::putPlaylist/$1', ['as' => 'my-playlist_put']);
+        $routes->put('(:num)/track/(:num)', 'MyPlaylist::putTrack/$1/$2', ['as' => 'my-playlist_put_song']);
+
+        $routes->delete('(:num)', 'MyPlaylist::deletePlaylist/$1', ['as' => 'my-playlist_delete']);
+        $routes->delete('(:num)/track/(:num)', 'MyPlaylist::deleteTrack/$1/$2', ['as' => 'my-playlist_delete_song']);
     });
+
+    $routes->post('create-playlist', 'MyPlaylist::createPlaylist', ['filter' => 'notlogged, images', 'as' => 'my-playlist_create']);
 
 });
