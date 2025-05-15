@@ -1,29 +1,24 @@
-/* Album Detail Page Specific Styles */
-
-/* Album header styling */
-.album-header {
+/* Playlist Detail Page Specific Styles */
+/* Playlist header styling */
+.playlist-header {
     padding-bottom: 20px;
     position: relative;
 }
-
-.album-cover {
+.playlist-cover {
     width: 280px;
     height: 280px;
     border-radius: 8px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     object-fit: cover;
 }
-
-.album-details {
+.playlist-details {
     padding-left: 20px;
 }
-
 /* Track list styling */
 .track-list {
     background-color: var(--lspoty-card-bg);
     border-radius: 8px;
 }
-
 .track-item {
     padding: 12px 16px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -32,22 +27,18 @@
     align-items: center;
     cursor: pointer;
 }
-
 .track-item:hover {
     background-color: var(--lspoty-hover-bg);
 }
-
 .track-item:last-child {
     border-bottom: none;
 }
-
 .track-number {
     width: 30px;
     text-align: center;
     color: var(--lspoty-text-secondary);
     font-size: 0.9rem;
 }
-
 .track-play-btn {
     color: var(--lspoty-text);
     background: none;
@@ -61,16 +52,13 @@
     display: none;
     cursor: pointer;
 }
-
 .track-item:hover .track-number {
     display: none;
 }
-
 .track-item:hover .track-play-btn {
     opacity: 1;
     display: block;
 }
-
 .track-title {
     flex-grow: 1;
     padding: 0 15px;
@@ -81,52 +69,70 @@
     display: flex;
     align-items: center;
 }
-
 .track-title a {
     color: var(--lspoty-text);
     text-decoration: none;
     transition: color 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 120px;
+    max-width: 200px;
 }
-
 .track-title a:hover {
     color: var(--lspoty-primary);
 }
-
 /* Track progress styling */
+.track-progress-container {
+    flex-grow: 1;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin-left: 10px;
+    overflow: hidden;
+    position: relative;
+}
+.track-progress-bar {
+    height: 100%;
+    background-color: var(--lspoty-primary);
+    width: 0;
+    transition: width 0.2s linear;
+    border-radius: 2px;
+}
 .track-progress {
     color: var(--lspoty-text-secondary);
     margin-left: 8px;
     font-size: 0.85rem;
 }
-
 .track-duration {
     color: var(--lspoty-text-secondary);
     font-size: 0.85rem;
     width: 50px;
     text-align: right;
 }
-
 .track-actions {
     width: 40px;
     text-align: center;
     position: relative;
 }
-
 .track-actions .dropdown-toggle {
     background: none;
     border: none;
     color: var(--lspoty-text-secondary);
+    padding: 6px;
+    border-radius: 4px;
     opacity: 0;
     transition: opacity 0.2s ease;
     cursor: pointer;
 }
-
 .track-item:hover .track-actions .dropdown-toggle {
     opacity: 1;
 }
-
-/* Album stats styling */
-.album-stats {
+.track-actions .dropdown-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+/* Playlist stats styling */
+.playlist-stats {
     color: var(--lspoty-text-secondary);
     font-size: 0.9rem;
     display: flex;
@@ -135,20 +141,17 @@
     margin-top: 8px;
     flex-wrap: wrap;
 }
-
-.album-stats i {
+.playlist-stats i {
     margin-right: 5px;
 }
-
-/* Album actions styling */
-.album-actions {
+/* Playlist actions styling */
+.playlist-actions {
     display: flex;
     gap: 10px;
     margin: 20px 0;
     flex-wrap: wrap;
 }
-
-/* Action button styling (reused from track-detail.css) */
+/* Action button styling */
 .action-btn {
     background-color: transparent;
     color: var(--lspoty-text);
@@ -161,59 +164,19 @@
     gap: 5px;
     cursor: pointer;
 }
-
 .action-btn:hover {
     background-color: rgba(255,255,255,0.1);
     border-color: rgba(255,255,255,0.3);
 }
-
 .action-btn.primary {
     background-color: var(--lspoty-primary);
     color: #000;
     border: none;
 }
-
 .action-btn.primary:hover {
     background-color: #19a349;
 }
-
-/* Artist section styling */
-.artist-thumbnail {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.hover-text-success:hover {
-    color: var(--lspoty-primary) !important;
-    text-decoration: none;
-}
-
-/* Album grid styling */
-.album-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px;
-}
-
-.album-grid-item {
-    transition: transform 0.2s ease;
-}
-
-.album-grid-item:hover {
-    transform: translateY(-5px);
-}
-
-.album-grid-cover {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-/* Back button styling (reused from track-detail.css) */
+/* Back button styling */
 .back-button {
     background-color: transparent;
     border: none;
@@ -227,89 +190,136 @@
     margin-bottom: 20px;
     cursor: pointer;
 }
-
 .back-button:hover {
     background-color: rgba(255,255,255,0.1);
 }
-
 .back-button i {
     margin-right: 5px;
 }
-
-/* Dropdown menu styling (reused from track-detail.css) */
+/* Dropdown menu styling */
 .dropdown-menu {
     background-color: var(--lspoty-card-bg);
-    border: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    min-width: 180px;
+    padding: 8px 0;
     z-index: 1050 !important;
     position: absolute;
     right: 0;
 }
-
 .dropdown-item {
     color: var(--lspoty-text);
-    transition: all 0.2s ease;
+    padding: 8px 16px;
+    font-size: 14px;
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
-
 .dropdown-item:hover {
     background-color: var(--lspoty-hover-bg);
     color: var(--lspoty-primary);
 }
-
+.dropdown-item i {
+    margin-right: 5px;
+}
 .dropdown-divider {
     border-color: rgba(255,255,255,0.1);
+    margin: 4px 0;
 }
-
 /* Active states for buttons */
 .action-btn.active,
 .control-btn.active {
     color: var(--lspoty-primary);
 }
-
-/* Card pointer for album cards */
+/* Card styles for similar playlists */
 .card.card-plain {
     cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: var(--lspoty-text);
+    transition: transform 0.2s ease;
 }
-
+.card.card-plain:hover {
+    transform: translateY(-5px);
+}
+.transition-transform {
+    transition: transform 0.2s ease;
+}
+.hover-elevation:hover {
+    transform: translateY(-5px);
+}
+.hover-text-success:hover {
+    color: var(--lspoty-primary) !important;
+    text-decoration: none;
+}
+/* User image styling */
+.rounded-circle {
+    border-radius: 50%;
+    object-fit: cover;
+}
+/* Custom background colors */
+.bg-gray-800 {
+    background-color: var(--lspoty-card-bg);
+    border-radius: 8px;
+}
 /* Responsive adjustments */
 @media (max-width: 1200px) {
-    .album-cover {
+    .playlist-cover {
         width: 220px;
         height: 220px;
     }
-
-    .album-details {
+}
+@media (max-width: 992px) {
+    .playlist-details {
         padding-left: 0;
+        margin-top: 20px;
+    }
+}
+@media (max-width: 768px) {
+    .playlist-cover {
+        width: 200px;
+        height: 200px;
+    }
+    .track-title a {
+        max-width: 120px;
+        min-width: 100px;
+    }
+
+    .track-progress-container {
+        max-width: 100px;
+    }
+
+    /* Center align playlist details on medium screens */
+    .playlist-details {
         text-align: center;
     }
 
-    .album-actions {
+    .playlist-actions {
         justify-content: center;
     }
 
-    .album-stats {
+    .playlist-stats {
         justify-content: center;
     }
 
-    .track-title {
-        max-width: 160px;
-        padding: 0 8px;
-    }
-
-    /* Ensure dropdowns are visible on mobile */
+    /* Fix mobile dropdown position */
     .dropdown-menu {
-        position: fixed;
-        right: 10px;
+        position: fixed !important;
+        left: auto !important;
+        right: 10px !important;
+        top: auto !important;
     }
 }
-
 @media (max-width: 576px) {
-    .album-cover {
+    .playlist-cover {
         width: 180px;
         height: 180px;
     }
-
     .track-duration {
         width: 40px;
         font-size: 0.8rem;
@@ -324,7 +334,16 @@
         font-size: 0.8rem;
     }
 
-    .album-actions {
+    .track-title a {
+        max-width: 80px;
+        min-width: 80px;
+    }
+
+    .track-progress-container {
+        max-width: 60px;
+    }
+
+    .playlist-actions {
         flex-direction: column;
         align-items: center;
     }
@@ -334,8 +353,6 @@
         justify-content: center;
     }
 }
-
-
 /* Progress bar styling */
 .track-progress-container {
     flex-grow: 1;

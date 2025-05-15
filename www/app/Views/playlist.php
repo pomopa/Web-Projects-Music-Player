@@ -18,8 +18,8 @@
     <link id="pagestyle" href="<?= site_url('/assets/css/material-dashboard.css?v=3.1.0') ?>" rel="stylesheet" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
-    <!-- Album Detail CSS -->
-    <link rel="stylesheet" href="<?= site_url('/assets/css/album-detail.css') ?>">
+    <!-- Playlist Detail CSS -->
+    <link rel="stylesheet" href="<?= site_url('/assets/css/playlist-details.css') ?>">
 </head>
 <body class="bg-dark">
 <!-- Navigation -->
@@ -53,9 +53,9 @@
         </div>
     </div>
 
-    <div class="row album-header">
+    <div class="row playlist-header">
         <div class="col-lg-3 col-md-4 col-sm-12 d-flex justify-content-center justify-content-md-start mb-4 mb-md-0">
-            <img src="<?= esc($playlist->image) ?>" alt="Album cover" class="album-cover">
+            <img src="<?= esc($playlist->image) ?>" alt="Playlist cover" class="playlist-cover">
         </div>
         <div class="col-lg-9 col-md-8 col-sm-12 playlist-details">
             <h1 class="text-white display-5 fw-bold mb-1"><?= esc($playlist->name) ?></h1>
@@ -63,7 +63,7 @@
                 <?= esc($playlist->owner->dispname) ?>
             </h2>
 
-            <div class="album-stats">
+            <div class="playlist-stats">
                 <span>
                 <i class="fa fa-calendar"></i>
                 <?php if (!empty($playlist->creationdate) && $playlist->creationdate !== '0000-00-00'): ?>
@@ -76,8 +76,8 @@
                 <span><i class="fa fa-clock"></i> <?= gmdate("H:i:s", $playlist->totalDuration) ?></span>
             </div>
 
-            <div class="album-actions">
-                <button class="action-btn primary" id="playAlbumButton">
+            <div class="playlist-actions">
+                <button class="action-btn primary" id="playPlaylistButton">
                     <i class="fa fa-play me-1"></i> Play Playlist
                 </button>
                 <button class="action-btn" id="shareButton">
@@ -119,6 +119,7 @@
                                         <li><a class="dropdown-item" href="/track/<?= $trackId ?>"><i class="fa fa-info-circle me-2"></i>Track details</a></li>
                                         <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-plus me-2"></i>Add to playlist</a></li>
                                         <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-share-alt me-2"></i>Share track</a></li>
+                                        <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-times me-2"></i>Remove from playlist</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -128,7 +129,7 @@
                 <?php else: ?>
                     <div class="p-4 text-center text-secondary">
                         <i class="fa fa-info-circle mb-2 fs-3"></i>
-                        <p>No tracks available for this playlist.</p>
+                        <p>No tracks available in this playlist.</p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -141,7 +142,7 @@
                 <h3 class="fw-bold fs-4 text-white mb-3">Created by</h3>
                 <div class="d-flex align-items-center mb-3">
                     <img src="<?= esc($playlist->owner->image) ?>"
-                         alt="Artist image" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                         alt="User image" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
                     <div>
                         <h4 class="text-white mb-0 fs-5"><?= esc($playlist->owner->dispname) ?></h4>
                     </div>
@@ -168,7 +169,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <div class="col-12">
-                            <p class="text-muted">No other playlist created by this user.</p>
+                            <p class="text-muted">No other playlists created by this user.</p>
                         </div>
                     <?php endif; ?>
                 </div>
