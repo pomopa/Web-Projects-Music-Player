@@ -32,14 +32,16 @@
     margin-top: 0.5rem;
 }
 
+/* Tags styling */
 .tag {
-    display: inline-flex;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--lspoty-text-secondary);
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    background-color: rgba(29, 185, 84, 0.15);
+    color: var(--lspoty-primary);
+    border-radius: 12px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 8px;
 }
 
 .artist-stats {
@@ -300,7 +302,7 @@
 }
 
 /* Responsive styles */
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     .artist-image {
         width: 180px;
         height: 180px;

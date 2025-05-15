@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\Exceptions\PageNotFoundException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -37,87 +36,94 @@ class Playlist extends BaseController
 
             return [];
         } catch (GuzzleException $e) {
-            log_message('error', 'Error fetching albums: ' . $e->getMessage());
             return [];
         }
     }
 
-    private function getTracks($playlist_id)
-    {
+    private function getOwner($id){
         try {
-            $response = $this->client->request('GET', 'tracks', [
+            $response = $this->client->request('GET', 'users', [
                 'query' => [
-                    'client_id'   => $this->apiKey,
-                    'format'      => 'json',
-                    'playlist_id' => $playlist_id,
-                    //'limit'       => 50,
+                    'client_id'  => $this->apiKey,
+                    'format'     => 'json',
+                    'id'  => $id,
                 ]
             ]);
-
             $data = json_decode($response->getBody(), false);
 
             if (isset($data->results) && count($data->results) > 0) {
-                return $data->results;
+                return $data->results[0];
             }
 
             return [];
         } catch (GuzzleException $e) {
-            log_message('error', 'Error fetching tracks: ' . $e->getMessage());
             return [];
         }
     }
 
+    private function getPlaylistTracks($id)
+    {
+        try {
+            $response = $this->client->request('GET', 'playlists/tracks', [
+                'query' => [
+                    'client_id'  => $this->apiKey,
+                    'format'     => 'json',
+                    'limit'      => 'all',
+                    'id'  => $id,
+                ]
+            ]);
+            $data = json_decode($response->getBody(), false);
 
-    public function view($id){
+            if (isset($data->results) && count($data->results) > 0) {
+                return $data->results[0];
+            }
+
+            return [];
+        } catch (GuzzleException $e) {
+            return [];
+        }
+    }
+
+    private function getUserPlaylists($userId, $excludePlaylist){
+        try {
+            $response = $this->client->request('GET', 'playlists', [
+                'query' => [
+                    'client_id'  => $this->apiKey,
+                    'format'     => 'json',
+                    'user_id'  => $userId,
+                    'limit'      => 10,
+                    'order'      => 'creationdate_desc',
+                ]
+            ]);
+            $data = json_decode($response->getBody(), false);
+
+            if (isset($data->results) && count($data->results) > 0) {
+                $playlists = array_filter($data->results, function($playlist) use ($excludePlaylist) {
+                    return $playlist->id != $excludePlaylist;
+                });
+                foreach ($playlists as $playlist) {
+                    $playlist->image = 'https://img.freepik.com/premium-psd/music-icon-user-interface-element-3d-render-illustration_516938-1693.jpg';
+                }
+                return array_slice($playlists, 0, 4);
+            }
+            return [];
+        } catch (GuzzleException $e) {
+            return [];
+        }
+    }
+
+    public function index($id){
         $playlist = $this->getPlaylist($id);
-
-        if (empty($playlist)) {
-            throw PageNotFoundException::forPageNotFound("Playlist no encontrada.");
+        $playlist->image = 'https://img.freepik.com/premium-psd/music-icon-user-interface-element-3d-render-illustration_516938-1693.jpg';
+        $playlist->tracks = $this->getPlaylistTracks($id)->tracks ?? [];
+        $playlist->totalDuration = 0;
+        if ($playlist && !empty($playlist->tracks)) {
+            foreach ($playlist->tracks as $track) {
+                $playlist->totalDuration += $track->duration;
+            }
         }
-
-        $playlist->tracks = $this->getTracks($playlist->id);
-
-        $playlistId = $playlist->id;
-        $playlistName = $playlist->name ?? 'Playlist Not Found';
-        $tracks = $this->getTracks($playlist->id);
-        $playlist->tracks = $tracks;
-
-        // Utilitza la imatge del primer track, si existeix
-        $playlistImage = !empty($tracks) ? $tracks[0]->album_image : '/assets/img/default-cover.png';
-
-        $playlistCreator = $playlist->user_name ?? 'Unknown Creator';
-        $playlistCreatorId = $playlist->user_id ?? 0;
-        $creationDate = date('Y-m-d', strtotime($playlist->creationdate ?? 'now'));
-
-        $totalDuration = 0;
-        foreach ($playlist->tracks as $track) {
-            $totalDuration += $track->duration;
-        }
-
-        $formattedTotalDuration = gmdate("H:i:s", $totalDuration);
-        $tracksCount = count($playlist->tracks);
-
-        $session = session();
-        $userSession = $session->get('user');
-        $currentUserId = $userSession['id'] ?? null;
-        if($currentUserId == null) {
-            $isOwner = false;
-        } else {
-            $isOwner = $currentUserId == $playlistCreatorId;
-        }
-
-        return view('playlist', [
-            'playlist' => $playlist,
-            'playlistId' => $playlistId,
-            'playlistName' => $playlistName,
-            'playlistImage' => $playlistImage,
-            'playlistCreator' => $playlistCreator,
-            'playlistCreatorId' => $playlistCreatorId,
-            'creationDate' => $creationDate,
-            'tracks' => $playlist->tracks,
-            'formattedTotalDuration' => $formattedTotalDuration,
-            'tracksCount' => $tracksCount,
-            'isOwner' => $isOwner
-        ]);
+        $playlist->owner = $this->getOwner($playlist->user_id);
+        $playlist->similarPlaylists = $this->getUserPlaylists($playlist->user_id, $id);
+        return view('playlist', ['playlist' => $playlist]);
     }
 }
