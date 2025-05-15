@@ -76,7 +76,7 @@ class SignUp extends BaseController
                 mkdir($fullPathPlaylists, 0755, true);
                 mkdir($fullPathProfile, 0755, true);
 
-                $file = $this->request->getFile('profilePicture');
+                $file = $this->request->getFile('picture');
                 $newName = null;
 
                 if (!empty($file) && $file->getSize() !== 0) {

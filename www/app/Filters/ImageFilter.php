@@ -25,7 +25,7 @@ class ImageFilter implements FilterInterface
                 ->withInput();
         }
 
-        $file = $request->getFile('profilePicture');
+        $file = $request->getFile('picture');
 
         if ($file->getSize() === 0) {
             return null;

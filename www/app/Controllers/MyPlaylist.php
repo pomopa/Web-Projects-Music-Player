@@ -51,7 +51,7 @@ class MyPlaylist extends BaseController
             $session = session();
             $userID = $session->get('user');
 
-            $file = $this->request->getFile('cover');
+            $file = $this->request->getFile('picture');
             $newName = null;
             if (!empty($file) && $file->getSize() !== 0) {
                 $newName = $userID['id'] . '/playlists/' . $file->getRandomName();
