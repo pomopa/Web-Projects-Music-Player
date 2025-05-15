@@ -5,7 +5,7 @@ Sign-in
 <?= $this->endSection() ?>
 
 <?= $this->section('sectionName') ?>
-Sign-in
+Sign in
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -17,7 +17,7 @@ Sign-in
     </h6>
 <?php endif; ?>
 
-<form action="<?= base_url('sign-in') ?>" method="post" accept-charset="utf-8" role="form" class="text-start">
+<form action="<?= base_url(route_to('sign-in_logic')) ?>" method="post" accept-charset="utf-8" role="form" class="text-start">
     <!-- CSRF protection -->
     <?= csrf_field() ?>
 
@@ -56,7 +56,7 @@ Sign-in
     </div>
     <p class="mt-4 text-sm text-center">
         You still don't have an account?
-        <a href="<?= base_url('sign-up') ?>" class="text-primary text-gradient font-weight-bold">Sign up</a>
+        <a href="<?= base_url(route_to('sign-up_view')) ?>" class="text-primary text-gradient font-weight-bold">Sign up</a>
     </p>
 </form>
 <?= $this->endSection() ?>

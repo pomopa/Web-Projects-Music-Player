@@ -53,7 +53,7 @@ class SignIn extends BaseController
                 ]);
 
                 $session->set('state', "LOGGED IN");
-                return redirect()->to('');
+                return redirect()->to(base_url(route_to('landing_view')));
             } else {
                 return redirect()->back()->withInput()->with('errors', ['password' => 'Your email and/or password are incorrect.']);
             }

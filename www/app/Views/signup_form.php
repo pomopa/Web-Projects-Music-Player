@@ -5,11 +5,11 @@ Sign-up
 <?= $this->endSection() ?>
 
 <?= $this->section('sectionName') ?>
-Sign-up
+Sign up
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<form action="<?= base_url('sign-up') ?>" method="post" accept-charset="utf-8" role="form" class="text-start" enctype="multipart/form-data">
+<form action="<?= base_url(route_to('sign-up_submit')) ?>" method="post" accept-charset="utf-8" role="form" class="text-start" enctype="multipart/form-data">
     <!-- CSRF protection -->
     <?= csrf_field() ?>
 
@@ -26,10 +26,10 @@ Sign-up
     <?php endif; ?>
 
     <div class="input-group input-group-outline my-3" id="fileInputGroup">
-        <label id="fileNameLabel" class="form-label no-shadow-label" style="color: #737373;">Profile Picture</label>
+        <label id="fileNameLabel" class="form-label no-shadow-label" style="color: #737373;">Profile Picture (must be jpeg, jpg, png or gif)</label>
 
         <!-- input ocult -->
-        <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept="image/*" onchange="handleImagePreview(this)">
+        <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept=".jpeg,.jpg,.png,.gif,image/jpeg,image/png,image/gif" onchange="handleImagePreview(this)">
 
         <!-- label clicable -->
         <label for="profilePicture" class="form-control " style="cursor: pointer;">
@@ -85,7 +85,7 @@ Sign-up
     </div>
     <p class="mt-4 text-sm text-center">
         Already have an account?
-        <a href="<?= base_url('sign-in') ?>" class="text-primary text-gradient font-weight-bold">Sign in</a>
+        <a href="<?= base_url(route_to('sign-in_view')) ?>" class="text-primary text-gradient font-weight-bold">Sign in</a>
     </p>
 </form>
 

@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class SignOut extends BaseController
 {
-    public function signOut(): string
+    public function signOut()
     {
         $session = session();
 
@@ -12,10 +12,10 @@ class SignOut extends BaseController
             $state = $session->get('state');
             if($state == 'LOGGED IN'){
                 $session->destroy();
-                return view('landing');
+                return redirect()->to(base_url(route_to('landing_view')));
             }
         }
-        return view('landing');
+        return redirect()->to(base_url(route_to('landing_view')));
     }
 
 

@@ -54,7 +54,7 @@
 <header>
     <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
         <div class="containerCentrat">
-            <a href="/" title="Go to Home Page" class="navbar-brand text-center text-white text-decoration-none logo-big">
+            <a href="<?= base_url(route_to('landing_view')) ?>" title="Go to Home Page" class="navbar-brand text-center text-white text-decoration-none logo-big">
                 LSpoty
             </a>
         </div>
@@ -105,7 +105,8 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="../../../assets/js/material-dashboard.min.js?v=3.1.0"></script>
+<script src="<?= site_url('/assets/js/commons.js') ?>"></script>
 <?= $this->renderSection('scripts') ?>
 </body>
-
+x
 </html>
