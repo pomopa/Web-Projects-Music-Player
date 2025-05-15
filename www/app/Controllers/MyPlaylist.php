@@ -198,6 +198,9 @@ class MyPlaylist extends BaseController
             ]);
         }
 
+        $session = session();
+        $userID = $session->get('user');
+
         $tracks = $this->trackPlaylistModel
             ->where('playlist_id', $playlistID)
             ->findAll();
@@ -217,12 +220,18 @@ class MyPlaylist extends BaseController
 
         $this->trackPlaylistModel->where('playlist_id', $playlistID)->delete();
 
+        $playlist = $this->playlistModel->find($playlistID);
         if (!$this->playlistModel->delete($playlistID)) {
             return $this->response->setStatusCode(400)->setJSON([
                 'status'  => 'error',
                 'message' => 'The playlist could not be deleted.',
                 'errors'  => $this->playlistModel->errors()
             ]);
+        }
+
+        $oldPath = self::UPLOADS_DIR . $userID['id'] . '/playlists/' . $playlist['cover'];
+        if (file_exists($oldPath)) {
+            unlink($oldPath);
         }
 
         return $this->response->setStatusCode(200)->setJSON([
