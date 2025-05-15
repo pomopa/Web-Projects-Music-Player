@@ -26,13 +26,13 @@
         <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="<?= base_url(route_to('home_view')) ?>">LSpoty</a>
 
         <div class="d-flex align-items-center ms-auto gap-2">
-            <a href="<?= base_url(route_to('playlist_view')) ?>" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
+            <a href="<?= base_url(route_to('my-playlist_view')) ?>" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
                 <i class="fa fa-music"></i>
             </a>
             <a href="<?= base_url(route_to('profile_view')) ?>" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
                 <i class="fa fa-user-circle"></i>
             </a>
-            <form action="<?= base_url(route_to('sign-out_submit')) ?>" method="POST" class="d-inline" style="margin: 0 !important;">
+            <form action="<?= base_url(route_to('sign-out_logic')) ?>" method="POST" class="d-inline" style="margin: 0 !important;">
                 <button type="submit" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white" style="margin: 0 !important;">
                     <i class="fa fa-sign-out-alt"></i>
                 </button>

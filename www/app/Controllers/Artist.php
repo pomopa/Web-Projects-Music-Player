@@ -97,9 +97,8 @@ class Artist extends BaseController
     {
         $artist = $this->getArtistInfo($id);
 
-        if (!$artist) {
-            session()->setFlashdata('error', 'Artist not found');
-            return redirect()->to('/home');
+        if (empty($artist)){
+            return redirect()->to(base_url(route_to('home_view')));
         }
 
         $artist->albums = $this->getArtistAlbums($id);

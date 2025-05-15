@@ -28,10 +28,6 @@ $routes->group('home', ['filter' => 'notlogged'], function($routes) {
     $routes->get('', 'Home::index', ['as' => 'home_view']);
     $routes->get('(:segment)/(:segment)', 'Home::search/$1/$2', ['as' => 'home_search']);
 });
-$routes->group('home', ['namespace' => 'App\Controllers'], function($routes) {
-    $routes->get('', 'Home::index');
-    $routes->get('(:segment)/(:segment)', 'Home::search/$1/$2');
-});
 
 $routes->group('profile', ['filter' => 'notlogged'], function ($routes) {
     $routes->get('', 'Profile::index', ['as' => 'profile_view']);

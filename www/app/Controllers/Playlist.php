@@ -114,6 +114,9 @@ class Playlist extends BaseController
 
     public function index($id){
         $playlist = $this->getPlaylist($id);
+        if (empty($playlist)){
+            return redirect()->to(base_url(route_to('home_view')));
+        }
         $playlist->image = 'https://img.freepik.com/premium-psd/music-icon-user-interface-element-3d-render-illustration_516938-1693.jpg';
         $playlist->tracks = $this->getPlaylistTracks($id)->tracks ?? [];
         $playlist->totalDuration = 0;
