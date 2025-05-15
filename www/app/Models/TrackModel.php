@@ -21,9 +21,7 @@ class TrackModel extends Model
         'album_id',
         'album_name',
         'duration',
-        'player_url',
-        'created_at',
-        'updated_at'
+        'player_url'
     ];
 
     protected $useTimestamps = true;

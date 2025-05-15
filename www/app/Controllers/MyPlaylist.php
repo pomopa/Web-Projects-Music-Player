@@ -78,7 +78,7 @@ class MyPlaylist extends BaseController
         }
     }
 
-    public function putTrack(string $trackID, int $playlistID) {
+    public function putTrack(int $playlistID, string $trackID) {
         if ($this->trackPlaylistModel->where('playlist_id', $playlistID)->where('track_id', $trackID)->first()) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
@@ -95,14 +95,14 @@ class MyPlaylist extends BaseController
 
         if (!$this->trackModel->find($trackID)) {
             try {
-                $response = $this->client->get('tracks', [
+                $response = $this->client->request('GET', 'tracks', [
                     'query' => [
                         'client_id' => $this->apiKey,
-                        'id' => $trackID,
-                        'format' => 'json'
+                        'format'    => 'json',
+                        'limit'     => 10,
+                        'id'     => $trackID
                     ]
                 ]);
-
                 $data = json_decode($response->getBody(), true);
 
                 if (empty($data['results'])) {
@@ -142,16 +142,17 @@ class MyPlaylist extends BaseController
             }
         }
 
-        if (!$this->trackPlaylistModel->insert(['playlist_id' => $playlistID, 'track_id' => $trackID])) {
-            return $this->response->setStatusCode(404)->setJSON([
-                'status'  => 'error',
-                'message' => 'The track could not be added to the playlist.'
-            ]);
-        }
+        $this->trackPlaylistModel->protect(false)->insert(['playlist_id' => $playlistID, 'track_id' => $trackID]);
+//        if (!$this->trackPlaylistModel->protect(false)->insert(['playlist_id' => $playlistID, 'track_id' => $trackID])) {
+//            return $this->response->setStatusCode(404)->setJSON([
+//                'status'  => 'error',
+//                'message' => 'The track could not be added to the playlist.'
+//            ]);
+//        }
 
         return $this->response->setStatusCode(200)->setJSON([
             'status'  => 'success',
-            'message' => 'Track added successfully from the playlist.'
+            'message' => 'Track added successfully to the playlist.'
         ]);
     }
 
@@ -159,7 +160,7 @@ class MyPlaylist extends BaseController
 
     }
 
-    public function deleteTrack(string $trackID, int $playlistID) {
+    public function deleteTrack(int $playlistID, string $trackID) {
         if (!$this->trackPlaylistModel->where('playlist_id', $playlistID)->where('track_id', $trackID)->first()) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',

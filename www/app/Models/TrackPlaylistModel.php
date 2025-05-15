@@ -9,14 +9,17 @@ class TrackPlaylistModel extends Model
     protected $table            = 'track_playlist';
     protected $primaryKey       = null;
     protected $returnType       = 'array';
+
+    protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+
     protected $allowedFields    = [
         'track_id',
         'playlist_id',
         'created_at',
-    ];
-
-    protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
+        'updated_at',
+        ];
 
     protected $validationRules    = [
         'track_id'    => 'required|alpha_numeric|max_length[255]',
@@ -25,9 +28,9 @@ class TrackPlaylistModel extends Model
 
     protected $validationMessages = [
         'track_id' => [
-            'required'    => 'Track ID is required.',
+            'required'      => 'Track ID is required.',
             'alpha_numeric' => 'Track ID must be alphanumeric.',
-            'max_length'  => 'Track ID must be at most 255 characters.',
+            'max_length'    => 'Track ID must be at most 255 characters.',
         ],
         'playlist_id' => [
             'required'           => 'Playlist ID is required.',

@@ -42,10 +42,10 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
         $routes->get('(:num)', 'MyPlaylist::viewPlaylist/$1', ['as' => 'my-playlist_exact_view']);
 
         $routes->put('(:num)', 'MyPlaylist::putPlaylist/$1', ['as' => 'my-playlist_put']);
-        $routes->put('(:num)/track/(:num)', 'MyPlaylist::putTrack/$1/$2', ['as' => 'my-playlist_put_song']);
+        $routes->put('(:num)/track/(:segment)', 'MyPlaylist::putTrack/$1/$2', ['as' => 'my-playlist_put_song']);
 
         $routes->delete('(:num)', 'MyPlaylist::deletePlaylist/$1', ['as' => 'my-playlist_delete']);
-        $routes->delete('(:num)/track/(:num)', 'MyPlaylist::deleteTrack/$1/$2', ['as' => 'my-playlist_delete_song']);
+        $routes->delete('(:num)/track/(:segment)', 'MyPlaylist::deleteTrack/$1/$2', ['as' => 'my-playlist_delete_song']);
     });
 
     $routes->post('create-playlist', 'MyPlaylist::createPlaylist', ['filter' => ['notlogged', 'images'], 'as' => 'my-playlist_create']);
