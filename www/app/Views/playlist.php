@@ -80,6 +80,9 @@
                 <button class="action-btn primary" id="playPlaylistButton">
                     <i class="fa fa-play me-1"></i> Play Playlist
                 </button>
+                <button class="action-btn" id="addPlaylistButton">
+                    <i class="fa fa-plus me-1"></i> Add to My Playlists
+                </button>
                 <button class="action-btn" id="shareButton">
                     <i class="fa fa-share-alt me-1"></i> Share
                 </button>

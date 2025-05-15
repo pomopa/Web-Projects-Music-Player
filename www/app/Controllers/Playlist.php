@@ -115,7 +115,7 @@ class Playlist extends BaseController
     public function index($id){
         $playlist = $this->getPlaylist($id);
         $playlist->image = 'https://img.freepik.com/premium-psd/music-icon-user-interface-element-3d-render-illustration_516938-1693.jpg';
-        $playlist->tracks = $this->getPlaylistTracks($id)->tracks;
+        $playlist->tracks = $this->getPlaylistTracks($id)->tracks ?? [];
         $playlist->totalDuration = 0;
         if ($playlist && !empty($playlist->tracks)) {
             foreach ($playlist->tracks as $track) {

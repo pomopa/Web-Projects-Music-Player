@@ -1,8 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // =====================================================
-    // GLOBAL VARIABLES AND DOM ELEMENTS
-    // =====================================================
-    // Store all Swiper instances for easier reference
     window.swiperInstances = {};
 
     // Search elements
@@ -19,9 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Track current active filter
     let currentFilter = 'tracks';
 
-    // =====================================================
-    // SWIPER FUNCTIONALITY
-    // =====================================================
 
     // Configuration factory function to create consistent Swiper configs
     const createSwiperConfig = (navigationSelectors) => {
@@ -155,9 +148,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
-    // =====================================================
-    // SEARCH FUNCTIONALITY
-    // =====================================================
 
     // Function to fetch search results
     async function performSearch(query, category) {
@@ -188,14 +178,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             html = `
                                 <div class="card card-plain bg-gray-800 mb-2">
                                     <div class="card-body p-3 d-flex align-items-center">
-                                        <img src="${item.album_image || '/api/placeholder/60/60'}" class="rounded me-3" alt="Track cover" style="width: 60px; height: 60px;">
+                                        <img src="${item.album_image}" class="rounded me-3" alt="Track cover" style="width: 60px; height: 60px;">
                                         <div class="flex-grow-1">
                                             <h6 class="card-title mb-0 text-white">${item.name}</h6>
                                             <p class="card-text text-secondary mb-0 small">${item.artist_name} · ${item.album_name || 'Album'}</p>
                                         </div>
                                         <div>
-                                            <button class="btn btn-sm btn-outline-light" data-bs-toggle="tooltip" title="Add to playlist">
-                                                <i class="fa fa-plus"></i>
+                                            <button class="btn btn-sm btn-outline-light view-btn" data-url="/track/${item.id}" data-bs-toggle="tooltip" title="View track">
+                                                <i class="fa fa-eye"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -213,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <p class="card-text text-secondary mb-0 small">${item.artist_name}</p>
                                         </div>
                                         <div>
-                                            <button class="btn btn-sm btn-outline-light" data-bs-toggle="tooltip" title="View album">
+                                            <button class="btn btn-sm btn-outline-light view-btn" data-url="/album/${item.id}" data-bs-toggle="tooltip" title="View album">
                                                 <i class="fa fa-eye"></i>
                                             </button>
                                         </div>
@@ -226,13 +216,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             html = `
                                 <div class="card card-plain bg-gray-800 mb-2">
                                     <div class="card-body p-3 d-flex align-items-center">
-                                        <img src="${item.image || '/api/placeholder/60/60'}" class="rounded-circle me-3" alt="Artist photo" style="width: 60px; height: 60px;">
+                                        <img src="${item.image || 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg'}" class="rounded-circle me-3" alt="Artist photo" style="width: 60px; height: 60px;">
                                         <div class="flex-grow-1">
                                             <h6 class="card-title mb-0 text-white">${item.name}</h6>
                                             <p class="card-text text-secondary mb-0 small">Artist</p>
                                         </div>
                                         <div>
-                                            <button class="btn btn-sm btn-outline-light" data-bs-toggle="tooltip" title="View artist">
+                                            <button class="btn btn-sm btn-outline-light view-btn" data-url="/artist/${item.id}" data-bs-toggle="tooltip" title="View artist">
                                                 <i class="fa fa-eye"></i>
                                             </button>
                                         </div>
@@ -245,13 +235,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             html = `
                                 <div class="card card-plain bg-gray-800 mb-2">
                                     <div class="card-body p-3 d-flex align-items-center">
-                                        <img src="/api/placeholder/60/60" class="rounded me-3" alt="Playlist cover" style="width: 60px; height: 60px;">
+                                        <img src="https://img.freepik.com/premium-psd/music-icon-user-interface-element-3d-render-illustration_516938-1693.jpg" class="rounded me-3" alt="Playlist cover" style="width: 60px; height: 60px;">
                                         <div class="flex-grow-1">
                                             <h6 class="card-title mb-0 text-white">${item.name}</h6>
                                             <p class="card-text text-secondary mb-0 small">Playlist</p>
                                         </div>
                                         <div>
-                                            <button class="btn btn-sm btn-outline-light" data-bs-toggle="tooltip" title="View playlist">
+                                            <button class="btn btn-sm btn-outline-light view-btn" data-url="/playlist/${item.id}" data-bs-toggle="tooltip" title="View playlist">
                                                 <i class="fa fa-eye"></i>
                                             </button>
                                         </div>
@@ -264,7 +254,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     resultsContainer.innerHTML += html;
                 });
 
-                // Initialize tooltips for the new elements
                 initializeTooltips();
 
             } else {
@@ -277,18 +266,24 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
         } catch (error) {
-            console.error('Error fetching search results:', error);
+            console.error('Error search results:', error);
             resultsContainer.innerHTML = `
                 <div class="text-center text-white py-4">
                     <p>Something went wrong. Please try again later.</p>
                 </div>
             `;
         }
+        document.querySelectorAll('.view-btn').forEach(button => {
+            button.style.cursor = 'pointer';
+            button.addEventListener('click', function () {
+                const url = this.getAttribute('data-url');
+                if (url) {
+                    window.location.href = url;
+                }
+            });
+        });
     }
 
-    // =====================================================
-    // UI CATEGORY MANAGEMENT
-    // =====================================================
 
     // Function to show the appropriate category section
     const showCategorySection = (filter) => {
@@ -305,16 +300,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (sectionToShow) {
             sectionToShow.classList.remove('d-none');
 
-            // Important: refresh swipers after showing the section
-            setTimeout(refreshSwipers, 10); // Short timeout to ensure DOM updates first
+            setTimeout(refreshSwipers, 10);
         } else {
-            console.error(`Section with ID ${filter}Section not found`);
+            console.error(`Section with ID ${filter} Section not found`);
         }
     };
 
-    // =====================================================
-    // TOOLTIP INITIALIZATION
-    // =====================================================
 
     // Function to initialize tooltips
     const initializeTooltips = () => {
@@ -328,9 +319,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // =====================================================
-    // EVENT LISTENERS
-    // =====================================================
 
     // Handle search form submission
     searchForm.addEventListener('submit', function(e) {
@@ -408,10 +396,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    // =====================================================
-    // INITIALIZATION
-    // =====================================================
 
     // Initialize all swipers
     initializeSwipers();
