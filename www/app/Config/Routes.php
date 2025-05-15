@@ -48,6 +48,6 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
         $routes->delete('(:num)/track/(:num)', 'MyPlaylist::deleteTrack/$1/$2', ['as' => 'my-playlist_delete_song']);
     });
 
-    $routes->post('create-playlist', 'MyPlaylist::createPlaylist', ['filter' => 'notlogged, images', 'as' => 'my-playlist_create']);
+    $routes->post('create-playlist', 'MyPlaylist::createPlaylist', ['filter' => ['notlogged', 'images'], 'as' => 'my-playlist_create']);
 
 });

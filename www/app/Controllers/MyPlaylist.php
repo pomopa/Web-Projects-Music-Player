@@ -27,7 +27,7 @@ class MyPlaylist extends BaseController
     }
 
     public function index() {
-
+        return view('test');
     }
 
     public function viewPlaylist(int $playlistID) {
@@ -52,10 +52,10 @@ class MyPlaylist extends BaseController
             $userID = $session->get('user');
 
             $file = $this->request->getFile('picture');
-            $newName = null;
+            $newName = '';
             if (!empty($file) && $file->getSize() !== 0) {
-                $newName = $userID['id'] . '/playlists/' . $file->getRandomName();
-                if (!$file->move(self::UPLOADS_DIR, $newName)) {
+                $newName = $file->getRandomName();
+                if (!$file->move(self::UPLOADS_DIR, $userID['id'] . '/playlists/' . $newName)) {
                     session()->setFlashdata('errorImage', 'There was an error uploading your file.');
                     return redirect()->back();
                 }
@@ -64,7 +64,7 @@ class MyPlaylist extends BaseController
 
             $data = [
                 'name'    => $this->request->getPost('name'),
-                'cover' => isNull($newName) ? '' : $newName,
+                'cover' => $newName,
                 'user_id' => $userID['id'],
             ];
 

@@ -21,7 +21,7 @@ class PlaylistModel extends Model
 
     protected $validationRules  = [
         'name'     => 'required|string|max_length[255]',
-        'cover'    => 'permit_empty|valid_url|max_length[255]',
+        'cover'    => 'permit_empty|max_length[255]',
         'user_id'  => 'required|integer',
     ];
 
@@ -32,7 +32,6 @@ class PlaylistModel extends Model
             'max_length' => 'The playlist name cannot exceed 255 characters.'
         ],
         'cover' => [
-            'valid_url'  => 'The cover must be a valid URL.',
             'max_length' => 'The cover URL cannot exceed 255 characters.'
         ],
         'user_id' => [
