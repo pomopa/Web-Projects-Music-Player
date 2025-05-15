@@ -40,14 +40,14 @@ $routes->group('profile', ['filter' => 'notlogged'], function ($routes) {
 });
 
 $routes->group('track', ['namespace' => 'App\Controllers'], function($routes) {
-    $routes->get('(:segment)', 'Track::index/$1');
+    $routes->get('(:segment)', 'Track::index/$1',  ['as' => 'tracks_view']);
 });
 $routes->group('artist', ['namespace' => 'App\Controllers'], function($routes) {
-    $routes->get('(:segment)', 'Artist::index/$1');
+    $routes->get('(:segment)', 'Artist::index/$1', ['as' => 'artists_view']);
 });
 $routes->group('album', ['namespace' => 'App\Controllers'], function($routes) {
-    $routes->get('(:segment)', 'Album::index/$1');
+    $routes->get('(:segment)', 'Album::index/$1', ['as' => 'albums_view']);
 });
 $routes->group('playlist', ['namespace' => 'App\Controllers'], function($routes) {
-    $routes->get('(:segment)', 'Playlist::index/$1');
+    $routes->get('(:segment)', 'Playlist::index/$1', ['as' => 'playlist_view']);
 });
