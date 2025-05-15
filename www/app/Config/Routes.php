@@ -21,11 +21,6 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
 
     $routes->get('sign-out', 'SignOut::signOut', ['filter' => 'notlogged', 'as' => 'sign-out_logic']);
 
-    $routes->get('tracks', 'Track::index', ['as' => 'tracks_view']);
-    $routes->get('artists', 'Artist::index', ['as' => 'artists_view']);
-    $routes->get('albums', 'Album::index', ['as' => 'albums_view']);
-    $routes->get('playlists', 'Playlist::index', ['as' => 'playlist_view']);
-    
     $routes->group('home', ['filter' => 'notlogged'], function($routes) {
         $routes->get('', 'Home::index', ['as' => 'home_view']);
         $routes->get('(:segment)/(:segment)', 'Home::search/$1/$2', ['as' => 'home_search']);
@@ -49,5 +44,21 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     });
 
     $routes->post('create-playlist', 'MyPlaylist::createPlaylist', ['filter' => ['notlogged', 'images'], 'as' => 'my-playlist_create']);
+
+    $routes->group('track', ['namespace' => 'App\Controllers'], function($routes) {
+        $routes->get('(:segment)', 'Track::index/$1',  ['as' => 'tracks_view']);
+    });
+
+    $routes->group('artist', ['namespace' => 'App\Controllers'], function($routes) {
+        $routes->get('(:segment)', 'Artist::index/$1', ['as' => 'artists_view']);
+    });
+    
+    $routes->group('album', ['namespace' => 'App\Controllers'], function($routes) {
+        $routes->get('(:segment)', 'Album::index/$1', ['as' => 'albums_view']);
+    });
+    
+    $routes->group('playlist', ['namespace' => 'App\Controllers'], function($routes) {
+        $routes->get('(:segment)', 'Playlist::index/$1', ['as' => 'playlist_view']);
+    });
 
 });

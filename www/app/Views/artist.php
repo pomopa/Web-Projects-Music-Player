@@ -1,22 +1,9 @@
-<?php
-// Check if artist data is available
-$artistId = $artist ? $artist->id : 0;
-$artistName = $artist ? $artist->name : 'Artist Not Found';
-$defaultImage = 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg';
-$artistImage = ($artist && !empty($artist->image)) ? $artist->image : $defaultImage;
-$joinDate = $artist ? date('F Y', strtotime($artist->joindate)) : 'Unknown';
-$website = $artist ? ($artist->website ?? '#') : '#';
-$followersCount = $artist ? ($artist->stats->followers_count ?? 0) : 0;
-$albumsCount = $artist ? (count($artist->albums) ?? 0) : 0;
-$tracksCount = $artist ? (count($artist->tracks) ?? 0) : 0;
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LSpoty - <?= esc($artistName) ?></title>
+    <title>LSpoty - <?= esc($artist->name) ?></title>
 
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
@@ -68,45 +55,36 @@ $tracksCount = $artist ? (count($artist->tracks) ?? 0) : 0;
     <!-- Artist Header Section -->
     <div class="row artist-header">
         <div class="col-md-3 col-sm-12 d-flex justify-content-center justify-content-md-start mb-4 mb-md-0">
-            <img src="<?= esc($artistImage) ?>" alt="<?= esc($artistName) ?>" class="artist-image">
+            <img src="<?= esc($artist->image) ?>" alt="<?= esc($artist->image) ?>" class="artist-image">
         </div>
         <div class="col-md-9 col-sm-12 artist-details">
             <div class="d-flex align-items-center">
-                <h1 class="text-white display-4 fw-bold mb-0"><?= esc($artistName) ?></h1>
+                <h1 class="text-white display-4 fw-bold mb-0"><?= esc($artist->name) ?></h1>
                 <?php if (isset($artist->verified) && $artist->verified): ?>
                     <span class="verified-badge ms-2"><i class="fa fa-check-circle" title="Verified Artist"></i></span>
                 <?php endif; ?>
             </div>
 
             <div class="artist-metadata mt-2">
-                <span class="tag"><i class="fa fa-calendar me-1"></i> Joined <?= esc($joinDate) ?></span>
+                <span class="tag"><i class="fa fa-calendar me-1"></i> Joined <?= esc(date('F Y', strtotime($artist->joindate))) ?></span>
             </div>
 
             <div class="artist-stats mt-3">
                 <div class="stat-item">
-                    <span class="stat-value"><?= number_format($albumsCount) ?></span>
+                    <span class="stat-value"><?= number_format($artist->fullcount) ?></span>
                     <span class="stat-label">Albums</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-value"><?= number_format($tracksCount) ?></span>
+                    <span class="stat-value"><?= number_format(count($artist->tracks)) ?></span>
                     <span class="stat-label">Tracks</span>
                 </div>
             </div>
 
             <div class="actions-container mt-4">
-                <button class="action-btn primary <?= $isFollowing ? 'followed btn-success' : '' ?>" id="followButton" data-artist-id="<?= $artistId ?>">
-                    <?php if ($isFollowing): ?>
-                        <i class="fa fa-check me-1"></i> Following
-                    <?php else: ?>
-                        <i class="fa fa-user-plus me-1"></i> Follow
-                    <?php endif; ?>
-                </button>
-                <?php if ($website != '#'): ?>
-                    <a href="<?= esc($website) ?>" target="_blank" class="action-btn">
-                        <i class="fa fa-external-link-alt me-1"></i> Website
-                    </a>
-                <?php endif; ?>
-                <button class="action-btn" id="shareButton" data-artist-id="<?= $artistId ?>">
+                <a href="<?= esc(($artist->website ?? '#')) ?>" target="_blank" class="action-btn">
+                    <i class="fa fa-external-link-alt me-1"></i> Website
+                </a>
+                <button class="action-btn" id="shareButton" data-artist-id="<?= $artist->id ?>">
                     <i class="fa fa-share-alt me-1"></i> Share
                 </button>
             </div>
@@ -116,7 +94,7 @@ $tracksCount = $artist ? (count($artist->tracks) ?? 0) : 0;
     <!-- Albums Section -->
     <div class="row">
         <div class="col-12">
-            <h3 class="fw-bold fs-4 text-white mb-3">Albums (<?= $albumsCount ?>)</h3>
+            <h3 class="fw-bold fs-4 text-white mb-3">Albums (<?= $artist->fullcount ?>)</h3>
             <?php if (isset($artist->albums) && count($artist->albums) > 0): ?>
                 <div class="row g-3">
                     <?php foreach($artist->albums as $album): ?>

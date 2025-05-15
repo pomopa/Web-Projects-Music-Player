@@ -1,27 +1,9 @@
-<?php
-$trackName = $track ? $track->name : 'Track Not Found';
-$artistName = $track ? $track->artist_name : 'Unknown Artist';
-$albumName = $track ? $track->album_name : 'Unknown Album';
-$albumImage = $track ? $track->album_image : '/api/placeholder/400/400';
-$artistImage = $track ? ($track->artist_image ?? 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg') : 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg';
-$releaseDate = $track ? date('Y-m-d', strtotime($track->releasedate)) : 'Unknown';
-$duration = $track ? gmdate("i:s", $track->duration) : '0:00';
-$audio = $track ? $track->audio : '';
-$genre = $track ? ($track->musicinfo->tags->genres[0] ?? 'Unknown') : 'Unknown';
-$license = $track ? $track->license_ccurl : 'Unknown';
-
-// ID para funcionalidad JavaScript
-$trackId = $track ? $track->id : 0;
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LSpoty - <?= esc($trackName) ?></title>
-
-    <!--     Fonts and icons     -->
+    <title>LSpoty - <?= esc($track->name) ?></title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
     <!-- Nucleo Icons -->
     <link href="<?= site_url('/assets/css/nucleo-icons.css') ?>" rel="stylesheet" />
@@ -44,13 +26,13 @@ $trackId = $track ? $track->id : 0;
         <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="<?= base_url(route_to('home_view')) ?>">LSpoty</a>
 
         <div class="d-flex align-items-center ms-auto gap-2">
-            <a href="<?= base_url(route_to('playlist_view')) ?>" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
+            <a href="<?= base_url(route_to('my-playlist_view')) ?>" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
                 <i class="fa fa-music"></i>
             </a>
             <a href="<?= base_url(route_to('profile_view')) ?>" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
                 <i class="fa fa-user-circle"></i>
             </a>
-            <form action="<?= base_url(route_to('sign-out_submit')) ?>" method="POST" class="d-inline" style="margin: 0 !important;">
+            <form action="<?= base_url(route_to('sign-out_logic')) ?>" method="POST" class="d-inline" style="margin: 0 !important;">
                 <button type="submit" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white" style="margin: 0 !important;">
                     <i class="fa fa-sign-out-alt"></i>
                 </button>
@@ -71,25 +53,25 @@ $trackId = $track ? $track->id : 0;
 
     <div class="row track-header">
         <div class="col-md-3 col-sm-12 d-flex justify-content-center justify-content-md-start mb-4 mb-md-0">
-            <img src="<?= esc($albumImage) ?>" alt="Track cover" class="track-cover">
+            <img src="<?= esc($track->album_image) ?>" alt="Track cover" class="track-cover">
         </div>
         <div class="col-md-9 col-sm-12 track-details">
-            <h1 class="text-white display-5 fw-bold mb-1"><?= esc($trackName) ?></h1>
-            <h2 class="text-secondary fs-4 mb-3"><?= esc($artistName) ?></h2>
+            <h1 class="text-white display-5 fw-bold mb-1"><?= esc($track->name) ?></h1>
+            <a class="text-secondary fs-4 mb-3" href="/artist/<?=$track->artist_id?>"><?= esc($track->artist_name) ?></a>
 
             <div class="mb-3">
-                <span class="tag"><i class="fa fa-calendar me-1"></i> <?= esc($releaseDate) ?></span>
+                <span class="tag"><i class="fa fa-calendar me-1"></i> <?= esc(date('Y-m-d', strtotime($track->releasedate))) ?></span>
             </div>
 
             <div class="actions-container">
-                <button class="action-btn primary" id="playButton" data-track-url="<?= esc($audio) ?>">
+                <button class="action-btn primary" id="playButton" data-track-url="<?= esc($track->audio) ?>">
                     <i class="fa fa-play me-1"></i> Play
                 </button>
                 <div class="dropdown">
                     <button class="action-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-plus me-1"></i> Add to playlist
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" data-track-id="<?= $trackId ?>">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" data-track-id="<?=$track->id?>">
                         <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="1">My Favorites</a></li>
                         <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="2">Workout Mix</a></li>
                         <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="3">Chill Vibes</a></li>
@@ -97,7 +79,7 @@ $trackId = $track ? $track->id : 0;
                         <li><a class="dropdown-item" href="/create-playlist"><i class="fa fa-plus-circle me-2"></i>Create new playlist</a></li>
                     </ul>
                 </div>
-                <button class="action-btn" id="shareButton" data-track-id="<?= $trackId ?>">
+                <button class="action-btn" id="shareButton" data-track-id="<?=$track->id?>">
                     <i class="fa fa-share-alt me-1"></i> Share
                 </button>
             </div>
@@ -110,7 +92,7 @@ $trackId = $track ? $track->id : 0;
             <div class="progress-container">
                 <div class="progress-bar" style="width: 0%"></div>
             </div>
-            <span class="time-display duration"><?= esc($duration) ?></span>
+            <span class="time-display duration"><?= esc(gmdate("i:s", $track->duration)) ?></span>
         </div>
         <div class="player-controls">
             <button class="control-btn"><i class="fa fa-step-backward"></i></button>
@@ -118,7 +100,7 @@ $trackId = $track ? $track->id : 0;
             <button class="control-btn"><i class="fa fa-step-forward"></i></button>
         </div>
         <audio id="audioPlayer" preload="metadata">
-            <source src="<?= esc($audio) ?>" type="audio/mpeg">
+            <source src="<?= esc($track->audio) ?>" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
     </div>
@@ -133,15 +115,20 @@ $trackId = $track ? $track->id : 0;
                             <tbody>
                             <tr>
                                 <td class="text-secondary">Album</td>
-                                <td class="text-white"><?= esc($albumName) ?></td>
+                                <td class="text-white">
+                                    <a href="/album/<?= esc($track->album_id) ?>" class="text-success text-decoration-none">
+                                        <?= esc($track->album_name) ?>
+                                    </a>
+                                </td>
+
                             </tr>
                             <tr>
                                 <td class="text-secondary">Duration</td>
-                                <td class="text-white"><?= esc($duration) ?></td>
+                                <td class="text-white"><?= esc(gmdate("i:s", $track->duration)) ?></td>
                             </tr>
                             <tr>
                                 <td class="text-secondary">License</td>
-                                <td class="text-white"><?= esc($license) ?></td>
+                                <td class="text-white"><?= esc($track->license_ccurl) ?></td>
                             </tr>
                             </tbody>
                         </table>
@@ -154,13 +141,17 @@ $trackId = $track ? $track->id : 0;
             <div class="bg-gray-800 rounded p-4 mb-4">
                 <h3 class="fw-bold fs-4 text-white mb-3">Artist</h3>
                 <div class="d-flex align-items-center mb-3">
-                    <img src="<?= esc($artistImage) ?>"
+                    <img src="<?= esc($track->artist_image) ?>"
                          alt="Artist image" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
                     <div>
-                        <h4 class="text-white mb-0 fs-5"><?= esc($artistName) ?></h4>
+                        <h4 class="text-white mb-0 fs-5"><?= esc($track->artist_name) ?></h4>
                     </div>
                 </div>
-                <button class="btn btn-outline-success rounded-pill w-100">Visit Artist</button>
+                <?php $artistUrl = site_url('/artist/' . $track->artist_id); ?>
+                <button class="btn btn-outline-success rounded-pill w-100"
+                        onclick="window.location.href='<?= $artistUrl ?>'">
+                    Visit Artist
+                </button>
             </div>
         </div>
     </div>

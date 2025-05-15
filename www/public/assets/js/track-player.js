@@ -163,23 +163,4 @@ document.addEventListener('DOMContentLoaded', function() {
             audioPlayer.currentTime = audioPlayer.duration;
         });
     }
-
-
-
-    // Follow artist button functionality
-    const followArtistBtn = document.querySelector('.btn-outline-success');
-    if (followArtistBtn) {
-        followArtistBtn.addEventListener('click', function() {
-            // Toggle button state
-            this.classList.toggle('btn-outline-success');
-            this.classList.toggle('btn-success');
-
-            // Update text
-            const isFollowing = this.classList.contains('btn-success');
-            this.textContent = isFollowing ? 'Following' : 'Follow Artist';
-
-            // Here you would make an API call to follow/unfollow the artist
-            console.log(`Artist is now ${isFollowing ? 'followed' : 'unfollowed'}`);
-        });
-    }
 });
