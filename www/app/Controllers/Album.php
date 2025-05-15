@@ -102,6 +102,9 @@ class Album extends BaseController
 
     public function index($id){
         $album = $this->getAlbum($id);
+        if (empty($album)){
+            return redirect()->to(base_url(route_to('home_view')));
+        }
         $album->tracks = $this->getAlbumTracks($id);
         $album->similarAlbums = $this->getArtistAlbums($album->artist_id, $album->id);
         $album->artist_image = $this->getAlbumArtist($album->artist_id);
