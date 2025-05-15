@@ -36,7 +36,7 @@
                             <!-- Profile Picture -->
                             <div class="col-12 text-center mb-4">
                                 <div class="mx-auto position-relative" style="width: 150px; height: 150px;">
-                                    <?php if(!empty($user->profile_pic) && file_exists(WRITEPATH . 'uploads/' . $user->profile_pic)): ?>
+                                    <?php if(!empty($user->profile_pic) && file_exists(WRITEPATH . 'uploads/' . $user->id . '/profile/' . $user->profile_pic)): ?>
                                         <img src="<?= base_url(route_to('profile_picture')) ?>" class="rounded-circle img-fluid border border-success" style="width: 150px; height: 150px; object-fit: cover;" alt="Profile Picture">
                                     <?php else: ?>
                                         <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center border border-success" style="width: 150px; height: 150px;">
@@ -44,10 +44,10 @@
                                         </div>
                                     <?php endif; ?>
 
-                                    <label for="profilePicture" class="position-absolute bottom-0 end-0 btn btn-sm btn-success rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; padding: 0;">
+                                    <label for="picture" class="position-absolute bottom-0 end-0 btn btn-sm btn-success rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; padding: 0;">
                                         <i class="fa fa-camera"></i>
                                     </label>
-                                    <input type="file" id="profilePicture" name="profilePicture" class="d-none" accept=".jpeg,.jpg,.png,.gif,image/jpeg,image/png,image/gif">
+                                    <input type="file" id="picture" name="picture" class="d-none" accept=".jpeg,.jpg,.png,.gif,image/jpeg,image/png,image/gif">
                                 </div>
                                 <small class="text-light mt-2 d-block">Click the camera icon to change your profile picture</small>
                                 <small class="text-light mt-2 d-block">The allowed image types are jpg, jpeg, png or gif</small>

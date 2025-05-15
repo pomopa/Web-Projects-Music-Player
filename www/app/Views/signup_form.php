@@ -29,10 +29,10 @@ Sign up
         <label id="fileNameLabel" class="form-label no-shadow-label" style="color: #737373;">Profile Picture (must be jpeg, jpg, png or gif)</label>
 
         <!-- input ocult -->
-        <input type="file" name="profilePicture" id="profilePicture" class="d-none" accept=".jpeg,.jpg,.png,.gif,image/jpeg,image/png,image/gif" onchange="handleImagePreview(this)">
+        <input type="file" name="picture" id="picture" class="d-none" accept=".jpeg,.jpg,.png,.gif,image/jpeg,image/png,image/gif" onchange="handleImagePreview(this)">
 
         <!-- label clicable -->
-        <label for="profilePicture" class="form-control " style="cursor: pointer;">
+        <label for="picture" class="form-control " style="cursor: pointer;">
             <span id="fileLabel">&nbsp;</span>
         </label>
     </div>
