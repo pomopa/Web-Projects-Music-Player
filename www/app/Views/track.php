@@ -1,52 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LSpoty - <?= esc($track->name) ?></title>
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
-    <!-- Nucleo Icons -->
-    <link href="<?= site_url('/assets/css/nucleo-icons.css') ?>" rel="stylesheet" />
-    <link href="<?= site_url('/assets/css/nucleo-svg.css') ?>" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <!-- Material Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <!-- CSS Files -->
-    <link id="pagestyle" href="<?= site_url('/assets/css/material-dashboard.css?v=3.1.0') ?>" rel="stylesheet" />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
-    <!-- Track Detail CSS -->
-    <link rel="stylesheet" href="<?= site_url('/assets/css/track-detail.css') ?>">
-</head>
-<body class="bg-dark">
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-black position-sticky top-0" style="z-index: 1000;">
-    <div class="container">
-        <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="<?= base_url(route_to('home_view')) ?>">LSpoty</a>
+<?= $this->extend('default_logged_in') ?>
 
-        <div class="d-flex align-items-center ms-auto gap-2">
-            <a href="<?= base_url(route_to('my-playlist_view')) ?>" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
-                <i class="fa fa-music"></i>
-            </a>
-            <a href="<?= base_url(route_to('profile_view')) ?>" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
-                <i class="fa fa-user-circle"></i>
-            </a>
-            <form action="<?= base_url(route_to('sign-out_logic')) ?>" method="POST" class="d-inline" style="margin: 0 !important;">
-                <button type="submit" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white" style="margin: 0 !important;">
-                    <i class="fa fa-sign-out-alt"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-</nav>
+<?= $this->section('title') ?>
+<title>LSpoty - <?= esc($track->name) ?></title>
+<?= $this->endSection() ?>
 
-<!-- Main Content -->
-<div class="container">
+<?= $this->section('styles') ?>
+<link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
+<link rel="stylesheet" href="<?= site_url('/assets/css/track-detail.css') ?>">
+<?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
     <div class="row mt-4">
         <div class="col-12">
             <button class="back-button" onclick="history.back()">
-                <i class="fa fa-arrow-left"></i> Back
+                <i class="fa fa-arrow-left"></i> <?= lang('App.back') ?>
             </button>
         </div>
     </div>
@@ -65,22 +32,22 @@
 
             <div class="actions-container">
                 <button class="action-btn primary" id="playButton" data-track-url="<?= esc($track->audio) ?>">
-                    <i class="fa fa-play me-1"></i> Play
+                    <i class="fa fa-play me-1"></i> <?= lang('App.play') ?>
                 </button>
                 <div class="dropdown">
                     <button class="action-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-plus me-1"></i> Add to playlist
+                        <i class="fa fa-plus me-1"></i> <?= lang('App.add_to_playlist') ?>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" data-track-id="<?=$track->id?>">
                         <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="1">My Favorites</a></li>
                         <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="2">Workout Mix</a></li>
                         <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="3">Chill Vibes</a></li>
                         <li><div class="dropdown-divider"></div></li>
-                        <li><a class="dropdown-item" href="/create-playlist"><i class="fa fa-plus-circle me-2"></i>Create new playlist</a></li>
+                        <li><a class="dropdown-item" href="/create-playlist"><i class="fa fa-plus-circle me-2"></i><?= lang('App.create_new_playlist') ?></a></li>
                     </ul>
                 </div>
                 <button class="action-btn" id="shareButton" data-track-id="<?=$track->id?>">
-                    <i class="fa fa-share-alt me-1"></i> Share
+                    <i class="fa fa-share-alt me-1"></i> <?= lang('App.share') ?>
                 </button>
             </div>
         </div>
@@ -101,7 +68,7 @@
         </div>
         <audio id="audioPlayer" preload="metadata">
             <source src="<?= esc($track->audio) ?>" type="audio/mpeg">
-            Your browser does not support the audio element.
+            <?= lang('App.non_supporting_browser') ?>
         </audio>
     </div>
 
@@ -109,12 +76,12 @@
         <div class="col-md-8">
             <div class="bg-gray-800 rounded p-4 mb-4">
                 <div class="">
-                    <h4 class="fw-bold text-white mb-2">Track Information</h4>
+                    <h4 class="fw-bold text-white mb-2"><?= lang('App.track_information') ?></h4>
                     <div class="table-responsive">
                         <table class="table table-borderless">
                             <tbody>
                             <tr>
-                                <td class="text-secondary">Album</td>
+                                <td class="text-secondary"><?= lang('App.album') ?></td>
                                 <td class="text-white">
                                     <a href="/album/<?= esc($track->album_id) ?>" class="text-success text-decoration-none">
                                         <?= esc($track->album_name) ?>
@@ -123,11 +90,11 @@
 
                             </tr>
                             <tr>
-                                <td class="text-secondary">Duration</td>
+                                <td class="text-secondary"><?= lang('App.duration') ?></td>
                                 <td class="text-white"><?= esc(gmdate("i:s", $track->duration)) ?></td>
                             </tr>
                             <tr>
-                                <td class="text-secondary">License</td>
+                                <td class="text-secondary"><?= lang('App.license') ?></td>
                                 <td class="text-white"><?= esc($track->license_ccurl) ?></td>
                             </tr>
                             </tbody>
@@ -139,7 +106,7 @@
 
         <div class="col-md-4">
             <div class="bg-gray-800 rounded p-4 mb-4">
-                <h3 class="fw-bold fs-4 text-white mb-3">Artist</h3>
+                <h3 class="fw-bold fs-4 text-white mb-3"><?= lang('App.artist') ?></h3>
                 <div class="d-flex align-items-center mb-3">
                     <img src="<?= esc($track->artist_image) ?>"
                          alt="Artist image" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
@@ -150,26 +117,13 @@
                 <?php $artistUrl = site_url('/artist/' . $track->artist_id); ?>
                 <button class="btn btn-outline-success rounded-pill w-100"
                         onclick="window.location.href='<?= $artistUrl ?>'">
-                    Visit Artist
+                    <?= lang('App.visit_artist') ?>
                 </button>
             </div>
         </div>
     </div>
-</div>
+<?= $this->endSection() ?>
 
-<!-- Footer -->
-<footer class="bg-black text-center text-light py-3 mt-auto">
-    <div class="container">
-        <p class="mb-0">© 2025 LSpoty - All rights reserved</p>
-    </div>
-</footer>
-
-<!-- Core JS Files -->
-<script src="<?= site_url('/assets/js/core/popper.min.js') ?>"></script>
-<script src="<?= site_url('/assets/js/core/bootstrap.min.js') ?>"></script>
-<script src="<?= site_url('/assets/js/plugins/perfect-scrollbar.min.js') ?>"></script>
-<!-- Track Player JS -->
+<?= $this->section('javascript') ?>
 <script src="<?= site_url('/assets/js/track-player.js') ?>"></script>
-
-</body>
-</html>
+<?= $this->endSection() ?>
