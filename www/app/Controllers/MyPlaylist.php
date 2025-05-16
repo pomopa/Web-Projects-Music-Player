@@ -26,6 +26,16 @@ class MyPlaylist extends BaseController
         ]);
     }
 
+    private function checkIfPlaylistFromUser(int $playlistID): bool
+    {
+        $session = session();
+        $userID = $session->get('user');
+        if (!$this->playlistModel->where('id', $playlistID)->where('user_id', $userID['id'])->first()) {
+            return false;
+        }
+        return true;
+    }
+
     public function index() {
         return view('test');
     }
@@ -61,7 +71,6 @@ class MyPlaylist extends BaseController
                 }
             }
 
-
             $data = [
                 'name'    => $this->request->getPost('name'),
                 'cover' => $newName,
@@ -86,10 +95,10 @@ class MyPlaylist extends BaseController
             ]);
         }
 
-        if (!$this->playlistModel->find($playlistID)) {
+        if (!$this->checkIfPlaylistFromUser($playlistID)) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
-                'message' => 'The provided playlist does not exist in the system.'
+                'message' => 'The provided playlist does not exist or does not belong to the current user.'
             ]);
         }
 
@@ -143,12 +152,6 @@ class MyPlaylist extends BaseController
         }
 
         $this->trackPlaylistModel->protect(false)->insert(['playlist_id' => $playlistID, 'track_id' => $trackID]);
-//        if (!$this->trackPlaylistModel->protect(false)->insert(['playlist_id' => $playlistID, 'track_id' => $trackID])) {
-//            return $this->response->setStatusCode(404)->setJSON([
-//                'status'  => 'error',
-//                'message' => 'The track could not be added to the playlist.'
-//            ]);
-//        }
 
         return $this->response->setStatusCode(200)->setJSON([
             'status'  => 'success',
@@ -156,15 +159,59 @@ class MyPlaylist extends BaseController
         ]);
     }
 
-    public function putPlaylist(int $playlistID) {
+    public function putPlaylist(int $playlistID)
+    {
+        if (!$this->checkIfPlaylistFromUser($playlistID)) {
+            return $this->response->setStatusCode(404)->setJSON([
+                'status'  => 'error',
+                'message' => 'The provided playlist does not exist or does not belong to the current user.'
+            ]);
+        }
 
+        $data = $this->request->getJSON(true);
+
+        if (empty($data['name']) && empty($data['picture'])) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'status'  => 'error',
+                'message' => 'No data provided to update.'
+            ]);
+        }
+
+        $updateData = $this->playlistModel->find($playlistID);
+        if (!empty($data['name'])) {
+            $updateData['name'] = $data['name'];
+        }
+//        if (!empty($data['picture'])) {
+//            $updateData['picture'] = $data['picture'];
+//        }  TODO Possiblement s'ha de trobar alguna manera de canviar la imatge
+
+        if (!$this->playlistModel->update($playlistID, $updateData)) {
+            return $this->response->setStatusCode(500)->setJSON([
+                'status'  => 'error',
+                'message' => 'Failed to update the playlist.'
+            ]);
+        }
+
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'Playlist updated successfully.',
+            'data'    => $updateData
+        ]);
     }
+
 
     public function deleteTrack(int $playlistID, string $trackID) {
         if (!$this->trackPlaylistModel->where('playlist_id', $playlistID)->where('track_id', $trackID)->first()) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
                 'message' => 'A playlist with this track does not exist in the system.'
+            ]);
+        }
+
+        if (!$this->checkIfPlaylistFromUser($playlistID)) {
+            return $this->response->setStatusCode(404)->setJSON([
+                'status'  => 'error',
+                'message' => 'The provided playlist does not exist or does not belong to the current user.'
             ]);
         }
 
@@ -196,6 +243,13 @@ class MyPlaylist extends BaseController
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
                 'message' => 'Playlist does not exists.'
+            ]);
+        }
+
+        if (!$this->checkIfPlaylistFromUser($playlistID)) {
+            return $this->response->setStatusCode(404)->setJSON([
+                'status'  => 'error',
+                'message' => 'The provided playlist does not exist or does not belong to the current user.'
             ]);
         }
 
