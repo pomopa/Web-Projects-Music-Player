@@ -40,10 +40,7 @@
             </div>
 
             <div class="playlist-actions">
-                <button class="action-btn primary" id="playPlaylistButton">
-                    <i class="fa fa-play me-1"></i> Play Random Playlist
-                </button>
-                <button class="action-btn" id="addPlaylistButton" onclick="window.location.href='<?= base_url(route_to('my-playlist_create')) ?>'">
+                <button class="action-btn primary" id="createPlaylistButton" onclick="window.location.href='<?= base_url(route_to('my-playlist_create')) ?>'">
                     <i class="fa fa-plus me-1"></i> Create Playlist
                 </button>
                 <button class="action-btn" id="shareButton">
