@@ -35,25 +35,25 @@
         <div class="playlist-stats">
             <span>
                 <i class="fa fa-calendar"></i>
-                <?php if (!empty($playlist['creationdate']) && $playlist['creationdate'] !== '0000-00-00'): ?>
-                    <?= esc(date('Y-m-d', strtotime($playlist['creationdate']))) ?>
+                <?php if (!empty($playlist['created_at']) && $playlist['created_at'] !== '0000-00-00'): ?>
+                    <?= esc(date('Y-m-d', strtotime($playlist['created_at']))) ?>
                 <?php else: ?>
-                    <?= esc($playlist['creationdate']) ?>
+                    <?= esc($playlist['created_at']) ?>
                 <?php endif; ?>
             </span>
             <span><i class="fa fa-music"></i> <?= count($playlist['tracks']) ?> tracks</span>
-            <span><i class="fa fa-clock"></i> <?= gmdate("H:i:s", $playlist['totalDuration']) ?></span>
+            <span><i class="fa fa-clock"></i> <?= $formattedTotalDuration ?></span>
         </div>
 
         <div class="playlist-actions">
             <button class="action-btn primary" id="playPlaylistButton">
                 <i class="fa fa-play me-1"></i> Play Playlist
             </button>
-            <button class="action-btn" id="addPlaylistButton">
-                <i class="fa fa-plus me-1"></i> Add to My Playlists
+            <button class="action-btn" id="renamePlaylistButton">
+                <i class="fa fa-pencil-alt me-1"></i> Rename Playlist
             </button>
-            <button class="action-btn" id="shareButton">
-                <i class="fa fa-share-alt me-1"></i> Share
+            <button class="action-btn alert-danger" id="deleteButton">
+                <i class="fa fa-trash me-1"></i> Delete Playlist
             </button>
         </div>
     </div>
@@ -112,10 +112,8 @@
         <div class="bg-gray-800 rounded p-4 mb-4">
             <h3 class="fw-bold fs-4 text-white mb-3">Created by</h3>
             <div class="d-flex align-items-center mb-3">
-                <img src="<?= esc($playlist['owner']['image']) ?>"
-                     alt="User image" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
                 <div>
-                    <h4 class="text-white mb-0 fs-5"><?= esc($playlist['owner']['dispname']) ?></h4>
+                    <h4 class="text-white mb-0 fs-5"><?= esc($playlistCreator) ?></h4>
                 </div>
             </div>
         </div>
@@ -123,7 +121,7 @@
 
     <div class="col-md-8">
         <div class="bg-gray-800 rounded p-4 mb-4">
-            <h3 class="fw-bold fs-4 text-white mb-3">More Playlists by <?= esc($playlist['owner']['dispname']) ?></h3>
+            <h3 class="fw-bold fs-4 text-white mb-3">More Playlists by <?= esc($playlistCreator) ?></h3>
             <div class="row g-3">
                 <?php if (!empty($playlist['similarPlaylists'])): ?>
                     <?php foreach($playlist['similarPlaylists'] as $ply): ?>
