@@ -1,0 +1,181 @@
+.track-image img.playlist-cover-small {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.playlist-item {
+    display: grid;
+    grid-template-columns: 40px 50px 1fr 70px 80px 10px;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    transition: background-color 0.2s ease;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    gap: 10px;
+}
+
+.playlist-item:hover {
+    background-color: var(--lspoty-hover-bg);
+}
+
+.track-number {
+    color: var(--lspoty-text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.track-play .play-track-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 1px solid var(--lspoty-text-secondary);
+    color: var(--lspoty-text);
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.track-play .play-track-btn:hover {
+    background-color: var(--lspoty-primary);
+    border-color: var(--lspoty-primary);
+    color: #000;
+    opacity: 1;
+}
+
+.track-image img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.track-info {
+    padding-left: 10px;
+    overflow: hidden;
+}
+
+.track-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--lspoty-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-album {
+    font-size: 0.8rem;
+    color: var(--lspoty-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-duration {
+    color: var(--lspoty-text-secondary);
+    font-size: 0.9rem;
+    text-align: right;
+    justify-self: end;
+}
+
+.number-tracks {
+    color: var(--lspoty-text-secondary);
+    font-size: 0.9rem;
+    text-align: right;
+    justify-self: end;
+}
+
+.track-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.track-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    color: var(--lspoty-text-secondary);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.track-action-btn:hover {
+    color: var(--lspoty-primary);
+    opacity: 1;
+}
+
+/* Similar artists section */
+.similar-artists .card-img-top {
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+}
+
+/* Responsive styles */
+@media (max-width: 1000px) {
+    .artist-image {
+        width: 180px;
+        height: 180px;
+    }
+
+    .artist-stats {
+        gap: 1.5rem;
+    }
+
+    .playlist-item {
+        grid-template-columns: 30px 40px 1fr 60px 70px 10px;
+        padding: 0.5rem;
+    }
+
+    .track-image img {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 576px) {
+    .artist-header {
+        text-align: center;
+    }
+
+    .artist-stats {
+        justify-content: center;
+    }
+
+    .actions-container {
+        justify-content: center;
+    }
+
+    .playlist-item {
+        grid-template-columns: 30px 1fr 60px;
+    }
+
+    .track-number,
+    .track-play,
+    .track-image {
+        display: none;
+    }
+
+    .track-duration {
+        text-align: right;
+    }
+
+    .track-actions {
+        display: none;
+    }
+}

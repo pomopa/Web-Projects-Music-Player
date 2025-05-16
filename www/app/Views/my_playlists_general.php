@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
     <!-- Playlist Detail CSS -->
     <link rel="stylesheet" href="<?= site_url('/assets/css/playlist-details.css') ?>">
+    <link rel="stylesheet" href="<?= site_url('/assets/css/playlist-detail.css') ?>">
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -35,7 +36,7 @@
             <div class="playlist-stats">
             </span>
                 <span><i class="fa fa-music"></i> <?= count($myPlaylists) ?> playlists</span>
-                <span><i class="fa fa-clock"></i> <?= gmdate("H:i:s", 0) ?></span>
+                <span><i class="fa fa-clock"></i> <?= gmdate("H:i:s", $totalDuration) ?></span>
             </div>
 
             <div class="playlist-actions">
@@ -60,19 +61,31 @@
                     <?php $playlistNumber = 1; ?>
                     <?php foreach ($myPlaylists as $playlist): ?>
                         <?php
-                        $trackDuration = gmdate("i:s", 1);
+                        $trackDuration = gmdate("i:s", $playlist['duration']);
+                        $playlistId = $playlist['id'];
+                        if(!empty($playlist['tracks'])) {
+                            $trackId = $playlist['tracks'][0]['id'];
+                            $player_url = $playlist['tracks'][0]['player_url'];
+                        } else {
+                            $trackId = null;
+                            $player_url = null;
+                        }
                         ?>
-                        <div class="track-item">
+                        <div class="playlist-item">
                             <div class="track-number"><?= $playlistNumber ?></div>
-
+                            <div class="track-image">
+                                <img src="<?= base_url('assets/img/default-cover.png') ?>" alt="Playlist cover" class="playlist-cover-small">
+                            </div>
+                            <button class="track-play-btn" onclick="window.location.href='<?= base_url(route_to('my-playlist_exact_view', $playlistId)) ?>'">
+                                <i class="fa fa-play"></i>
+                            </button>
                             <div class="track-title">
-                                <a href="/my-playlists/<?= $playlist->id ?>" class="text-decoration-none text-white">
-                                    <?= esc($playlist->name) ?>
+                                <a href="/my-playlists/<?= $playlistId ?>" class="text-decoration-none text-white">
+                                    <?= esc($playlist['name']) ?>
                                 </a>
-                                <!-- Progress will be added here dynamically -->
                             </div>
                             <div class="track-duration"><?= $trackDuration ?></div>
-                            <div class="track-duration"><?= count($playlist->tracks) ?? 0 ?></div>
+                            <div class="number-tracks"><?= count($playlist['tracks']) ?? 0 ?> tracks</div>
 
                         </div>
                         <?php $playlistNumber++; ?>

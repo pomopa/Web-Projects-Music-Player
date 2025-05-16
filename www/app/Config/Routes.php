@@ -45,7 +45,7 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
 
     $routes->group('create-playlist', ['namespace' => 'App\Controllers'], function($routes) {
         $routes->post('', 'MyPlaylist::createPlaylist', ['filter' => ['notlogged', 'images'], 'as' => 'my-playlist_create']);
-        $routes->post('', 'MyPlaylist::createPlaylistView', ['filter' => ['notlogged'], 'as' => 'my-playlist_create_view']);
+        $routes->get('', 'MyPlaylist::createPlaylistView', ['filter' => ['notlogged'], 'as' => 'my-playlist_create_view']);
     });
 
 

@@ -37,56 +37,39 @@ class MyPlaylist extends BaseController
             ->where('user_id', $currentUserId)
             ->findAll();
 
+        $trackModel = new TrackModel();
+        $trackPlaylistModel = new TrackPlaylistModel();
+
+        $totalDuration = 0;
+
+        foreach ($myPlaylists as &$playlist) {
+            $trackIds = $trackPlaylistModel
+                ->select('track_id')
+                ->where('playlist_id', $playlist['id'])
+                ->findColumn('track_id');
+
+            $tracks = !empty($trackIds)
+                ? $trackModel->whereIn('id', $trackIds)->findAll()
+                : [];
+
+            $duration = 0;
+            foreach ($tracks as $track) {
+                $duration += $track->duration;
+            }
+
+            $playlist['tracks'] = $tracks;
+            $playlist['duration'] = $duration;
+            $totalDuration += $duration;
+        }
         $userModel = new UserModel();
         $user = $userModel->find($currentUserId);
         $username = $user['username'] ?? 'Usuario';
 
         return view('my_playlists_general', [
             'myPlaylists' => $myPlaylists,
-            'username' => $username
+            'username' => $username,
+            'totalDuration' => $totalDuration,
         ]);
-
-        /*
-
-        $playlist = null;//$this->getPlaylist($playlistID);
-
-        $playlist->tracks = null;//$this->getTracks($playlist->id);
-
-        $playlistId = $playlist->id;
-        $playlistName = $playlist->name ?? 'Playlist Not Found';
-        $tracks = $this->getTracks($playlist->id);
-        $playlist->tracks = $tracks;
-
-        $playlistCreator = $playlist->user_name ?? 'Unknown Creator';
-        $playlistCreatorId = $playlist->user_id ?? 0;
-        $creationDate = date('Y-m-d', strtotime($playlist->creationdate ?? 'now'));
-
-        $totalDuration = 0;
-        foreach ($playlist->tracks as $track) {
-            $totalDuration += $track->duration;
-        }
-
-        $formattedTotalDuration = gmdate("H:i:s", $totalDuration);
-        $tracksCount = count($playlist->tracks);
-
-        $session = session();
-        $userSession = $session->get('user');
-        $currentUserId = $userSession['id'] ?? null;
-        $isOwner = true;
-
-        return view('my_playlists_general', [
-            'playlist' => $playlist,
-            'playlistId' => $playlistId,
-            'playlistName' => $playlistName,
-            'playlistImage' => $playlistImage,
-            'playlistCreator' => $playlistCreator,
-            'playlistCreatorId' => $playlistCreatorId,
-            'creationDate' => $creationDate,
-            'tracks' => $playlist->tracks,
-            'formattedTotalDuration' => $formattedTotalDuration,
-            'tracksCount' => $tracksCount,
-            'isOwner' => $isOwner
-        ]);*/
     }
     public function viewPlaylist($playlistID) {
         // Utilitza la imatge del primer track, si existeix
