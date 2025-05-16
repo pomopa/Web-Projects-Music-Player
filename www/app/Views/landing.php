@@ -22,9 +22,9 @@ Landing Page
         With LSpoty you will be able to:
     </p>
     <ul style="list-style: none">
-        <li">Search for music from your favorite artists.</li>
-        <li>Discover what everyone is listening to!</li>
-        <li>Create your own playlists to enjoy on the go.</li>
+        <li>🎶 Search for music from your favorite artists 🎶</li>
+        <li>🎧 Discover what everyone is listening to 🎧</li>
+        <li>⏯️ Create your own playlists to enjoy on the go. ⏯️</li>
     </ul>
     <?php if(session()->getFlashdata('success')): ?>
         <div class="alert alert-success">

@@ -21,10 +21,7 @@ class TrackModel extends Model
         'album_id',
         'album_name',
         'duration',
-        'player_url',
-        'playlist_id',
-        'created_at',
-        'updated_at'
+        'player_url'
     ];
 
     protected $useTimestamps = true;
@@ -41,7 +38,6 @@ class TrackModel extends Model
         'album_name'   => 'required|string|max_length[255]',
         'duration'     => 'required|integer|greater_than[0]',
         'player_url'   => 'required|valid_url|max_length[255]',
-        'playlist_id'  => 'required|integer',
     ];
 
     protected $validationMessages = [
@@ -87,10 +83,6 @@ class TrackModel extends Model
             'required'   => 'The player URL is required.',
             'valid_url'  => 'The player URL must be valid.',
             'max_length' => 'The player URL must not exceed 255 characters.'
-        ],
-        'playlist_id' => [
-            'required'   => 'The album name is required.',
-            'integer' => 'The playlist_id must be an integer.'
         ]
     ];
 

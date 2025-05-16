@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class Profile extends BaseController
 {
-    private const UPLOADS_DIR = WRITEPATH . 'uploads';
+    private const UPLOADS_DIR = WRITEPATH . 'uploads/';
     private UserModel $userModel;
 
     public function __construct(){
@@ -28,6 +28,23 @@ class Profile extends BaseController
         return view('profile', $data);
     }
 
+    private function removeFiles(string $folderPath)
+    {
+        $files = array_diff(scandir($folderPath), ['.', '..']);
+
+        foreach ($files as $file) {
+            $fullPath = $folderPath . DIRECTORY_SEPARATOR . $file;
+            if (is_dir($fullPath)) {
+                $this->removeFiles($fullPath);
+            } else {
+                unlink($fullPath);
+            }
+        }
+
+        rmdir($folderPath);
+        return null;
+    }
+
     private function delete(): RedirectResponse
     {
         $session = session();
@@ -35,12 +52,8 @@ class Profile extends BaseController
 
         $user = (object) $this->userModel->find($userID['id']);
         $this->userModel->delete($userID['id']);
-        if (!empty($user->profile_pic)) {
-            $oldPath = self::UPLOADS_DIR . '/' . $user->profile_pic;
-            if (file_exists($oldPath)) {
-                unlink($oldPath);
-            }
-        }
+        $folderPath = self::UPLOADS_DIR . $userID['id'];
+        $this->removeFiles($folderPath);
         $session->destroy();
 
         session()->setFlashdata('success', 'The user data was removed successfully.');
@@ -82,18 +95,18 @@ class Profile extends BaseController
             $userID = $session->get('user');
             $user = (object) $this->userModel->find($userID['id']);
 
-            $file = $this->request->getFile('profilePicture');
+            $file = $this->request->getFile('picture');
             if (!empty($file) && $file->getSize() !== 0) {
                 $newName = $file->getRandomName();
 
                 if (!empty($user->profile_pic)) {
-                    $oldPath = self::UPLOADS_DIR . '/' . $user->profile_pic;
+                    $oldPath = self::UPLOADS_DIR . $userID['id'] . '/profile/' . $user->profile_pic;
                     if (file_exists($oldPath)) {
                         unlink($oldPath);
                     }
                 }
 
-                if (!$file->move(self::UPLOADS_DIR, $newName)) {
+                if (!$file->move(self::UPLOADS_DIR, $userID['id'] . '/profile/' . $newName)) {
                     session()->setFlashdata('error', 'There was an error uploading your file.');
                     return $this->index();
                 }
