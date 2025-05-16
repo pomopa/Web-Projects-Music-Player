@@ -28,13 +28,66 @@ class MyPlaylist extends BaseController
     }
 
     public function index() {
-        return view('my-playlist_general');
-    }
-    public function viewPlaylist($id) {
-        // Utilitza la imatge del primer track, si existeix
-        $playlistImage = !empty($tracks) ? $tracks[0]->album_image : '/assets/img/default-cover.png';
+        $session = session();
+        $userSession = $session->get('user');
+        $currentUserId = $userSession['id'] ?? null;
 
-        $playlist = $this->getPlaylist($id);
+        $myPlaylists = $this->playlistModel
+            ->where('user_id', $currentUserId)
+            ->findAll();
+
+        return view('my_playlists_general', [
+            'myPlaylists' => $myPlaylists,
+            'isOwner' => true
+        ]);
+
+        /*
+
+        $playlist = null;//$this->getPlaylist($playlistID);
+
+        $playlist->tracks = null;//$this->getTracks($playlist->id);
+
+        $playlistId = $playlist->id;
+        $playlistName = $playlist->name ?? 'Playlist Not Found';
+        $tracks = $this->getTracks($playlist->id);
+        $playlist->tracks = $tracks;
+
+        $playlistCreator = $playlist->user_name ?? 'Unknown Creator';
+        $playlistCreatorId = $playlist->user_id ?? 0;
+        $creationDate = date('Y-m-d', strtotime($playlist->creationdate ?? 'now'));
+
+        $totalDuration = 0;
+        foreach ($playlist->tracks as $track) {
+            $totalDuration += $track->duration;
+        }
+
+        $formattedTotalDuration = gmdate("H:i:s", $totalDuration);
+        $tracksCount = count($playlist->tracks);
+
+        $session = session();
+        $userSession = $session->get('user');
+        $currentUserId = $userSession['id'] ?? null;
+        $isOwner = true;
+
+        return view('my_playlists_general', [
+            'playlist' => $playlist,
+            'playlistId' => $playlistId,
+            'playlistName' => $playlistName,
+            'playlistImage' => $playlistImage,
+            'playlistCreator' => $playlistCreator,
+            'playlistCreatorId' => $playlistCreatorId,
+            'creationDate' => $creationDate,
+            'tracks' => $playlist->tracks,
+            'formattedTotalDuration' => $formattedTotalDuration,
+            'tracksCount' => $tracksCount,
+            'isOwner' => $isOwner
+        ]);*/
+    }
+    public function viewPlaylist($playlistID) {
+        // Utilitza la imatge del primer track, si existeix
+        $playlistImage = '/assets/img/default-cover.png';//!empty($tracks) ? $tracks[0]->album_image : '/assets/img/default-cover.png';
+
+        $playlist = $this->getPlaylist($playlistID);
 
         $playlist->tracks = $this->getTracks($playlist->id);
 
@@ -73,10 +126,6 @@ class MyPlaylist extends BaseController
             'tracksCount' => $tracksCount,
             'isOwner' => $isOwner
         ]);
-    }
-
-    public function viewPlaylist(int $playlistID) {
-
     }
 
     public function createPlaylist() {
