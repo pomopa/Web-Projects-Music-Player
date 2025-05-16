@@ -133,6 +133,10 @@ class MyPlaylist extends BaseController
         ]);
     }
 
+    public function createPlaylistView() {
+        return View('create_playlist');
+    }
+
     public function createPlaylist() {
         helper(['form']);
         $rules = [
