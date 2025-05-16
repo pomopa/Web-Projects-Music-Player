@@ -6,6 +6,7 @@ use App\Models\PlaylistModel;
 use App\Models\TrackModel;
 use App\Models\TrackPlaylistModel;
 use GuzzleHttp\Client;
+use App\Models\UserModel;
 use function PHPUnit\Framework\isNull;
 
 class MyPlaylist extends BaseController
@@ -36,9 +37,13 @@ class MyPlaylist extends BaseController
             ->where('user_id', $currentUserId)
             ->findAll();
 
+        $userModel = new UserModel();
+        $user = $userModel->find($currentUserId);
+        $username = $user['username'] ?? 'Usuario';
+
         return view('my_playlists_general', [
             'myPlaylists' => $myPlaylists,
-            'isOwner' => true
+            'username' => $username
         ]);
 
         /*
