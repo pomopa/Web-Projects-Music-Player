@@ -17,7 +17,8 @@ class MyPlaylist extends BaseController
     private string $apiKey = "aab3b83e";
     private const UPLOADS_DIR = WRITEPATH . 'uploads/';
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->trackModel = new TrackModel();
         $this->playlistModel = new PlaylistModel();
         $this->trackPlaylistModel = new TrackPlaylistModel();
@@ -27,6 +28,9 @@ class MyPlaylist extends BaseController
     }
 
     public function index() {
+        return view('my-playlist_general');
+    }
+    public function viewPlaylist($id) {
         // Utilitza la imatge del primer track, si existeix
         $playlistImage = !empty($tracks) ? $tracks[0]->album_image : '/assets/img/default-cover.png';
 
@@ -54,6 +58,7 @@ class MyPlaylist extends BaseController
         $session = session();
         $userSession = $session->get('user');
         $currentUserId = $userSession['id'] ?? null;
+        $isOwner = true;
 
         return view('my_playlists_general', [
             'playlist' => $playlist,
@@ -68,7 +73,6 @@ class MyPlaylist extends BaseController
             'tracksCount' => $tracksCount,
             'isOwner' => $isOwner
         ]);
-    }
     }
 
     public function viewPlaylist(int $playlistID) {
