@@ -12,6 +12,7 @@
     <!-- Playlist Detail CSS -->
     <link rel="stylesheet" href="<?= site_url('/assets/css/playlist-details.css') ?>">
     <link rel="stylesheet" href="<?= site_url('/assets/css/playlist-detail.css') ?>">
+    <script src="<?= site_url('/assets/js/playlist-player-my-playlists.js') ?>"></script
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -74,7 +75,10 @@
                         $coverPath = WRITEPATH . 'uploads/' . $playlist['user_id'] . '/playlists/' . $playlist['cover'];
                         $hasCover = !empty($playlist['cover']) && file_exists($coverPath);
                         ?>
-                        <div class="playlist-item">
+                        <div class="playlist-item" data-tracks='<?= json_encode($playlist['tracks']) ?>'>
+                            <button class="justify-content-center action-btn primary playPlaylistButton" id="playPlaylistButton" data-playlist='<?= json_encode($playlist['tracks']) ?>' onclick='playPlaylist(<?= json_encode($playlist['tracks']) ?>, "<?= esc($playlist['name']) ?>"); '>
+                                <i class="fa fa-play text-light2"></i>
+                            </button>
                             <div class="track-number"><?= $playlistNumber ?></div>
                             <div class="track-image">
                                 <?php if ($hasCover): ?>
@@ -90,7 +94,7 @@
                                 <?php endif; ?>
                             </div>
                             <button class="track-play-btn" onclick="window.location.href='<?= base_url(route_to('my-playlist_exact_view', $playlistId)) ?>'">
-                                <i class="fa fa-play"></i>
+                                <i class="fa fa-play text-light"></i>
                             </button>
                             <div class="track-title">
                                 <a href="/my-playlists/<?= $playlistId ?>" class="text-decoration-none text-white">
@@ -112,5 +116,33 @@
             </div>
         </div>
     </div>
+
+    <div id="playlistPlayerBar" class="playlist-player-bar bg-dark text-white px-3 py-2"
+         style="position: fixed; bottom: 0; left: 0; right: 0; display: none; z-index: 9999; border-top: 1px solid #555;">
+        <div class="d-flex justify-content-center align-items-center text-center gap-4">
+            <div class="text-end" style="line-height: 1;">
+                <span id="playerPlaylistName" class="fw-bold d-block"></span>
+                <span id="playerTrackName" class="text-muted small d-block"></span>
+            </div>
+
+            <div>
+                <button id="pauseResumeBtn" class="btn btn-outline-light btn-sm" title="Pause/Resume">
+                    <i id="pauseResumeIcon" class="fa fa-pause"></i>
+                </button>
+            </div>
+
+            <div>
+                <button id="nextTrackBtn" class="btn btn-outline-light btn-sm" title="Next Track">
+                    <i class="fa fa-forward"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
 
 <?= $this->endSection() ?>

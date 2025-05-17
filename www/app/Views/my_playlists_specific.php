@@ -186,6 +186,7 @@
 
 <?= $this->section('javascript') ?>
 <script src="../../../assets/js/signup.js"></script>
+<script src="<?= site_url('/assets/js/playlist-player.js') ?>"></script>
 <script>
     const deletePlaylistBaseURL = "<?= base_url(route_to('my-playlist_delete', 0)) ?>".replace('/0', '');
     const updatePlaylistBaseURL = "<?= base_url(route_to('my-playlist_put', 0)) ?>".replace('/0', '');
