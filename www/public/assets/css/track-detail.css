@@ -160,7 +160,6 @@ a:hover {
     background-color: #19a349;
 }
 
-/* Dropdown menu styling */
 .dropdown-menu {
     background-color: var(--lspoty-card-bg);
     border: none;
@@ -204,13 +203,11 @@ a:hover {
     border-radius: 10px;
 }
 
-/* Active states for buttons */
 .action-btn.active,
 .control-btn.active {
     color: var(--lspoty-primary);
 }
 
-/* Responsive adjustments */
 @media (max-width: 1000px) {
     .track-cover {
         width: 180px;
@@ -244,7 +241,6 @@ a:hover {
     flex-wrap: wrap;
 }
 
-/* Hacer que los cards se extiendan para llenar la altura disponible */
 .equal-height-row > div {
     display: flex;
     flex-direction: column;
@@ -256,7 +252,6 @@ a:hover {
     margin-bottom: 0;
 }
 
-/* Aplicar estos estilos a los contenedores de información */
 .track-info-card,
 .artist-info-card {
     height: 100%;
@@ -264,7 +259,6 @@ a:hover {
     flex-direction: column;
 }
 
-/* Para dispositivos móviles */
 @media (max-width: 768px) {
     .equal-height-row > div {
         margin-bottom: 20px;

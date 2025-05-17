@@ -8,7 +8,7 @@
 
 .playlist-item {
     display: grid;
-    grid-template-columns: 40px 50px 1fr 70px 80px 10px;
+    grid-template-columns: 30px 40px 50px 1fr 70px 80px 10px;
     align-items: center;
     padding: 0.6rem 1rem;
     transition: background-color 0.2s ease;
@@ -138,7 +138,7 @@
     }
 
     .playlist-item {
-        grid-template-columns: 30px 40px 1fr 60px 70px 10px;
+        grid-template-columns: 40px 40px 1fr 60px 70px 10px;
         padding: 0.5rem;
     }
 
@@ -178,4 +178,57 @@
     .track-actions {
         display: none;
     }
+}
+
+/* Playlist Player Bar */
+#playlistPlayerBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none; /* Solo se muestra si hay música */
+    z-index: 9999;
+    background-color: #121212;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-top: 1px solid #555;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+}
+
+#playlistPlayerBar .d-flex {
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+#playlistPlayerBar .fw-bold {
+    font-size: 0.95rem;
+}
+
+#playerTrackName {
+    font-size: 0.875rem;
+    color: #ccc;
+}
+
+#pauseResumeBtn {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#pauseResumeBtn:hover {
+    background-color: #ddd;
+}
+
+#pauseResumeIcon {
+    font-size: 1rem;
 }
