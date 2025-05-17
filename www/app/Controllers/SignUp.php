@@ -28,24 +28,24 @@ class SignUp extends BaseController
 
         $errors = [
             'email' => [
-                'required'    => 'The Email field is required.',
-                'valid_email' => 'The email address is not valid.',
-                'is_email_unique'   => 'The email address is already registered.',
-                'is_from_domain' => 'Only emails from the domain @students.salle.url.edu, @ext.salle.url.edu or @salle.url.edu are accepted.',
-                'max_length' => 'The email address must be less than 40 characters long.'
+                'required'    => lang('Validation.required', ['email']),
+                'valid_email' => lang('Validation.valid_email'),
+                'is_email_unique'   => lang('Validation.unique_email'),
+                'is_from_domain' => lang('Validation.is_from_domain'),
+                'max_length' => lang('Validation.max_length', ['email', '60'])
             ],
             'password' => [
-                'required'   => 'The Password field is required.',
-                'min_length' => 'The password must contain at least 8 characters.',
-                'special_password_rule' => 'The password must contain both upper and lower case letters and numbers.',
-                'max_length' => 'The password must be less than 40 characters long.'
+                'required'   => lang('Validation.required', [lang('App.password')]),
+                'min_length' => lang('Validation.min_length'),
+                'special_password_rule' => lang('Validation.special_password_rule'),
+                'max_length' => lang('Validation.max_length', [lang('App.password'), '40']),
             ],
             'repeat_password' => [
-                'required'   => 'The Repeat Password field is required.',
-                'matches'     => 'Passwords do not match.'
+                'required'   => lang('Validation.required', [lang('App.repeat_password')]),
+                'matches'     => lang('Validation.matches'),
             ],
             'username' => [
-                'max_length' => 'The username must be less than 20 characters long.'
+                'max_length' => lang('Validation.max_length', [lang('App.username'), '20']),
             ]
         ];
 
@@ -83,7 +83,7 @@ class SignUp extends BaseController
                     $newName = $file->getRandomName();
 
                     if (!$file->move(self::UPLOADS_DIR, $profilePath . $newName)) {
-                        session()->setFlashdata('errorImage', 'There was an error uploading your file.');
+                        session()->setFlashdata('errorImage', lang('Validation.error_uploading'));
                         return redirect()->back();
                     }
 

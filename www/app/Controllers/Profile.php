@@ -3,9 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
-use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\HTTP\RedirectResponse;
-use Psr\Http\Message\ResponseInterface;
 
 class Profile extends BaseController
 {
@@ -56,7 +54,7 @@ class Profile extends BaseController
         $this->removeFiles($folderPath);
         $session->destroy();
 
-        session()->setFlashdata('success', 'The user data was removed successfully.');
+        session()->setFlashdata('success', lang('Validation.removal_successfully'));
         return redirect()->to(base_url(route_to('landing_view')));
     }
 
@@ -73,20 +71,20 @@ class Profile extends BaseController
 
         $errors = [
             'password' => [
-                'min_length' => 'The password must contain at least 8 characters.',
-                'special_password_rule' => 'The password must contain both upper and lower case letters and numbers.',
-                'max_length' => 'The password must be less than 40 characters long.'
+                'min_length' => lang('Validation.min_length'),
+                'special_password_rule' => lang('Validation.special_password_rule'),
+                'max_length' => lang('Validation.max_length', [lang('App.password'), '40']),
             ],
             'age' => [
-                'integer' => 'The age must be an integer.',
-                'greater_than_equal_to' => 'The age must be greater or equal to 0.',
-                'less_than_equal_to' => 'The age must be less than or equal to 125.'
+                'integer' => lang('Validation.integer'),
+                'greater_than_equal_to' => lang('Validation.greater_than_equal_to'),
+                'less_than_equal_to' => lang('Validation.less_than_equal_to'),
             ],
             'confirm_password' => [
-                'matches'     => 'Passwords do not match.'
+                'matches'     => lang('Validation.matches'),
             ],
             'username' => [
-                'max_length' => 'The username must be less than 20 characters long.'
+                'max_length' => lang('Validation.max_length', [lang('App.username'), '20']),
             ]
         ];
 
@@ -107,7 +105,7 @@ class Profile extends BaseController
                 }
 
                 if (!$file->move(self::UPLOADS_DIR, $userID['id'] . '/profile/' . $newName)) {
-                    session()->setFlashdata('error', 'There was an error uploading your file.');
+                    session()->setFlashdata('error', lang('Validation.error_uploading'));
                     return $this->index();
                 }
 
@@ -125,9 +123,9 @@ class Profile extends BaseController
             $user->username = $this->request->getPost('username');
 
             if ($this->userModel->update($userID['id'], $user)) {
-                session()->setFlashdata('success', 'The user data was updated successfully.');
+                session()->setFlashdata('success', lang('Validation.user_updated_successfully'));
             } else {
-                session()->setFlashdata('error', 'There was an error updating the data.');
+                session()->setFlashdata('error', lang('Validation.error_while_updating'));
             }
         }
 
