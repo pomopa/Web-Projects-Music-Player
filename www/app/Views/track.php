@@ -31,11 +31,8 @@
             </div>
 
             <div class="actions-container">
-                <button class="action-btn primary" id="playButton" data-track-url="<?= esc($track->audio) ?>">
-                    <i class="fa fa-play me-1"></i> <?= lang('App.play') ?>
                 <button class="action-btn primary" id="playButton" data-track-url="<?= esc($track->playerUrl) ?>">
-                    <i class="fa fa-play me-1"></i> Play
-                </button>
+                    <i class="fa fa-play me-1"></i> <?= lang('App.play') ?>
                 <div class="dropdown">
                     <button class="action-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-plus me-1"></i> <?= lang('App.add_to_playlist') ?>
@@ -121,7 +118,7 @@
                     <img src="<?= esc($track->artist_image) ?>"
                          alt="Artist image" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
                     <div>
-                        <h4 class="text-white mb-0 fs-5"><?= esc($track->artist_name) ?></h4>
+                        <h4 class="text-white mb-0 fs-5"><?= esc($track->artistName) ?></h4>
                     </div>
                 </div>
                 <?php $artistUrl = site_url('/artist/' . $track->artistId); ?>

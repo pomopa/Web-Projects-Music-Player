@@ -72,7 +72,7 @@
                     ?>
                     <div class="track-item">
                         <div class="track-number"><?= $trackNumber ?></div>
-                        <button class="track-play-btn" data-track-id="<?= $trackId ?>" data-track-url="<?= $track['audio'] ?>">
+                        <button class="track-play-btn" data-track-id="<?= $trackId ?>" data-track-url="<?= $track['player_url'] ?>">
                             <i class="fa fa-play"></i>
                         </button>
                         <div class="track-title">

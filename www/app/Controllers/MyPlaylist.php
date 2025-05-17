@@ -64,7 +64,7 @@ class MyPlaylist extends BaseController
 
             $duration = 0;
             foreach ($tracks as $track) {
-                $duration += $track->duration;
+                $duration += $track['duration'];
             }
 
             $playlist['tracks'] = $tracks;
