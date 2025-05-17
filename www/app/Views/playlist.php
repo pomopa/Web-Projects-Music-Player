@@ -5,11 +5,6 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('styles') ?>
-    <!-- CSS Files -->
-    <link id="pagestyle" href="<?= site_url('/assets/css/material-dashboard.css?v=3.1.0') ?>" rel="stylesheet" />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
-    <!-- Playlist Detail CSS -->
     <link rel="stylesheet" href="<?= site_url('/assets/css/playlist-details.css') ?>">
 <?= $this->endSection() ?>
 
@@ -17,7 +12,7 @@
 <div class="row mt-4">
     <div class="col-12">
         <button class="back-button" onclick="history.back()">
-            <i class="fa fa-arrow-left"></i> Back
+            <i class="fa fa-arrow-left"></i> <?= lang('App.back') ?>
         </button>
     </div>
 </div>
@@ -41,19 +36,19 @@
                     <?= esc($playlist->creationdate) ?>
                 <?php endif; ?>
             </span>
-            <span><i class="fa fa-music"></i> <?= count($playlist->tracks) ?> tracks</span>
+            <span><i class="fa fa-music"></i> <?= count($playlist->tracks) ?> <?= lang('App.tracks') ?></span>
             <span><i class="fa fa-clock"></i> <?= gmdate("H:i:s", $playlist->totalDuration) ?></span>
         </div>
 
         <div class="playlist-actions">
             <button class="action-btn primary" id="playPlaylistButton">
-                <i class="fa fa-play me-1"></i> Play Playlist
+                <i class="fa fa-play me-1"></i> <?= lang('App.play_playlist') ?>
             </button>
             <button class="action-btn" id="addPlaylistButton">
-                <i class="fa fa-plus me-1"></i> Add to My Playlists
+                <i class="fa fa-plus me-1"></i> <?= lang('App.add_to_playlist') ?>
             </button>
             <button class="action-btn" id="shareButton">
-                <i class="fa fa-share-alt me-1"></i> Share
+                <i class="fa fa-share-alt me-1"></i> <?= lang('App.share') ?>
             </button>
         </div>
     </div>
@@ -61,7 +56,7 @@
 
     <div class="row mt-4">
         <div class="col-12">
-            <h2 class="fw-bold fs-4 text-white mb-3">Tracks</h2>
+            <h2 class="fw-bold fs-4 text-white mb-3"><?= lang('App.tracks') ?></h2>
             <div class="track-list">
                 <?php if (!empty($playlist->tracks)): ?>
                     <?php $trackNumber = 1; ?>
@@ -100,19 +95,19 @@
                                             <li><hr class="dropdown-divider"></li>
                                         <?php else: ?>
                                             <li>
-                                                <span class="dropdown-item text-muted">No playlists available</span>
+                                                <span class="dropdown-item text-muted"><?= lang('App.no_playlists_available') ?></span>
                                             </li>
                                             <li><hr class="dropdown-divider"></li>
                                         <?php endif; ?>
 
                                         <li>
                                             <a class="dropdown-item" href="/track/<?= $track->id ?>">
-                                                <i class="fa fa-info-circle me-2"></i>Track details
+                                                <i class="fa fa-info-circle me-2"></i><?= lang('App.track_information') ?>
                                             </a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="#" data-track-id="<?= $track->id ?>">
-                                                <i class="fa fa-share-alt me-2"></i>Share track
+                                                <i class="fa fa-share-alt me-2"></i><?= lang('App.share_track') ?>
                                             </a>
                                         </li>
                                     </ul>
@@ -124,7 +119,7 @@
                 <?php else: ?>
                     <div class="p-4 text-center text-secondary">
                         <i class="fa fa-info-circle mb-2 fs-3"></i>
-                        <p>No tracks available in this playlist.</p>
+                        <p><?= lang('App.no_tracks_for_playlist') ?></p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -134,7 +129,7 @@
 <div class="row mt-4 mb-5">
     <div class="col-md-4">
         <div class="bg-gray-800 rounded p-4 mb-4">
-            <h3 class="fw-bold fs-4 text-white mb-3">Created by</h3>
+            <h3 class="fw-bold fs-4 text-white mb-3"><?= lang('App.created_by') ?></h3>
             <div class="d-flex align-items-center mb-3">
                 <img src="<?= esc($playlist->owner->image) ?>"
                      alt="User image" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
@@ -147,7 +142,7 @@
 
     <div class="col-md-8">
         <div class="bg-gray-800 rounded p-4 mb-4">
-            <h3 class="fw-bold fs-4 text-white mb-3">More Playlists by <?= esc($playlist->owner->dispname) ?></h3>
+            <h3 class="fw-bold fs-4 text-white mb-3"><?= lang('App.more_playlists_by') ?> <?= esc($playlist->owner->dispname) ?></h3>
             <div class="row g-3">
                 <?php if(!empty($playlist->similarPlaylists)): ?>
                     <?php foreach($playlist->similarPlaylists as $ply): ?>
@@ -164,7 +159,7 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <div class="col-12">
-                        <p class="text-muted">No other playlists created by this user.</p>
+                        <p class="text-muted"><?= lang('App.no_other_playlists') ?></p>
                     </div>
                 <?php endif; ?>
             </div>
