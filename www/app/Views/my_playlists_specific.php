@@ -23,9 +23,22 @@
 </div>
 
 <div class="row playlist-header">
-    <div class="col-lg-3 col-md-4 col-sm-12 d-flex justify-content-center justify-content-md-start mb-4 mb-md-0">
-        <img src="<?= esc($playlistImage) ?>" alt="Playlist cover" class="playlist-cover">
-    </div>
+    <?php
+        $coverPath = WRITEPATH . 'uploads/' . $playlist['user_id'] . '/playlists/' . $playlist['cover'];
+        $hasCover = !empty($playlist['cover']) && file_exists($coverPath);
+        ?>
+
+    <?php if ($hasCover): ?>
+        <img src="<?= base_url(route_to('my-playlist_picture', $playlist['id'])) ?>"
+             alt="Playlist Cover"
+             class="rounded img-fluid border border-success"
+             style="width: 160px; height: 160px; padding: 0; object-fit: cover; ">
+    <?php else: ?>
+        <div class="rounded bg-secondary d-flex align-items-center justify-content-center border border-success"
+             style="width: 160px; height: 160px; padding: 0;">
+            <i class="fa fa-music fa-4x text-light2"></i>
+        </div>
+    <?php endif; ?>
     <div class="col-lg-9 col-md-8 col-sm-12 playlist-details">
         <h1 class="text-white display-5 fw-bold mb-1"><?= esc($playlist['name']) ?></h1>
         <h2 class="text-secondary fs-4 mb-3 d-block text-decoration-none hover-text-success">
