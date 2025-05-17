@@ -59,54 +59,77 @@
     </div>
 </div>
 
-<div class="row mt-4">
-    <div class="col-12">
-        <h2 class="fw-bold fs-4 text-white mb-3">Tracks</h2>
-        <div class="track-list">
-            <?php if (!empty($playlist->tracks)): ?>
-                <?php $trackNumber = 1; ?>
-                <?php foreach ($playlist->tracks as $track): ?>
-                    <?php
-                    $trackDuration = gmdate("i:s", $track->duration);
-                    $trackId = $track->id;
-                    ?>
-                    <div class="track-item">
-                        <div class="track-number"><?= $trackNumber ?></div>
-                        <button class="track-play-btn" data-track-id="<?= $trackId ?>" data-track-url="<?= $track->audio ?>">
-                            <i class="fa fa-play"></i>
-                        </button>
-                        <div class="track-title">
-                            <a href="/track/<?= $trackId ?>" class="text-decoration-none text-white">
-                                <?= esc($track->name) ?>
-                            </a>
-                            <!-- Progress will be added here dynamically -->
-                        </div>
-                        <div class="track-duration"><?= $trackDuration ?></div>
-                        <div class="track-actions">
-                            <div class="dropdown position-relative">
-                                <button class="dropdown-toggle" type="button" id="trackDropdown<?= $trackId ?>" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="trackDropdown<?= $trackId ?>">
-                                    <li><a class="dropdown-item" href="/track/<?= $trackId ?>"><i class="fa fa-info-circle me-2"></i>Track details</a></li>
-                                    <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-plus me-2"></i>Add to playlist</a></li>
-                                    <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-share-alt me-2"></i>Share track</a></li>
-                                    <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-times me-2"></i>Remove from playlist</a></li>
-                                </ul>
+    <div class="row mt-4">
+        <div class="col-12">
+            <h2 class="fw-bold fs-4 text-white mb-3">Tracks</h2>
+            <div class="track-list">
+                <?php if (!empty($playlist->tracks)): ?>
+                    <?php $trackNumber = 1; ?>
+                    <?php foreach ($playlist->tracks as $track): ?>
+                        <?php
+                        $trackDuration = gmdate("i:s", $track->duration);
+                        $trackId = $track->id;
+                        ?>
+                        <div class="track-item">
+                            <div class="track-number"><?= $trackNumber ?></div>
+                            <button class="track-play-btn" data-track-id="<?= $trackId ?>" data-track-url="<?= $track->playerUrl ?>">
+                                <i class="fa fa-play"></i>
+                            </button>
+                            <div class="track-title">
+                                <a href="/track/<?= $trackId ?>" class="text-decoration-none text-white">
+                                    <?= esc($track->name) ?>
+                                </a>
+                                <!-- Progress will be added here dynamically -->
+                            </div>
+                            <div class="track-duration"><?= $trackDuration ?></div>
+                            <div class="track-actions">
+                                <div class="dropdown position-relative">
+                                    <button class="dropdown-toggle" type="button" id="trackDropdown<?= $track->id ?>" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="trackDropdown<?= $track->id ?>">
+
+                                        <?php if (!empty($playlist->playlists)): ?>
+                                            <?php foreach ($playlist->playlists as $userPlaylist): ?>
+                                                <li>
+                                                    <a class="dropdown-item" href="#" onclick="addToPlaylist(<?= $userPlaylist['id'] ?>, <?= $track->id ?>)">
+                                                        <i class="fa fa-plus me-2"></i><?= esc($userPlaylist['name']) ?>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                            <li><hr class="dropdown-divider"></li>
+                                        <?php else: ?>
+                                            <li>
+                                                <span class="dropdown-item text-muted">No playlists available</span>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                        <?php endif; ?>
+
+                                        <li>
+                                            <a class="dropdown-item" href="/track/<?= $track->id ?>">
+                                                <i class="fa fa-info-circle me-2"></i>Track details
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-track-id="<?= $track->id ?>">
+                                                <i class="fa fa-share-alt me-2"></i>Share track
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
+                        <?php $trackNumber++; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="p-4 text-center text-secondary">
+                        <i class="fa fa-info-circle mb-2 fs-3"></i>
+                        <p>No tracks available in this playlist.</p>
                     </div>
-                    <?php $trackNumber++; ?>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="p-4 text-center text-secondary">
-                    <i class="fa fa-info-circle mb-2 fs-3"></i>
-                    <p>No tracks available in this playlist.</p>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
-</div>
 
 <div class="row mt-4 mb-5">
     <div class="col-md-4">
@@ -148,4 +171,33 @@
         </div>
     </div>
 </div>
+<?= $this->endSection() ?>
+
+<?= $this->section('scripts') ?>
+
+<script>
+    function addToPlaylist(playlistId, trackId) {
+        fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: JSON.stringify({})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error adding track to playlist');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Track added to playlist!');
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Failed to add track to playlist.');
+            });
+    }
+</script>
 <?= $this->endSection() ?>
