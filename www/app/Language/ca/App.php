@@ -75,7 +75,7 @@ return [
     'duration' => 'Durada',
     'license' => 'Llicència',
     'visit_artist' => 'Visita l’artista',
-    'play_album' => 'Reprodueix l\'Àlbum',
+    'play_album' => 'Reproduir l\'Àlbum',
     'more_albums_by' => 'Més àlbums de ',
     'share_track' => 'Comparteix la cançó',
     'no_tracks_for_album' => 'No s\'han trobat cançons per aquest àlbum.',
