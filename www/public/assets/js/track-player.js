@@ -1,10 +1,9 @@
 /**
  * LSpoty Track Player JavaScript
  * Handles audio playback, progress tracking, and playlist management
- */
+ **/
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Audio player elements
     const audioPlayer = document.getElementById('audioPlayer');
     const playPauseBtn = document.getElementById('playPauseBtn');
     const playButton = document.getElementById('playButton');
@@ -12,15 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const progressContainer = document.querySelector('.progress-container');
     const currentTimeDisplay = document.querySelector('.current-time');
     const durationDisplay = document.querySelector('.duration');
-    const likeButton = document.getElementById('likeButton');
     const shareButton = document.getElementById('shareButton');
 
-    // Initialize the audio player with the track URL from the play button
     if (playButton && playButton.dataset.trackUrl) {
         audioPlayer.src = playButton.dataset.trackUrl;
     }
 
-    // Format time in MM:SS
     function formatTime(seconds) {
         if (isNaN(seconds)) return "0:00";
         const minutes = Math.floor(seconds / 60);
@@ -28,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
     }
 
-    // Update progress bar
     function updateProgress() {
         if (audioPlayer.duration) {
             const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
@@ -37,13 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Play/Pause functionality
     function togglePlay() {
         if (audioPlayer.paused) {
             audioPlayer.play().catch(error => {
                 console.error("Error playing audio:", error);
-                // Show error message to user
-                alert("Could not play the track. Please try again.");
             });
             playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
             playButton.innerHTML = '<i class="fa fa-pause me-1"></i> Pause';
@@ -54,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Set up event listeners for audio controls
     if (playPauseBtn) {
         playPauseBtn.addEventListener('click', togglePlay);
     }
@@ -77,14 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
             currentTimeDisplay.textContent = '0:00';
         });
 
-        // Handle audio player errors
         audioPlayer.addEventListener('error', function(e) {
             console.error("Audio error:", e);
             alert("Error loading audio. Please try again later.");
         });
     }
 
-    // Click on progress bar to seek
     if (progressContainer) {
         progressContainer.addEventListener('click', function(e) {
             const clickPosition = (e.offsetX / this.offsetWidth);
@@ -95,43 +84,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle playlist functionality
-    const playlistItems = document.querySelectorAll('.playlist-add');
-    if (playlistItems.length > 0) {
-        playlistItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const playlistId = this.getAttribute('data-playlist-id');
-                const trackId = this.closest('.dropdown-menu').getAttribute('data-track-id');
-
-                // Here you would make an API call to add the track to the playlist
-                console.log(`Adding track ${trackId} to playlist ${playlistId}`);
-
-                // Simulate API call response
-                // In a real app, you would use fetch or axios to make this call
-                setTimeout(() => {
-                    alert(`Track added to ${this.textContent}`);
-                }, 500);
-            });
-        });
-    }
-
-
-    // Handle share button functionality
     if (shareButton) {
         shareButton.addEventListener('click', function() {
             const trackId = this.getAttribute('data-track-id');
             const shareUrl = `${window.location.origin}/track?id=${trackId}`;
 
-            // Check if the Web Share API is available
             if (navigator.share) {
                 navigator.share({
                     title: document.title,
                     url: shareUrl
                 }).catch(console.error);
             } else {
-                // Fallback for browsers that don't support the Web Share API
-                // Create a temporary input element to copy the URL
                 const tempInput = document.createElement('input');
                 document.body.appendChild(tempInput);
                 tempInput.value = shareUrl;
@@ -145,10 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle volume control (if needed)
-    // Example: You could add a volume slider and control it here
 
-    // Additional track controls (previous, next, shuffle, repeat)
     const prevButton = document.querySelector('.control-btn:nth-child(1)');
     const nextButton = document.querySelector('.control-btn:nth-child(3)');
 
@@ -163,4 +123,41 @@ document.addEventListener('DOMContentLoaded', function() {
             audioPlayer.currentTime = audioPlayer.duration;
         });
     }
+
+    document.querySelectorAll('.playlist-add').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const playlistId = this.dataset.playlistId;
+            const trackId = this.closest('ul').dataset.trackId;
+
+            console.log(`/my-playlists/${playlistId}/track/${trackId}`);
+
+            fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({})
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta del servidor');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Track added to playlist!');
+                    } else {
+                        throw new Error(data.message || 'Error adding track to playlist');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Failed to add track to playlist: ' + error.message);
+                });
+        });
+    });
 });

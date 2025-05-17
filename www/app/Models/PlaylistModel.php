@@ -39,4 +39,11 @@ class PlaylistModel extends Model
             'integer'  => 'The user_id must be an integer.'
         ]
     ];
+
+    public function getPlaylistsByUserId(int $userId): array
+    {
+        return $this->where('user_id', $userId)
+            ->findAll();
+    }
+
 }
