@@ -68,8 +68,8 @@
             </button>
         </div>
         <div id="wantToUpdate" class="hidden">
-            <label for="update_name" class="form-label text-light">New Playlist Name (Leave blank to not modify)</label>
-            <input type="text" id="update_name" class="form-control border border-light ps-2 mb-3" placeholder="New name...">
+            <label for="update_name" class="form-label text-light"><?= lang('App.rename_playlist_title') ?></label>
+            <input type="text" id="update_name" class="form-control border border-light ps-2 mb-3" placeholder="<?= lang('App.rename_playlist_placeholder') ?>">
 
             <?php /*<div class="input-group input-group-outline my-3" id="fileInputGroup">
                 <label for="update_name" class="form-label text-light">New Cover (Leave blank to not modify)</label>
@@ -88,7 +88,7 @@
                 <img id="previewImage" src="#" alt="Preview" class="d-block mx-auto" style="max-width: 200px; border-radius: 8px;" />
             </div> */?>
 
-            <button class="action-btn primary" onclick="updatePlaylist(<?= $playlist['id']?>)">Update Playlist</button>
+            <button class="action-btn primary" onclick="updatePlaylist(<?= $playlist['id']?>)"><?= lang('App.update_playlist_button') ?></button>
 
         </div>
     </div>

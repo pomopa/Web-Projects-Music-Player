@@ -107,4 +107,7 @@ return [
     'playlist_added' => 'Playlist added to your library!',
     'failed_to_add_playlist' => 'Failed to add playlist.',
     'error_adding_playlist' => 'Error adding playlist to your library',
+    'rename_playlist_title' => 'New Playlist Name',
+    'rename_playlist_placeholder' => 'New Name...',
+    'update_playlist_button' => 'Update Playlist',
 ];

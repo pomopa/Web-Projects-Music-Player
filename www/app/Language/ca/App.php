@@ -105,4 +105,7 @@ return [
     'track_added' => 'Track added to playlist!',
     'failed_to_add_track' => 'No s\'ha pogut afegir la cançó a la llista: ',
     'error_adding_playlist' => 'Hi ha hagut un error afegint la llista al àlbum',
+    'rename_playlist_title' => 'Nou nom de la Llista de Reproducció',
+    'rename_playlist_placeholder' => 'Nou Nom...',
+    'update_playlist_button' => 'Actualitzar Llista',
 ];
