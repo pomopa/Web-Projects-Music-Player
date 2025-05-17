@@ -259,28 +259,52 @@ class MyPlaylist extends BaseController
     public function putPlaylist(int $playlistID)
     {
         if (!$this->checkIfPlaylistFromUser($playlistID)) {
-            return $this->response->setStatusCode(404)->setJSON([
+            return $this->response->setStatusCode(403)->setJSON([
                 'status'  => 'error',
                 'message' => lang('Validation.playlist_not_exists')
             ]);
         }
 
-        $data = $this->request->getJSON(true);
+        $updateData = [];
 
-        if (empty($data['name']) && empty($data['picture'])) {
+        // nom
+        if ($this->request->getHeaderLine('Content-Type') === 'application/json') {
+            $json = $this->request->getJSON(true);
+            if (!empty($json['name'])) {
+                $updateData['name'] = trim($json['name']);
+            }
+        }
+
+        /*$file = $this->request->getFile('picture');
+
+
+        // Imatge
+        if ($file->getSize() !== 0) {
+            if ($file->isValid() && !$file->hasMoved()) {
+                $userId = session('user')['id'];
+                $newName = $file->getRandomName();
+                $uploadPath = WRITEPATH . 'uploads/' . $userId . '/playlists/';
+
+                // eliminar anterior imatge
+                $existing = $this->playlistModel->find($playlistID);
+                if (!empty($existing['cover'])) {
+                    $oldPath = $uploadPath . $existing['cover'];
+                    if (file_exists($oldPath)) {
+                        unlink($oldPath);
+                    }
+                }
+
+                $file->move($uploadPath, $newName);
+                $updateData['cover'] = $newName;
+            }
+        }*/
+
+        if (empty($updateData)) {
             return $this->response->setStatusCode(400)->setJSON([
                 'status'  => 'error',
                 'message' => lang('Validation.no_data')
             ]);
         }
-
-        $updateData = $this->playlistModel->find($playlistID);
-        if (!empty($data['name'])) {
-            $updateData['name'] = $data['name'];
-        }
-//        if (!empty($data['picture'])) {
-//            $updateData['picture'] = $data['picture'];
-//        }  TODO Possiblement s'ha de trobar alguna manera de canviar la imatge
 
         if (!$this->playlistModel->update($playlistID, $updateData)) {
             return $this->response->setStatusCode(500)->setJSON([

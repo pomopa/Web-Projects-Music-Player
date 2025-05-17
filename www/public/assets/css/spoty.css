@@ -238,3 +238,7 @@ footer.py-3 {
     margin-top: 0.25rem;
     font-weight: 500;
 }
+
+.hidden {
+    display: none;
+}

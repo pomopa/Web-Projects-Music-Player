@@ -58,12 +58,38 @@
             <button class="action-btn primary" id="playPlaylistButton">
                 <i class="fa fa-play me-1"></i> <?= lang('App.play_playlist') ?>
             </button>
-            <button class="action-btn" id="renamePlaylistButton">
+
+            <button class="action-btn" id="wantToUpdateButton">
                 <i class="fa fa-pencil-alt me-1"></i> <?= lang('App.rename_playlist') ?>
             </button>
-            <button class="action-btn alert-danger" id="deleteButton">
+            <button class="action-btn alert-danger" id="deleteButton" onclick="deletePlaylist(<?= $playlist['id']?>, '<?= esc(addslashes($playlist['name'])) ?>')">
                 <i class="fa fa-trash me-1"></i> <?= lang('App.delete_playlist') ?>
+
             </button>
+        </div>
+        <div id="wantToUpdate" class="hidden">
+            <label for="update_name" class="form-label text-light">New Playlist Name (Leave blank to not modify)</label>
+            <input type="text" id="update_name" class="form-control border border-light ps-2 mb-3" placeholder="New name...">
+
+            <?php /*<div class="input-group input-group-outline my-3" id="fileInputGroup">
+                <label for="update_name" class="form-label text-light">New Cover (Leave blank to not modify)</label>
+
+                <!-- input ocult -->
+                <input type="file" name="picture" id="picture" class="d-none" accept=".jpeg,.jpg,.png,.gif,image/jpeg,image/png,image/gif" onchange="handleImagePreview(this)">
+
+                <!-- label clicable -->
+                <label for="picture" class="form-control " style="cursor: pointer;">
+                    <span id="fileLabel">&nbsp;</span>
+                </label>
+            </div>
+
+            <!-- Previsualització de la imatge seleccionada -->
+            <div id="previewContainer" class="mb-3" style="display: none;">
+                <img id="previewImage" src="#" alt="Preview" class="d-block mx-auto" style="max-width: 200px; border-radius: 8px;" />
+            </div> */?>
+
+            <button class="action-btn primary" onclick="updatePlaylist(<?= $playlist['id']?>)">Update Playlist</button>
+
         </div>
     </div>
 </div>
@@ -154,4 +180,119 @@
         </div>
     </div>
 </div>
+<?= $this->endSection() ?>
+
+<?= $this->section('javascript') ?>
+<script src="../../../assets/js/signup.js"></script>
+<script src="<?= site_url('/assets/js/playlist-player.js') ?>"></script>
+<script>
+    const deletePlaylistBaseURL = "<?= base_url(route_to('my-playlist_delete', 0)) ?>".replace('/0', '');
+    const updatePlaylistBaseURL = "<?= base_url(route_to('my-playlist_put', 0)) ?>".replace('/0', '');
+
+
+    function deletePlaylist(playListID, playListName) {
+        if (!confirm('Are you sure you want to delete playlist ' + playListName + '?')) {
+            return;
+        }
+
+        fetch(deletePlaylistBaseURL + '/' + playListID, {
+            method: 'DELETE',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message ?? 'Unexpected response');
+                if (data.status === 'success') {
+                    window.location.href = "<?= base_url(route_to('my-playlist_view')) ?>";
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting playlist:', error);
+                alert('An error occurred while deleting the playlist.');
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('wantToUpdateButton').addEventListener('click', function () {
+
+            const el = document.getElementById('wantToUpdate');
+            if (el) {
+                el.classList.toggle('hidden');
+            }
+        });
+    });
+
+    function updatePlaylistName(playListID) {
+        const nameInput = document.getElementById('update_name');
+        const newName = nameInput.value.trim();
+
+        if (!newName) {
+            return;
+        }
+
+        fetch(updatePlaylistBaseURL + '/' + playListID, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({ name: newName })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Error al editar el nom.");
+            });
+    }
+
+    /*
+    function updatePlaylistPicture(playListId) {
+        const pictureInput = document.getElementById('picture');
+        if (!pictureInput.files.length) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('picture', pictureInput.files[0]);
+
+        console.log(pictureInput.files[0]);
+
+        fetch(updatePlaylistBaseURL + '/' + playListId, {
+            method: 'PUT',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Error updating image.");
+            });
+    }
+    */
+
+    function updatePlaylist(playListID) {
+        updatePlaylistName(playListID);
+        //updatePlaylistPicture(playListID);
+    }
+
+    </script>
 <?= $this->endSection() ?>
