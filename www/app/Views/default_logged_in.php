@@ -54,7 +54,7 @@
         © <script>
             document.write(new Date().getFullYear())
         </script>
-        Made by Joan Enric, Pol and Roger with <i class="fa fa-heart" aria-hidden="true"></i>
+        <?= lang('App.copyright') ?> <i class="fa fa-heart" aria-hidden="true"></i>
     </div>
 </footer>
 
