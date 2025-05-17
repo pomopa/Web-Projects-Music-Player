@@ -1,14 +1,10 @@
 <?= $this->extend('default_logged_in') ?>
 
 <?= $this->section('title') ?>
-    <title>LSpoty - My Playlists</title>
+    <title>LSpoty - <?= lang('App.my_playlists') ?></title>
 <?= $this->endSection() ?>
 
 <?= $this->section('styles') ?>
-    <!-- CSS Files -->
-    <link id="pagestyle" href="<?= site_url('/assets/css/material-dashboard.css?v=3.1.0') ?>" rel="stylesheet" />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
     <!-- Playlist Detail CSS -->
     <link rel="stylesheet" href="<?= site_url('/assets/css/playlist-details.css') ?>">
     <link rel="stylesheet" href="<?= site_url('/assets/css/playlist-detail.css') ?>">
@@ -18,7 +14,7 @@
     <div class="row mt-4">
         <div class="col-12">
             <button class="back-button" onclick="history.back()">
-                <i class="fa fa-arrow-left"></i> Back
+                <i class="fa fa-arrow-left"></i> <?= lang('App.back') ?>
             </button>
         </div>
     </div>
@@ -32,23 +28,23 @@
             </div>
         <?php endif; ?>
         <div class="col-lg-9 col-md-8 col-sm-12 playlist-details">
-            <h1 class="text-white display-5 fw-bold mb-1">My Playlists</h1>
+            <h1 class="text-white display-5 fw-bold mb-1"><?= lang('App.my_playlists') ?></h1>
             <h2 class="text-secondary fs-4 mb-3 d-block text-decoration-none hover-text-success">
                 <?= esc($username) ?>
             </h2>
 
             <div class="playlist-stats">
             </span>
-                <span><i class="fa fa-music"></i> <?= count($myPlaylists) ?> playlists</span>
+                <span><i class="fa fa-music"></i> <?= count($myPlaylists) ?> <?= lang('App.playlists') ?></span>
                 <span><i class="fa fa-clock"></i> <?= gmdate("H:i:s", $totalDuration) ?></span>
             </div>
 
             <div class="playlist-actions">
                 <button class="action-btn primary" id="createPlaylistButton" onclick="window.location.href='<?= base_url(route_to('my-playlist_create')) ?>'">
-                    <i class="fa fa-plus me-1"></i> Create Playlist
+                    <i class="fa fa-plus me-1"></i> <?= lang('App.create_playlist') ?>
                 </button>
                 <button class="action-btn" id="shareButton">
-                    <i class="fa fa-share-alt me-1"></i> Share
+                    <i class="fa fa-share-alt me-1"></i> <?= lang('App.share') ?>
                 </button>
             </div>
         </div>
@@ -56,7 +52,7 @@
 
     <div class="row mt-4">
         <div class="col-12">
-            <h2 class="fw-bold fs-4 text-white mb-3">My Playlists</h2>
+            <h2 class="fw-bold fs-4 text-white mb-3"><?= lang('App.my_playlists') ?></h2>
             <div class="track-list">
                 <?php if (!empty($myPlaylists)): ?>
                     <?php $playlistNumber = 1; ?>
@@ -98,7 +94,7 @@
                                 </a>
                             </div>
                             <div class="track-duration"><?= $trackDuration ?></div>
-                            <div class="number-tracks"><?= count($playlist['tracks']) ?? 0 ?> tracks</div>
+                            <div class="number-tracks"><?= count($playlist['tracks']) ?? 0 ?> <?= lang('App.tracks') ?></div>
 
                         </div>
                         <?php $playlistNumber++; ?>
@@ -106,7 +102,7 @@
                 <?php else: ?>
                     <div class="p-4 text-center text-secondary">
                         <i class="fa fa-info-circle mb-2 fs-3"></i>
-                        <p>No playlists added, try adding some using the Create Playlist button!.</p>
+                        <p><?= lang('App.no_playlists_yet') ?></p>
                     </div>
                 <?php endif; ?>
             </div>

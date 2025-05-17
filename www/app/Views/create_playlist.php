@@ -1,7 +1,7 @@
 <?= $this->extend('default_logged_in') ?>
 
 <?= $this->section('title') ?>
-<title>LSpoty - Create Playlist</title>
+<title>LSpoty - <?= lang('App.create_playlist') ?></title>
 <?= $this->endSection() ?>
 
 <?= $this->section('styles') ?>
@@ -13,7 +13,7 @@
     <div class="col-lg-8 mx-auto">
         <div class="card bg-dark border border-success">
             <div class="card-header bg-success text-white">
-                <h4 class="mb-0">Create Playlist</h4>
+                <h4 class="mb-0"><?= lang('App.create_playlist') ?></h4>
             </div>
             <div class="card-body">
                 <?php if (session()->getFlashdata('errorImage')): ?>
@@ -46,8 +46,8 @@
                             </label>
                             <input type="file" id="picture" name="picture" class="d-none" accept=".jpeg,.jpg,.png,.gif,image/jpeg,image/png,image/gif">
                         </div>
-                        <small class="text-light mt-2 d-block">Click the camera icon to select a cover image</small>
-                        <small class="text-light mt-2 d-block">Accepted formats: jpg, jpeg, png, gif</small>
+                        <small class="text-light mt-2 d-block"><?= lang('App.click_camera_cover') ?></small>
+                        <small class="text-light mt-2 d-block"><?= lang('App.allowed_types') ?></small>
                     </div>
 
                     <!-- Playlist Name -->
@@ -66,7 +66,7 @@
                     <!-- Submit -->
                     <div class="col-12 d-flex justify-content-center mt-3">
                         <button type="submit" class="btn btn-success">
-                            <i class="fa fa-plus me-1"></i> Create Playlist
+                            <i class="fa fa-plus me-1"></i> <?= lang('App.create_playlist') ?>
                         </button>
                     </div>
                 </form>

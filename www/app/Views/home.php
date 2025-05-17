@@ -287,9 +287,7 @@
             something_wrong: "<?= lang('App.something_went_wrong') ?>",
             no_category1: "<?= lang('App.no_category1') ?>",
             no_category2: "<?= lang('App.no_category2') ?>"
-            // afegeix més segons necessitis
         };
-        const lang_searching = "<?= lang('App.searching') ?>";
     </script>
     <script src="<?= site_url('/assets/js/home.js') ?>"></script>
 <?= $this->endSection() ?>

@@ -14,7 +14,7 @@ class FileFilter implements FilterInterface
 
         if (!empty($files)) {
             return redirect()->back()
-                ->with('error', 'Well, well, well... look who just tried to be clever. You must be real proud of yourself.')
+                ->with('error', lang('Validation.bad_intents_file'))
                 ->withInput();
         }
 

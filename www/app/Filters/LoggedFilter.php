@@ -15,7 +15,7 @@ class LoggedFilter implements FilterInterface
             $state = $session->get('state');
 
             if($state == 'LOGGED IN'){
-                $session->setFlashdata('error_message', 'You are already logged in.');
+                $session->setFlashdata('error_message', lang('Validation.already_logged_in'));
                 return redirect()->to(base_url(route_to('home_view')));
             }
         }

@@ -84,7 +84,7 @@
                                             <li><hr class="dropdown-divider"></li>
                                         <?php else: ?>
                                             <li>
-                                                <span class="dropdown-item text-muted">No playlists available</span>
+                                                <span class="dropdown-item text-muted"><?= lang('App.no_playlists_available') ?></span>
                                             </li>
                                             <li><hr class="dropdown-divider"></li>
                                         <?php endif; ?>
@@ -166,6 +166,7 @@
             menu.style.display = 'none';
         });
     }
+
     function addToPlaylist(playlistId, trackId) {
         closeAllDropdowns()
         fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
@@ -178,13 +179,17 @@
         })
             .then(response => response.json())
             .then(data => {
-                alert(data.message ?? 'Unexpected response');
+                alert(data.message ?? "<?= lang('App.unexpected_response') ?>");
             })
             .catch(error => {
-                console.error('Error adding track:', error);
-                alert('An error occurred while adding the track.');
+                console.error("<?= lang('App.error_adding_track') ?>", error);
+                alert("<?= lang('App.error_adding_track') ?>");
             });
     }
+
+    const LANG = {
+        link: "<?= lang('App.track_link') ?>"
+    };
 </script>
 <script src="<?= site_url('/assets/js/album-player.js') ?>"></script>
 <?= $this->endSection() ?>

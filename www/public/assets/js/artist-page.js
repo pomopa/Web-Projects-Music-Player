@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         setTimeout(() => toast.remove(), 300);
                     }, 3000);
                 }, function() {
-                    alert('Could not copy the link. Please try again.');
+                    alert(`${LANG.link}`);
                 });
             }
         });
