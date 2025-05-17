@@ -22,7 +22,7 @@ class MyPlaylistPicture extends BaseController
         if (!$this->playlistModel->where('id', $playlistID)->where('user_id', $userID['id'])->first()) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
-                'message' => 'The provided playlist does not exist or does not belong to the current user.'
+                'message' => lang('Validation.playlist_permissions')
             ]);
         }
 

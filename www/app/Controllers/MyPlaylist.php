@@ -190,7 +190,7 @@ class MyPlaylist extends BaseController
         if ($this->trackPlaylistModel->where('playlist_id', $playlistID)->where('track_id', $trackID)->first()) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
-                'message' => 'A playlist with this track already exist in the system.'
+                'message' => 'This playlist with this track already exist in the system.'
             ]);
         }
 

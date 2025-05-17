@@ -1,54 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?= $this->extend('default_logged_in') ?>
+
+<?= $this->section('title') ?>
     <title>LSpoty - <?= esc($album->name) ?></title>
+<?= $this->endSection() ?>
 
-    <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
-    <!-- Nucleo Icons -->
-    <link href="<?= site_url('/assets/css/nucleo-icons.css') ?>" rel="stylesheet" />
-    <link href="<?= site_url('/assets/css/nucleo-svg.css') ?>" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <!-- Material Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <!-- CSS Files -->
-    <link id="pagestyle" href="<?= site_url('/assets/css/material-dashboard.css?v=3.1.0') ?>" rel="stylesheet" />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
-    <!-- Album Detail CSS -->
+<?= $this->section('styles') ?>
     <link rel="stylesheet" href="<?= site_url('/assets/css/album-detail.css') ?>">
-</head>
-<body class="bg-dark">
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-black position-sticky top-0" style="z-index: 1000;">
-    <div class="container">
-        <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="/home">LSpoty</a>
+<?= $this->endSection() ?>
 
-        <div class="d-flex align-items-center ms-auto gap-2">
-            <a href="/my-playlists" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
-                <i class="fa fa-music"></i>
-            </a>
-            <a href="/profile" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
-                <i class="fa fa-user-circle"></i>
-            </a>
-            <form action="/sign-out" method="POST" class="d-inline" style="margin: 0 !important;">
-                <button type="submit" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white" style="margin: 0 !important;">
-                    <i class="fa fa-sign-out-alt"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-</nav>
-
-<!-- Main Content -->
-<div class="container">
+<?= $this->section('content') ?>
     <div class="row mt-4">
         <div class="col-12">
             <button class="back-button" onclick="history.back()">
-                <i class="fa fa-arrow-left"></i> Back
+                <i class="fa fa-arrow-left"></i> <?= lang('App.back') ?>
             </button>
         </div>
     </div>
@@ -65,16 +29,16 @@
 
             <div class="album-stats">
                 <span><i class="fa fa-calendar"></i> <?= esc(date('Y-m-d', strtotime($album->releasedate))) ?></span>
-                <span><i class="fa fa-music"></i> <?= count($album->tracks) ?> tracks</span>
+                <span><i class="fa fa-music"></i> <?= count($album->tracks) ?> <?= lang('App.tracks') ?></span>
                 <span><i class="fa fa-clock"></i> <?= gmdate("H:i:s", $album->totalDuration) ?></span>
             </div>
 
             <div class="album-actions">
                 <button class="action-btn primary" id="playAlbumButton">
-                    <i class="fa fa-play me-1"></i> Play Album
+                    <i class="fa fa-play me-1"></i> <?= lang('App.play_album') ?>
                 </button>
                 <button class="action-btn" id="shareButton">
-                    <i class="fa fa-share-alt me-1"></i> Share
+                    <i class="fa fa-share-alt me-1"></i> <?= lang('App.share') ?>
                 </button>
             </div>
         </div>
@@ -82,7 +46,7 @@
 
     <div class="row mt-4">
         <div class="col-12">
-            <h2 class="fw-bold fs-4 text-white mb-3">Tracks</h2>
+            <h2 class="fw-bold fs-4 text-white mb-3"><?= lang('App.tracks') ?></h2>
             <div class="track-list">
                 <?php if (!empty($album->tracks)): ?>
                     <?php $trackNumber = 1; ?>
@@ -109,7 +73,6 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="trackDropdown<?= $trackId ?>">
-
                                         <?php if (!empty($album->playlists)): ?>
                                             <?php foreach ($album->playlists as $playlist): ?>
                                                 <li>
@@ -128,15 +91,14 @@
 
                                         <li>
                                             <a class="dropdown-item" href="/track/<?= $trackId ?>">
-                                                <i class="fa fa-info-circle me-2"></i>Track details
+                                                <i class="fa fa-info-circle me-2"></i><?= lang('App.track_information') ?>
                                             </a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>">
-                                                <i class="fa fa-share-alt me-2"></i>Share track
+                                                <i class="fa fa-share-alt me-2"></i><?= lang('App.share_track') ?>
                                             </a>
                                         </li>
-
                                     </ul>
                                 </div>
                             </div>
@@ -146,7 +108,7 @@
                 <?php else: ?>
                     <div class="p-4 text-center text-secondary">
                         <i class="fa fa-info-circle mb-2 fs-3"></i>
-                        <p>No tracks available for this album.</p>
+                        <p><?= lang('App.no_tracks_for_album') ?></p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -164,13 +126,13 @@
                         <h4 class="text-white mb-0 fs-5"><?= esc($album->artist_name) ?></h4>
                     </div>
                 </div>
-                <a href="/artist/<?= $album->artist_id ?>" class="btn btn-outline-success rounded-pill w-100">Visit Artist</a>
+                <a href="/artist/<?= $album->artist_id ?>" class="btn btn-outline-success rounded-pill w-100"><?= lang('App.visit_artist') ?></a>
             </div>
         </div>
 
         <div class="col-md-8">
             <div class="bg-gray-800 rounded p-4 mb-4">
-                <h3 class="fw-bold fs-4 text-white mb-3">More Albums by <?= esc($album->artist_name) ?></h3>
+                <h3 class="fw-bold fs-4 text-white mb-3"><?= lang('App.more_albums_by') ?><?= esc($album->artist_name) ?></h3>
                 <div class="row g-3">
                     <?php if(!empty($album->similarAlbums)): ?>
                         <?php foreach($album->similarAlbums as $alb): ?>
@@ -187,22 +149,16 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <div class="col-12">
-                            <p class="text-muted">No other albums found for this artist.</p>
+                            <p class="text-muted"><?= lang('App.no_albums_for_artist') ?></p>
                         </div>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
-</div>
+<?= $this->endSection() ?>
 
-<!-- Footer -->
-<footer class="bg-black text-center text-light py-3 mt-auto">
-    <div class="container">
-        <p class="mb-0">© 2025 LSpoty - All rights reserved</p>
-    </div>
-</footer>
-
+<?= $this->section('javascript') ?>
 <script>
     function closeAllDropdowns() {
         document.querySelectorAll('.dropdown-menu').forEach(menu => {
@@ -211,7 +167,6 @@
         });
     }
     function addToPlaylist(playlistId, trackId) {
-        console.log(`/my-playlists/${playlistId}/track/${trackId}`)
         closeAllDropdowns()
         fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
             method: 'PUT',
@@ -221,30 +176,15 @@
             },
             body: JSON.stringify({})
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta del servidor');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                if (data.status === 'success') {
-                    alert('Track added to playlist!');
-                } else {
-                    throw new Error(data.message || 'Error adding track to playlist');
-                }
+                alert(data.message ?? 'Unexpected response');
             })
             .catch(error => {
-                console.error(error);
-                alert('Failed to add track to playlist: ' + error.message);
+                console.error('Error adding track:', error);
+                alert('An error occurred while adding the track.');
             });
     }
 </script>
-
-<!-- Core JS Files -->
-<script src="<?= site_url('/assets/js/core/popper.min.js') ?>"></script>
-<script src="<?= site_url('/assets/js/core/bootstrap.min.js') ?>"></script>
-<script src="<?= site_url('/assets/js/plugins/perfect-scrollbar.min.js') ?>"></script>
 <script src="<?= site_url('/assets/js/album-player.js') ?>"></script>
-</body>
-</html>
+<?= $this->endSection() ?>

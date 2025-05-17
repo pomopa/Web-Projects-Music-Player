@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'invalid_category'  => 'Categoría invalida. Ha de ser una de: ',
+    'search_empty' => 'El camp de cerca no pot estar buit.',
+    'error_while_searching' => 'Hi ha hagut un error mentres es cercava: ',
+    'playlist_permissions' => 'La llista de reproducció proporcionada o no existeix o no es propietat del usuari actual.',
+    'removal_successfully' => 'Les dades d\'usuari s\'han eliminat correctament.',
+    'min_length' => 'La contrasenya ha de contenir com a mínim 8 caràcters.',
+    'special_password_rule' => 'La contrasenya ha de contenir majúscules, minúscules i números.',
+    'max_length' => 'El camp {0} ha de tenir menys de {1} caràcters.',
+    'integer' => 'L’edat ha de ser un nombre enter.',
+    'greater_than_equal_to' => 'L’edat ha de ser igual o superior a 0.',
+    'less_than_equal_to' => 'L’edat ha de ser igual o inferior a 125.',
+    'matches' => 'Les contrasenyes no coincideixen.',
+    'error_uploading' => 'Hi ha hagut un error mentres es penjava el seu fitxer.',
+    'user_updated_successfully' => 'Les dades de l’usuari s’han actualitzat correctament.',
+    'error_while_updating' => 'Hi ha hagut un error en actualitzar les dades.',
+    'required' => 'El camp {0} és obligatori.',
+    'valid_email' => 'L’adreça de correu electrònic no és vàlida.',
+    'is_email_in_system' => 'No existeix cap usuari amb aquesta adreça de correu electrònic.',
+    'is_from_domain' => 'Només s’accepten correus del domini @students.salle.url.edu, @ext.salle.url.edu o @salle.url.edu.',
+    'email_password_incorrect' => 'El correu i/o contrasenya proporcionades són incorrectes.',
+    'unique_email' => 'Aquest correu electrònic ja està registrat.',
+];

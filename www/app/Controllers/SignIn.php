@@ -17,23 +17,22 @@ class SignIn extends BaseController
         helper(['form']);
         $rules = [
             'email'        => 'required|valid_email|is_from_domain|max_length[60]|is_email_in_system',
-            'password'     => 'required|min_length[8]|special_password_rule|max_length[60]'
+            'password'     => 'required|min_length[8]|special_password_rule|max_length[40]'
         ];
 
         $errors = [
             'email' => [
-                'required'    => 'The Email field is required.',
-                'valid_email' => 'The email address is not valid.',
-                'is_email_in_system'   => 'User with this email address does not exist.',
-                'is_from_domain' => 'Only emails from the domain @students.salle.url.edu, @ext.salle.url.edu or @salle.url.edu are accepted.',
-                'max_length' => 'The email address must be less than 60 characters long.'
+                'required'    => lang('Validation.required', ['email']),
+                'valid_email' => lang('Validation.valid_email'),
+                'is_email_in_system'   => lang('Validation.is_email_in_system'),
+                'is_from_domain' => lang('Validation.is_from_domain'),
+                'max_length' => lang('Validation.max_length', ['email', '60'])
             ],
             'password' => [
-                'required'   => 'The Password field is required.',
-                'min_length' => 'The password must contain at least 8 characters.',
-                'special_password_rule' => 'The password must contain both upper and lower case letters and numbers.',
-                'max_length' => 'The password must be less than 60 characters long.',
-                'check_signin' => 'Your email and/or password are incorrect.'
+                'required'   => lang('Validation.required', [lang('App.password')]),
+                'min_length' => lang('Validation.min_length'),
+                'special_password_rule' => lang('Validation.special_password_rule'),
+                'max_length' => lang('Validation.max_length', [lang('App.password'), '40']),
             ]
         ];
 
@@ -55,7 +54,7 @@ class SignIn extends BaseController
                 $session->set('state', "LOGGED IN");
                 return redirect()->to(base_url(route_to('landing_view')));
             } else {
-                return redirect()->back()->withInput()->with('errors', ['password' => 'Your email and/or password are incorrect.']);
+                return redirect()->back()->withInput()->with('errors', ['password' => lang('Validation.email_password_incorrect')]);
             }
 
         } else {

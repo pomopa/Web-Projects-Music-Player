@@ -142,12 +142,12 @@ class Home extends BaseController
         $validCategories = ['tracks', 'albums', 'artists', 'playlists'];
         if (!in_array($category, $validCategories)) {
             return $this->response->setStatusCode(400)
-                ->setJSON(['error' => 'Invalid category. Must be one of: ' . implode(', ', $validCategories)]);
+                ->setJSON(['error' => lang('Validation.invalid_category') . implode(', ', $validCategories)]);
         }
 
         if (empty($query)) {
             return $this->response->setStatusCode(400)
-                ->setJSON(['error' => 'Search query cannot be empty']);
+                ->setJSON(['error' => lang('Validation.search_empty')]);
         }
 
         try {
@@ -155,7 +155,7 @@ class Home extends BaseController
             return $this->response->setJSON($results);
         } catch (\Exception $e) {
             return $this->response->setStatusCode(500)
-                ->setJSON(['error' => 'An error occurred while searching: ' . $e->getMessage()]);
+                ->setJSON(['error' => lang('Validation.error_while_searching') . $e->getMessage()]);
         }
     }
 

@@ -1,53 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LSpoty - <?= esc($artist->name) ?></title>
+<?= $this->extend('default_logged_in') ?>
 
-    <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
-    <!-- Nucleo Icons -->
-    <link href="<?= site_url('/assets/css/nucleo-icons.css') ?>" rel="stylesheet" />
-    <link href="<?= site_url('/assets/css/nucleo-svg.css') ?>" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <!-- Material Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <!-- CSS Files -->
-    <link id="pagestyle" href="<?= site_url('/assets/css/material-dashboard.css?v=3.1.0') ?>" rel="stylesheet" />
-    <!-- Artist Detail CSS -->
-    <link rel="stylesheet" href="<?= site_url('/assets/css/artist-detail.css') ?>">
-    <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
-</head>
-<body class="bg-dark">
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-black position-sticky top-0" style="z-index: 1000;">
-    <div class="container">
-        <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="/home">LSpoty</a>
+<?= $this->section('title') ?>
+<title>LSpoty - <?= esc($artist->name) ?></title>
+<?= $this->endSection() ?>
 
-        <div class="d-flex align-items-center ms-auto gap-2">
-            <a href="/my-playlists" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
-                <i class="fa fa-music"></i>
-            </a>
-            <a href="/profile" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
-                <i class="fa fa-user-circle"></i>
-            </a>
-            <form action="/sign-out" method="POST" class="d-inline" style="margin: 0 !important;">
-                <button type="submit" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white" style="margin: 0 !important;">
-                    <i class="fa fa-sign-out-alt"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-</nav>
+<?= $this->section('styles') ?>
+<link rel="stylesheet" href="<?= site_url('/assets/css/artist-detail.css') ?>">
+<?= $this->endSection() ?>
 
-<!-- Main Content -->
-<div class="container">
+<?= $this->section('content') ?>
     <div class="row mt-4">
         <div class="col-12">
             <button class="back-button" onclick="history.back()">
-                <i class="fa fa-arrow-left"></i> Back
+                <i class="fa fa-arrow-left"></i> <?= lang('App.back') ?>
             </button>
         </div>
     </div>
@@ -66,26 +31,26 @@
             </div>
 
             <div class="artist-metadata mt-2">
-                <span class="tag"><i class="fa fa-calendar me-1"></i> Joined <?= esc(date('F Y', strtotime($artist->joindate))) ?></span>
+                <span class="tag"><i class="fa fa-calendar me-1"></i> <?= lang('App.joined') ?> <?= esc(date('F Y', strtotime($artist->joindate))) ?></span>
             </div>
 
             <div class="artist-stats mt-3">
                 <div class="stat-item">
                     <span class="stat-value"><?= number_format($artist->fullcount) ?></span>
-                    <span class="stat-label">Albums</span>
+                    <span class="stat-label"><?= lang('App.albums') ?></span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-value"><?= number_format(count($artist->tracks)) ?></span>
-                    <span class="stat-label">Tracks</span>
+                    <span class="stat-label"><?= lang('App.tracks') ?></span>
                 </div>
             </div>
 
             <div class="actions-container mt-4">
                 <a href="<?= esc(($artist->website ?? '#')) ?>" target="_blank" class="action-btn">
-                    <i class="fa fa-external-link-alt me-1"></i> Website
+                    <i class="fa fa-external-link-alt me-1"></i> <?= lang('App.website') ?>
                 </a>
                 <button class="action-btn" id="shareButton" data-artist-id="<?= $artist->id ?>">
-                    <i class="fa fa-share-alt me-1"></i> Share
+                    <i class="fa fa-share-alt me-1"></i> <?= lang('App.share') ?>
                 </button>
             </div>
         </div>
@@ -94,7 +59,7 @@
     <!-- Albums Section -->
     <div class="row">
         <div class="col-12">
-            <h3 class="fw-bold fs-4 text-white mb-3">Albums (<?= $artist->fullcount ?>)</h3>
+            <h3 class="fw-bold fs-4 text-white mb-3"><?= lang('App.albums') ?> (<?= $artist->fullcount ?>)</h3>
             <?php if (isset($artist->albums) && count($artist->albums) > 0): ?>
                 <div class="row g-3">
                     <?php foreach($artist->albums as $album): ?>
@@ -115,32 +80,19 @@
                 </div>
             <?php else: ?>
                 <div class="alert bg-gray-800 text-white">
-                    No albums available for this artist yet.
+                    <?= lang('App.no_albums_yet') ?>
                 </div>
             <?php endif; ?>
         </div>
     </div>
-</div>
 
-<!-- Audio Player (Hidden) -->
-<audio id="audioPlayer" preload="metadata">
-    <source src="" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
+    <!-- Audio Player (Hidden) -->
+    <audio id="audioPlayer" preload="metadata">
+        <source src="" type="audio/mpeg">
+        <?= lang('App.non_supporting_browser') ?>
+    </audio>
+<?= $this->endSection() ?>
 
-<!-- Footer -->
-<footer class="bg-black text-center text-light py-3 mt-auto">
-    <div class="container">
-        <p class="mb-0">© 2025 LSpoty - All rights reserved</p>
-    </div>
-</footer>
-
-<!-- Core JS Files -->
-<script src="<?= site_url('/assets/js/core/popper.min.js') ?>"></script>
-<script src="<?= site_url('/assets/js/core/bootstrap.min.js') ?>"></script>
-<script src="<?= site_url('/assets/js/plugins/perfect-scrollbar.min.js') ?>"></script>
-<!-- Artist Page JS -->
-<script src="<?= site_url('/assets/js/artist-page.js') ?>"></script>
-
-</body>
-</html>
+<?= $this->section('javascript') ?>
+    <script src="<?= site_url('/assets/js/artist-page.js') ?>"></script>
+<?= $this->endSection() ?>
