@@ -84,7 +84,7 @@
                                             <li><hr class="dropdown-divider"></li>
                                         <?php else: ?>
                                             <li>
-                                                <span class="dropdown-item text-muted">No playlists available</span>
+                                                <span class="dropdown-item text-muted"><?= lang('App.no_playlists_available') ?></span>
                                             </li>
                                             <li><hr class="dropdown-divider"></li>
                                         <?php endif; ?>
