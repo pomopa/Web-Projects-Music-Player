@@ -35,7 +35,7 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->group('my-playlists', ['filter' => 'notlogged'], function ($routes) {
         $routes->get('', 'MyPlaylist::index', ['as' => 'my-playlist_view']);
         $routes->get('(:num)', 'MyPlaylist::viewPlaylist/$1', ['as' => 'my-playlist_exact_view']);
-        $routes->get('picture/(:num)', 'MyPlaylistPicture::playlistImage', ['as' => 'my-playlist_picture']);
+        $routes->get('picture/(:num)', 'MyPlaylistPicture::playlistImage/$1', ['as' => 'my-playlist_picture']);
 
         $routes->put('(:num)', 'MyPlaylist::putPlaylist/$1', ['as' => 'my-playlist_put']);
         $routes->put('(:num)/track/(:segment)', 'MyPlaylist::putTrack/$1/$2', ['as' => 'my-playlist_put_song']);
@@ -49,19 +49,19 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
         $routes->post('', 'MyPlaylist::createPlaylist', ['filter' => 'images', 'as' => 'my-playlist_create']);
     });
 
-    $routes->group('track', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->group('track', ['filter' => 'notlogged'], function($routes) {
         $routes->get('(:segment)', 'Track::index/$1',  ['as' => 'tracks_view']);
     });
 
-    $routes->group('artist', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->group('artist', ['filter' => 'notlogged'], function($routes) {
         $routes->get('(:segment)', 'Artist::index/$1', ['as' => 'artists_view']);
     });
     
-    $routes->group('album', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->group('album', ['filter' => 'notlogged'], function($routes) {
         $routes->get('(:segment)', 'Album::index/$1', ['as' => 'albums_view']);
     });
     
-    $routes->group('playlist', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->group('playlist', ['filter' => 'notlogged'], function($routes) {
         $routes->get('(:segment)', 'Playlist::index/$1', ['as' => 'playlist_view']);
     });
 

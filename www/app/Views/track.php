@@ -20,28 +20,35 @@
 
     <div class="row track-header">
         <div class="col-md-3 col-sm-12 d-flex justify-content-center justify-content-md-start mb-4 mb-md-0">
-            <img src="<?= esc($track->album_image) ?>" alt="Track cover" class="track-cover">
+            <img src="<?= esc($track->cover) ?>" alt="Track cover" class="track-cover">
         </div>
         <div class="col-md-9 col-sm-12 track-details">
             <h1 class="text-white display-5 fw-bold mb-1"><?= esc($track->name) ?></h1>
-            <a class="text-secondary fs-4 mb-3" href="/artist/<?=$track->artist_id?>"><?= esc($track->artist_name) ?></a>
+            <a class="text-secondary fs-4 mb-3" href="/artist/<?=$track->artistId?>"><?= esc($track->artistName) ?></a>
 
             <div class="mb-3">
                 <span class="tag"><i class="fa fa-calendar me-1"></i> <?= esc(date('Y-m-d', strtotime($track->releasedate))) ?></span>
             </div>
 
             <div class="actions-container">
-                <button class="action-btn primary" id="playButton" data-track-url="<?= esc($track->audio) ?>">
+                <button class="action-btn primary" id="playButton" data-track-url="<?= esc($track->playerUrl) ?>">
                     <i class="fa fa-play me-1"></i> <?= lang('App.play') ?>
-                </button>
                 <div class="dropdown">
                     <button class="action-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-plus me-1"></i> <?= lang('App.add_to_playlist') ?>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" data-track-id="<?=$track->id?>">
-                        <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="1">My Favorites</a></li>
-                        <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="2">Workout Mix</a></li>
-                        <li><a class="dropdown-item playlist-add" href="#" data-playlist-id="3">Chill Vibes</a></li>
+                        <?php if (!empty($track->playlists)): ?>
+                            <?php foreach ($track->playlists as $playlist): ?>
+                                <li>
+                                    <a class="dropdown-item playlist-add" href="#" data-playlist-id="<?= esc($playlist['id']) ?>">
+                                        <?= esc($playlist['name']) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <li><span class="dropdown-item text-muted">No playlists found</span></li>
+                        <?php endif; ?>
                         <li><div class="dropdown-divider"></div></li>
                         <li><a class="dropdown-item" href="/create-playlist"><i class="fa fa-plus-circle me-2"></i><?= lang('App.create_new_playlist') ?></a></li>
                     </ul>
@@ -67,7 +74,7 @@
             <button class="control-btn"><i class="fa fa-step-forward"></i></button>
         </div>
         <audio id="audioPlayer" preload="metadata">
-            <source src="<?= esc($track->audio) ?>" type="audio/mpeg">
+            <source src="<?= esc($track->playerUrl) ?>" type="audio/mpeg">
             <?= lang('App.non_supporting_browser') ?>
         </audio>
     </div>
@@ -83,8 +90,8 @@
                             <tr>
                                 <td class="text-secondary"><?= lang('App.album') ?></td>
                                 <td class="text-white">
-                                    <a href="/album/<?= esc($track->album_id) ?>" class="text-success text-decoration-none">
-                                        <?= esc($track->album_name) ?>
+                                    <a href="/album/<?= esc($track->albumId) ?>" class="text-success text-decoration-none">
+                                        <?= esc($track->albumName) ?>
                                     </a>
                                 </td>
 
@@ -111,10 +118,10 @@
                     <img src="<?= esc($track->artist_image) ?>"
                          alt="Artist image" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
                     <div>
-                        <h4 class="text-white mb-0 fs-5"><?= esc($track->artist_name) ?></h4>
+                        <h4 class="text-white mb-0 fs-5"><?= esc($track->artistName) ?></h4>
                     </div>
                 </div>
-                <?php $artistUrl = site_url('/artist/' . $track->artist_id); ?>
+                <?php $artistUrl = site_url('/artist/' . $track->artistId); ?>
                 <button class="btn btn-outline-success rounded-pill w-100"
                         onclick="window.location.href='<?= $artistUrl ?>'">
                     <?= lang('App.visit_artist') ?>

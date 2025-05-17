@@ -57,7 +57,7 @@
                         ?>
                         <div class="track-item">
                             <div class="track-number"><?= $trackNumber ?></div>
-                            <button class="track-play-btn" data-track-id="<?= $trackId ?>" data-track-url="<?= $track->audio ?>">
+                            <button class="track-play-btn" data-track-id="<?= $trackId ?>" data-track-url="<?= $track->playerUrl ?>">
                                 <i class="fa fa-play"></i>
                             </button>
                             <div class="track-title">
@@ -73,9 +73,32 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="trackDropdown<?= $trackId ?>">
-                                        <li><a class="dropdown-item" href="/track/<?= $trackId ?>"><i class="fa fa-info-circle me-2"></i><?= lang('App.track_information') ?></a></li>
-                                        <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-plus me-2"></i><?= lang('App.add_to_playlist') ?></a></li>
-                                        <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-share-alt me-2"></i><?= lang('App.share_track') ?></a></li>
+                                        <?php if (!empty($album->playlists)): ?>
+                                            <?php foreach ($album->playlists as $playlist): ?>
+                                                <li>
+                                                    <a class="dropdown-item" href="#" onclick="addToPlaylist(<?= $playlist['id'] ?>, <?= $trackId ?>)">
+                                                        <i class="fa fa-plus me-2"></i><?= esc($playlist['name']) ?>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                            <li><hr class="dropdown-divider"></li>
+                                        <?php else: ?>
+                                            <li>
+                                                <span class="dropdown-item text-muted">No playlists available</span>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                        <?php endif; ?>
+
+                                        <li>
+                                            <a class="dropdown-item" href="/track/<?= $trackId ?>">
+                                                <i class="fa fa-info-circle me-2"></i><?= lang('App.track_information') ?>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>">
+                                                <i class="fa fa-share-alt me-2"></i><?= lang('App.share_track') ?>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -136,5 +159,42 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('javascript') ?>
+<script>
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.classList.remove('show');
+            menu.style.display = 'none';
+        });
+    }
+    function addToPlaylist(playlistId, trackId) {
+        console.log(`/my-playlists/${playlistId}/track/${trackId}`)
+        closeAllDropdowns()
+        fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: JSON.stringify({})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Track added to playlist!');
+                } else {
+                    throw new Error(data.message || 'Error adding track to playlist');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Failed to add track to playlist: ' + error.message);
+            });
+    }
+</script>
 <script src="<?= site_url('/assets/js/album-player.js') ?>"></script>
 <?= $this->endSection() ?>

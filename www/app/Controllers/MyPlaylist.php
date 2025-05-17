@@ -6,6 +6,7 @@ use App\Models\PlaylistModel;
 use App\Models\TrackModel;
 use App\Models\TrackPlaylistModel;
 use GuzzleHttp\Client;
+use App\Models\UserModel;
 use function PHPUnit\Framework\isNull;
 
 class MyPlaylist extends BaseController
@@ -17,7 +18,8 @@ class MyPlaylist extends BaseController
     private string $apiKey = "aab3b83e";
     private const UPLOADS_DIR = WRITEPATH . 'uploads/';
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->trackModel = new TrackModel();
         $this->playlistModel = new PlaylistModel();
         $this->trackPlaylistModel = new TrackPlaylistModel();
@@ -37,11 +39,108 @@ class MyPlaylist extends BaseController
     }
 
     public function index() {
-        return view('test');
+        $session = session();
+        $userSession = $session->get('user');
+        $currentUserId = $userSession['id'] ?? null;
+
+        $myPlaylists = $this->playlistModel
+            ->where('user_id', $currentUserId)
+            ->findAll();
+
+        $trackModel = new TrackModel();
+        $trackPlaylistModel = new TrackPlaylistModel();
+
+        $totalDuration = 0;
+
+        foreach ($myPlaylists as &$playlist) {
+            $trackIds = $trackPlaylistModel
+                ->select('track_id')
+                ->where('playlist_id', $playlist['id'])
+                ->findColumn('track_id');
+
+            $tracks = !empty($trackIds)
+                ? $trackModel->whereIn('id', $trackIds)->findAll()
+                : [];
+
+            $duration = 0;
+            foreach ($tracks as $track) {
+                $duration += $track['duration'];
+            }
+
+            $playlist['tracks'] = $tracks;
+            $playlist['duration'] = $duration;
+            $totalDuration += $duration;
+        }
+        $userModel = new UserModel();
+        $user = $userModel->find($currentUserId);
+        $username = $user['username'] ?? 'Usuario';
+
+        return view('my_playlists_general', [
+            'myPlaylists' => $myPlaylists,
+            'user' => $user,
+            'username' => $username,
+            'totalDuration' => $totalDuration,
+        ]);
+    }
+    public function viewPlaylist($playlistId) {
+        $session = session();
+        $userSession = $session->get('user');
+        $currentUserId = $userSession['id'] ?? null;
+
+        $playlist = $this->playlistModel->find($playlistId);
+
+        if (!$playlist) {
+            return redirect()->to(base_url(route_to('my-playlist_view')))->with('error', 'Playlist not found.');
+        }
+
+        $userModel = new UserModel();
+        $creator = $userModel->find($playlist['user_id']);
+        $playlistCreator = $creator['username'] ?? 'Unknown';
+        $playlistCreatorId = $creator['id'] ?? 0;
+
+        $creationDate = isset($playlist['created_at'])
+            ? date('Y-m-d', strtotime($playlist['created_at']))
+            : 'Unknown';
+
+        $trackPlaylistModel = new TrackPlaylistModel();
+        $trackModel = new TrackModel();
+
+        $trackIds = $trackPlaylistModel
+            ->select('track_id')
+            ->where('playlist_id', $playlistId)
+            ->findColumn('track_id');
+
+        $tracks = !empty($trackIds)
+            ? $trackModel->whereIn('id', $trackIds)->findAll()
+            : [];
+
+        $totalDuration = 0;
+        foreach ($tracks as $track) {
+            $totalDuration += $track['duration'];
+        }
+        $formattedTotalDuration = gmdate("H:i:s", $totalDuration);
+        $tracksCount = count($tracks);
+
+        $isOwner = $currentUserId === $playlist['user_id'];
+
+        $playlist['tracks'] = $tracks;
+
+        return view('my_playlists_specific', [
+            'playlist' => $playlist,
+            'playlistId' => $playlist['id'],
+            'playlistName' => $playlist['name'],
+            'playlistCreator' => $playlistCreator,
+            'playlistCreatorId' => $playlistCreatorId,
+            'creationDate' => $creationDate,
+            'tracks' => $playlist['tracks'],
+            'formattedTotalDuration' => $formattedTotalDuration,
+            'tracksCount' => $tracksCount,
+            'isOwner' => $isOwner
+        ]);
     }
 
-    public function viewPlaylist(int $playlistID) {
-
+    public function createPlaylistView() {
+        return View('create_playlist');
     }
 
     public function createPlaylist() {
