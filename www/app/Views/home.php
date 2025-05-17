@@ -1,55 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LSpoty - Your Music Companion</title>
+<?= $this->extend('default_logged_in') ?>
 
-    <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
-    <!-- Nucleo Icons -->
-    <link href="<?= site_url('/assets/css/nucleo-icons.css') ?>" rel="stylesheet" />
-    <link href="<?= site_url('/assets/css/nucleo-svg.css') ?>" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <!-- Material Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+<?= $this->section('title') ?>
+    <title>LSpoty - <?= lang('App.companion') ?></title>
+<?= $this->endSection() ?>
 
-    <!-- CSS Files -->
-    <link id="pagestyle" href="<?= site_url('/assets/css/material-dashboard.css?v=3.1.0') ?>" rel="stylesheet" />
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
+<?= $this->section('styles') ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-</head>
-<body class="bg-dark">
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-black position-sticky top-0" style="z-index: 1000;">
-    <div class="container">
-        <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="/home">LSpoty</a>
+<?= $this->endSection() ?>
 
-        <div class="d-flex align-items-center ms-auto gap-2">
-            <a href="/my-playlists" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
-                <i class="fa fa-music"></i>
-            </a>
-            <a href="/profile" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
-                <i class="fa fa-user-circle"></i>
-            </a>
-            <form action="/sign-out" method="GET" class="d-inline" style="margin: 0 !important;">
-                <button type="submit" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white" style="margin: 0 !important;">
-                    <i class="fa fa-sign-out-alt"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-</nav>
-
-<!-- Main Content -->
-<div class="container">
+<?= $this->section('content') ?>
     <div class="row justify-content-center mt-4 mb-3">
         <div class="col-lg-8">
             <form id="searchForm" class="input-group bg-gray-800 rounded-pill">
-                <input type="text" id="searchInput" name="query" placeholder="Search for tracks, albums, artists or playlists..." class="form-control border-0 bg-transparent text-white">
+                <input type="text" id="searchInput" name="query" placeholder="<?= lang('App.search') ?>" class="form-control border-0 bg-transparent text-white">
                 <button type="submit" class="btn btn-link text-secondary" style="margin: 0 !important;">
                     <i class="fa fa-search"></i>
                 </button>
@@ -60,10 +23,10 @@
 
             <div class="mt-3 text-center">
                 <div class="btn-group" role="group" aria-label="Search filters">
-                    <button type="button" class="btn btn-outline-success active rounded-pill px-3 mx-1" style="margin: 0 5px 0 0 !important;" data-filter="tracks">Tracks</button>
-                    <button type="button" class="btn btn-outline-success rounded-pill px-3 mx-1" style="margin: 0 5px 0 0 !important;" data-filter="albums">Albums</button>
-                    <button type="button" class="btn btn-outline-success rounded-pill px-3 mx-1" style="margin: 0 5px 0 0 !important;" data-filter="artists">Artists</button>
-                    <button type="button" class="btn btn-outline-success rounded-pill px-3 mx-1" style="margin: 0 0 0 0 !important;" data-filter="playlists">Playlists</button>
+                    <button type="button" class="btn btn-outline-success active rounded-pill px-3 mx-1" style="margin: 0 5px 0 0 !important;" data-filter="tracks"><?= lang('App.tracks') ?></button>
+                    <button type="button" class="btn btn-outline-success rounded-pill px-3 mx-1" style="margin: 0 5px 0 0 !important;" data-filter="albums"><?= lang('App.albums') ?></button>
+                    <button type="button" class="btn btn-outline-success rounded-pill px-3 mx-1" style="margin: 0 5px 0 0 !important;" data-filter="artists"><?= lang('App.artists') ?></button>
+                    <button type="button" class="btn btn-outline-success rounded-pill px-3 mx-1" style="margin: 0 0 0 0 !important;" data-filter="playlists"><?= lang('App.playlists') ?></button>
                 </div>
             </div>
         </div>
@@ -71,7 +34,7 @@
 
     <!-- Search Results Section (hidden by default) -->
     <div id="searchResults" class="mb-4 d-none">
-        <h2 class="fw-bold fs-4 my-3 text-white text-center">Search Results</h2>
+        <h2 class="fw-bold fs-4 my-3 text-white text-center"><?= lang('App.search_results') ?></h2>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8" id="resultsContainer">
                 <!-- Search results will be populated here -->
@@ -84,7 +47,7 @@
         <!-- Tracks Section -->
         <div id="tracksSection" class="category-section">
             <!-- Recently Uploaded Tracks -->
-            <h2 class="fw-bold fs-4 my-3 text-white text-center">Recently Uploaded</h2>
+            <h2 class="fw-bold fs-4 my-3 text-white text-center"><?= lang('App.recently_uploaded') ?></h2>
             <div class="swiper recentTracksSwiper">
                 <div class="swiper-wrapper">
                     <?php if (!empty($recentTracks)): ?>
@@ -102,7 +65,7 @@
                     <?php else: ?>
                         <div class="swiper-slide">
                             <div class="text-white text-center w-100">
-                                <p>No recent tracks found.</p>
+                                <p><?= lang('App.no_recent_tracks') ?></p>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -112,7 +75,7 @@
             </div>
 
             <!-- Top Tracks -->
-            <h2 class="fw-bold fs-4 my-3 text-white text-center">Top Tracks</h2>
+            <h2 class="fw-bold fs-4 my-3 text-white text-center"><?= lang('App.top_tracks') ?></h2>
             <div class="swiper topTracksSwiper">
                 <div class="swiper-wrapper">
                     <?php if (!empty($topTracks)): ?>
@@ -130,7 +93,7 @@
                     <?php else: ?>
                         <div class="swiper-slide">
                             <div class="text-white text-center w-100">
-                                <p>No top tracks found.</p>
+                                <p><?= lang('App.no_top_tracks') ?></p>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -142,7 +105,7 @@
 
         <!-- Albums Section -->
         <div id="albumsSection" class="category-section d-none">
-            <h2 class="fw-bold fs-4 my-3 text-white text-center">Popular Albums</h2>
+            <h2 class="fw-bold fs-4 my-3 text-white text-center"><?= lang('App.popular_albums') ?></h2>
             <div class="swiper albumsSwiper">
                 <div class="swiper-wrapper">
                     <?php if (!empty($topAlbums)): ?>
@@ -160,7 +123,7 @@
                     <?php else: ?>
                         <div class="swiper-slide">
                             <div class="text-white text-center w-100">
-                                <p>No popular albums found.</p>
+                                <p><?= lang('App.no_popular_albums') ?></p>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -169,7 +132,7 @@
                 <div class="swiper-button-prev text-success"></div>
             </div>
 
-            <h2 class="fw-bold fs-4 my-3 text-white text-center">New Releases</h2>
+            <h2 class="fw-bold fs-4 my-3 text-white text-center"><?= lang('App.new_releases') ?></h2>
             <div class="swiper newReleasesSwiper">
                 <div class="swiper-wrapper">
                     <?php if (!empty($newAlbums)): ?>
@@ -199,7 +162,7 @@
 
         <!-- Artists Section -->
         <div id="artistsSection" class="category-section d-none">
-            <h2 class="fw-bold fs-4 my-3 text-white text-center">Featured Artists</h2>
+            <h2 class="fw-bold fs-4 my-3 text-white text-center"><?= lang('App.featured_artists') ?></h2>
             <div class="swiper featuredArtistsSwiper">
                 <div class="swiper-wrapper">
                     <?php if (!empty($topArtists)): ?>
@@ -210,7 +173,7 @@
                                         <img src="<?= esc(!empty($artist['image']) ? $artist['image'] : 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg') ?>"
                                              alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
                                         <h6 class="card-title mb-1 text-truncate text-white"><?= esc($artist['name']) ?></h6>
-                                        <p class="card-text text-secondary text-truncate small">Artist</p>
+                                        <p class="card-text text-secondary text-truncate small"><?= lang('App.artist') ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -218,7 +181,7 @@
                     <?php else: ?>
                         <div class="swiper-slide">
                             <div class="text-white text-center w-100">
-                                <p>No featured artists found.</p>
+                                <p><?= lang('App.no_featured_artists') ?></p>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -227,7 +190,7 @@
                 <div class="swiper-button-prev text-success"></div>
             </div>
 
-            <h2 class="fw-bold fs-4 my-3 text-white text-center">New Artists</h2>
+            <h2 class="fw-bold fs-4 my-3 text-white text-center"><?= lang('App.new_artists') ?></h2>
             <div class="swiper trendingArtistsSwiper">
                 <div class="swiper-wrapper">
                     <?php if (!empty($newArtists)): ?>
@@ -238,7 +201,7 @@
                                         <img src="<?= esc(!empty($artist_n['image']) ? $artist_n['image'] : 'https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small_2x/default-avatar-photo-placeholder-profile-picture-vector.jpg') ?>"
                                              alt="Artist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
                                         <h6 class="card-title mb-1 text-truncate text-white"><?= esc($artist_n['name']) ?></h6>
-                                        <p class="card-text text-secondary text-truncate small">Artist</p>
+                                        <p class="card-text text-secondary text-truncate small"><?= lang('App.artist') ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +209,7 @@
                     <?php else: ?>
                         <div class="swiper-slide">
                             <div class="text-white text-center w-100">
-                                <p>No new artists found.</p>
+                                <p><?= lang('App.no_new_artists') ?></p>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -258,7 +221,7 @@
 
         <!-- Playlists Section -->
         <div id="playlistsSection" class="category-section d-none">
-            <h2 class="fw-bold fs-4 my-3 text-white text-center">New Playlists</h2>
+            <h2 class="fw-bold fs-4 my-3 text-white text-center"><?= lang('App.new_playlists') ?></h2>
             <div class="swiper featuredPlaylistSwiper">
                 <div class="swiper-wrapper">
                     <?php if (!empty($newPlaylists)): ?>
@@ -269,7 +232,7 @@
                                         <img src="https://img.freepik.com/premium-psd/music-icon-user-interface-element-3d-render-illustration_516938-1693.jpg"
                                              alt="Playlist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
                                         <h6 class="card-title mb-1 text-truncate text-white"><?= esc($playlist['name']) ?></h6>
-                                        <p class="card-text text-secondary text-truncate small">Playlist</p>
+                                        <p class="card-text text-secondary text-truncate small"><?= lang('App.playlist') ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -277,7 +240,7 @@
                     <?php else: ?>
                         <div class="swiper-slide">
                             <div class="text-white text-center w-100">
-                                <p>No featured playlists found.</p>
+                                <p><?= lang('App.no_featured_playlists') ?></p>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -286,7 +249,7 @@
                 <div class="swiper-button-prev text-success"></div>
             </div>
 
-            <h2 class="fw-bold fs-4 my-3 text-white text-center">Oldest Playlists</h2>
+            <h2 class="fw-bold fs-4 my-3 text-white text-center"><?= lang('App.oldest_playlists') ?></h2>
             <div class="swiper popularPlaylistsSwiper">
                 <div class="swiper-wrapper">
                     <?php if (!empty($oldPlaylists)): ?>
@@ -297,7 +260,7 @@
                                         <img src="https://img.freepik.com/premium-psd/music-icon-user-interface-element-3d-render-illustration_516938-1693.jpg"
                                              alt="Playlist photo" class="img-fluid rounded-circle mb-2 w-75 mx-auto">
                                         <h6 class="card-title mb-1 text-truncate text-white"><?= esc($playlist['name']) ?></h6>
-                                        <p class="card-text text-secondary text-truncate small">Playlist</p>
+                                        <p class="card-text text-secondary text-truncate small"><?= lang('App.playlist') ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -305,7 +268,7 @@
                     <?php else: ?>
                         <div class="swiper-slide">
                             <div class="text-white text-center w-100">
-                                <p>No old playlists found.</p>
+                                <p><?= lang('App.no_old_playlists') ?></p>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -315,20 +278,18 @@
             </div>
         </div>
     </div>
-</div>
+<?= $this->endSection() ?>
 
-<!-- Footer -->
-<footer class="bg-black text-center text-light py-3 mt-auto">
-    <div class="container">
-        <p class="mb-0">© 2025 LSpoty - All rights reserved</p>
-    </div>
-</footer>
-
-<!-- Core JS Files -->
-<script src="<?= site_url('/assets/js/core/popper.min.js') ?>"></script>
-<script src="<?= site_url('/assets/js/core/bootstrap.min.js') ?>"></script>
-<script src="<?= site_url('/assets/js/home.js') ?>"></script>
-<script src="<?= site_url('/assets/js/plugins/perfect-scrollbar.min.js') ?>"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-</body>
-</html>
+<?= $this->section('javascript') ?>
+    <script>
+        const LANG = {
+            searching: "<?= lang('App.searching') ?>",
+            something_wrong: "<?= lang('App.something_went_wrong') ?>",
+            no_category1: "<?= lang('App.no_category1') ?>",
+            no_category2: "<?= lang('App.no_category2') ?>"
+            // afegeix més segons necessitis
+        };
+        const lang_searching = "<?= lang('App.searching') ?>";
+    </script>
+    <script src="<?= site_url('/assets/js/home.js') ?>"></script>
+<?= $this->endSection() ?>

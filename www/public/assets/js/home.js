@@ -152,9 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch search results
     async function performSearch(query, category) {
         try {
-            // Show loading state
-            resultsContainer.innerHTML = '<div class="text-center text-white"><p>Searching...</p></div>';
-
+            resultsContainer.innerHTML = `<div class="text-center text-white"><p>${LANG.searching}</p></div>`;
             // Fetch results from server
             const response = await fetch(`/home/${category}/${query}`);
 
@@ -260,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // No results found
                 resultsContainer.innerHTML = `
                     <div class="text-center text-white py-4">
-                        <p>No ${category} found matching "${query}"</p>
+                        <p>${LANG.no_category1} ${category} ${LANG.no_category2} "${query}"</p>
                     </div>
                 `;
             }
@@ -269,8 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error search results:', error);
             resultsContainer.innerHTML = `
                 <div class="text-center text-white py-4">
-                    <p>Something went wrong. Please try again later.</p>
-                </div>
+                    <p>${LANG.something_wrong}</div>
             `;
         }
         document.querySelectorAll('.view-btn').forEach(button => {

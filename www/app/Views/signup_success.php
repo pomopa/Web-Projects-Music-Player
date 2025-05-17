@@ -1,20 +1,20 @@
 <?= $this->extend('defaultForm') ?>
 
 <?= $this->section('headName') ?>
-Sign-up
+<?= lang('App.success') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('sectionName') ?>
-Sign-up
+<?= lang('App.success') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
 <br>
-<label class="form-check-label mb-0 ms-3">Account created successfully! You will be redirected in any moment.</label>
+<label class="form-check-label mb-0 ms-3"><?= lang('App.signup_success') ?></label>
 <br>
 <p class="mt-4 text-sm text-center">
-    If you are not automatically redirected you can do it manually by clicking on the
-    <a href="<?= base_url(route_to('landing_view')) ?>" class="text-primary text-gradient font-weight-bold">link</a>
+    <?= lang('App.auto_redirect') ?>
+    <a href="<?= base_url(route_to('landing_view')) ?>" class="text-primary text-gradient font-weight-bold"><?= lang('App.link') ?></a>
 </p>
 <?= $this->endSection() ?>
 

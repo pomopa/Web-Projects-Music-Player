@@ -32,7 +32,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="../../../assets/img/favicon.png">
     <link rel="icon" type="image/png" href="../../../assets/propis/img/favicon.png">
-    <title>LSpoty -<?= $this->renderSection('headName') ?> </title>
+    <title>LSpoty - <?= $this->renderSection('headName') ?> </title>
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
     <!-- Nucleo Icons -->
@@ -76,7 +76,7 @@
                             © <script>
                                 document.write(new Date().getFullYear())
                             </script>
-                            Made by Joan Enric, Pol and Roger with <i class="fa fa-heart" aria-hidden="true"></i>
+                            <?= lang('App.copyright') ?> <i class="fa fa-heart" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
