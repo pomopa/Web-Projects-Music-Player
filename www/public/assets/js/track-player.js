@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const progressContainer = document.querySelector('.progress-container');
     const currentTimeDisplay = document.querySelector('.current-time');
     const durationDisplay = document.querySelector('.duration');
-    const likeButton = document.getElementById('likeButton');
     const shareButton = document.getElementById('shareButton');
 
     // Initialize the audio player with the track URL from the play button
@@ -95,26 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle playlist functionality
-    const playlistItems = document.querySelectorAll('.playlist-add');
-    if (playlistItems.length > 0) {
-        playlistItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const playlistId = this.getAttribute('data-playlist-id');
-                const trackId = this.closest('.dropdown-menu').getAttribute('data-track-id');
 
-                // Here you would make an API call to add the track to the playlist
-                console.log(`Adding track ${trackId} to playlist ${playlistId}`);
-
-                // Simulate API call response
-                // In a real app, you would use fetch or axios to make this call
-                setTimeout(() => {
-                    alert(`Track added to ${this.textContent}`);
-                }, 500);
-            });
-        });
-    }
 
 
     // Handle share button functionality
@@ -145,8 +125,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle volume control (if needed)
-    // Example: You could add a volume slider and control it here
+    const playlistItems = document.querySelectorAll('.playlist-add');
+    if (playlistItems.length > 0) {
+        playlistItems.forEach(item => {
+            item.addEventListener('click', async function(e) {
+                e.preventDefault();
+                const playlistId = this.getAttribute('data-playlist-id');
+                const trackId = this.closest('.dropdown-menu').getAttribute('data-track-id');
+
+                const url = `/my-playlists/${playlistId}/track/${trackId}`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({})
+                    });
+
+                    if (response.ok) {
+                        alert(`Track added to "${this.textContent.trim()}"`);
+                    } else {
+                        const errText = await response.text();
+                        console.error(`Server responded with error: ${errText}`);
+                        alert('Failed to add track to playlist. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error adding track to playlist:', error);
+                    alert('An error occurred. Please check your connection and try again.');
+                }
+            });
+        });
+    }
+
 
     // Additional track controls (previous, next, shuffle, repeat)
     const prevButton = document.querySelector('.control-btn:nth-child(1)');
@@ -161,6 +174,35 @@ document.addEventListener('DOMContentLoaded', function() {
     if (nextButton) {
         nextButton.addEventListener('click', function () {
             audioPlayer.currentTime = audioPlayer.duration;
+        });
+    }
+
+    const addPlaylistButton = document.getElementById('addPlaylistButton');
+    if (addPlaylistButton) {
+        addPlaylistButton.addEventListener('click', function () {
+            const playlistId = addPlaylistButton.dataset.playlistId;
+
+            fetch(`/my-playlist/${playlistId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({})
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error adding playlist to your library');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Playlist added to your library!');
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Failed to add playlist to your library.');
+                });
         });
     }
 });

@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     // Global audio player
     let currentAudio = null;
@@ -166,6 +167,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // ----- DROPDOWN MANAGEMENT -----
+
+    // Cerrar todos los menús desplegables
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.classList.remove('show');
+            menu.style.display = 'none';
+        });
+    }
+
     document.querySelectorAll('.dropdown-toggle').forEach(dropdownToggle => {
         dropdownToggle.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -191,13 +202,64 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Manejar específicamente los botones "Add to playlist" que abren submenús
+    document.querySelectorAll('[id^="addPlaylistDropdown"]').forEach(addToPlaylistToggle => {
+        addToPlaylistToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-    // Close dropdowns when clicking outside
+            // Encontrar el submenú de playlists
+            const playlistMenu = this.nextElementSibling;
+
+            if (playlistMenu) {
+                // Mostrar/ocultar el submenú
+                if (playlistMenu.style.display === 'block') {
+                    playlistMenu.style.display = 'none';
+                    playlistMenu.classList.remove('show');
+                } else {
+                    // Posicionamiento del submenú
+                    playlistMenu.style.display = 'block';
+                    playlistMenu.classList.add('show');
+
+                    // En pantallas pequeñas, mostrar debajo en lugar de al lado
+                    if (window.innerWidth < 768) {
+                        playlistMenu.style.left = '0';
+                        playlistMenu.style.right = 'auto';
+                        playlistMenu.style.top = '100%';
+                    } else {
+                        // En pantallas grandes, mostrar a la derecha
+                        playlistMenu.style.left = '100%';
+                        playlistMenu.style.top = '0';
+
+                        // Verificar si se sale del viewport
+                        const rect = playlistMenu.getBoundingClientRect();
+                        if (rect.right > window.innerWidth) {
+                            playlistMenu.style.left = 'auto';
+                            playlistMenu.style.right = '100%';
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    // Implementar la función addToPlaylist (ya definida en el HTML)
+    window.addToPlaylist = function(playlistId, trackId) {
+        console.log(`Track ${trackId} added to playlist ${playlistId}`);
+
+        // Aquí implementarías el llamado AJAX para añadir la canción a la playlist
+
+        // Cerrar todos los menús después de la acción
+        closeAllDropdowns();
+
+        // Feedback al usuario
+        alert(`Canción añadida a la playlist ${playlistId}`);
+    };
+
+    // Cerrar dropdowns al hacer clic fuera
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.dropdown-toggle') && !e.target.closest('.dropdown-menu')) {
-            document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                menu.style.display = 'none';
-            });
+            closeAllDropdowns();
         }
     });
 
@@ -217,8 +279,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add click handler for more albums section
     document.querySelectorAll('.card.card-plain').forEach(card => {
         card.addEventListener('click', function() {
-            // Find the album ID from the URL structure or data attribute
-            // Assuming the album ID is in card class or can be extracted from some attribute
             const albumId = this.getAttribute('data-album-id');
             if (albumId) {
                 window.location.href = `/album/${albumId}`;
@@ -226,28 +286,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add click handlers for the dropdown items
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.stopPropagation();
+    // Share track functionality
+    document.querySelectorAll('[data-track-id]').forEach(shareLink => {
+        if (shareLink.textContent.includes('Share track')) {
+            shareLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
 
-            // Hide the dropdown
-            const dropdownMenu = this.closest('.dropdown-menu');
-            if (dropdownMenu) {
-                dropdownMenu.style.display = 'none';
-            }
+                const trackId = this.getAttribute('data-track-id');
+                if (!trackId) return;
 
-            const trackId = this.getAttribute('data-track-id');
-
-            // Handle add to playlist
-            if (this.textContent.includes('Add to playlist')) {
-                console.log(`Adding track ${trackId} to playlist`);
-                // Here you would show a modal with playlist options
-                alert('Add to playlist feature will be implemented soon');
-            }
-
-            // Handle share track
-            if (this.textContent.includes('Share track')) {
                 const trackTitle = this.closest('.track-item').querySelector('.track-title a').textContent.trim();
                 const currentUrl = `${window.location.origin}/track/${trackId}`;
 
@@ -267,7 +315,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     alert('Track link copied to clipboard!');
                 }
-            }
-        });
+
+                // Cerrar menú después de compartir
+                closeAllDropdowns();
+            });
+        }
     });
 });

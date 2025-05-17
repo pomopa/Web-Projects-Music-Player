@@ -93,7 +93,7 @@
                         ?>
                         <div class="track-item">
                             <div class="track-number"><?= $trackNumber ?></div>
-                            <button class="track-play-btn" data-track-id="<?= $trackId ?>" data-track-url="<?= $track->audio ?>">
+                            <button class="track-play-btn" data-track-id="<?= $trackId ?>" data-track-url="<?= $track->playerUrl ?>">
                                 <i class="fa fa-play"></i>
                             </button>
                             <div class="track-title">
@@ -109,9 +109,34 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="trackDropdown<?= $trackId ?>">
-                                        <li><a class="dropdown-item" href="/track/<?= $trackId ?>"><i class="fa fa-info-circle me-2"></i>Track details</a></li>
-                                        <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-plus me-2"></i>Add to playlist</a></li>
-                                        <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-share-alt me-2"></i>Share track</a></li>
+
+                                        <?php if (!empty($album->playlists)): ?>
+                                            <?php foreach ($album->playlists as $playlist): ?>
+                                                <li>
+                                                    <a class="dropdown-item" href="#" onclick="addToPlaylist(<?= $playlist->id ?>, <?= $trackId ?>)">
+                                                        <i class="fa fa-plus me-2"></i><?= esc($playlist->name) ?>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                            <li><hr class="dropdown-divider"></li>
+                                        <?php else: ?>
+                                            <li>
+                                                <span class="dropdown-item text-muted">No playlists available</span>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                        <?php endif; ?>
+
+                                        <li>
+                                            <a class="dropdown-item" href="/track/<?= $trackId ?>">
+                                                <i class="fa fa-info-circle me-2"></i>Track details
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>">
+                                                <i class="fa fa-share-alt me-2"></i>Share track
+                                            </a>
+                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -177,6 +202,32 @@
         <p class="mb-0">© 2025 LSpoty - All rights reserved</p>
     </div>
 </footer>
+
+<script>
+    function addToPlaylist(playlistId, trackId) {
+        fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: JSON.stringify({})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error adding track to playlist');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Track added to playlist!');
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Failed to add track to playlist.');
+            });
+    }
+</script>
 
 <!-- Core JS Files -->
 <script src="<?= site_url('/assets/js/core/popper.min.js') ?>"></script>

@@ -3,19 +3,24 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\PlaylistModel;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use App\Entities\TrackEntity;
+
 
 class Album extends BaseController
 {
     private Client $client;
     private string $apiKey = "aab3b83e";
+    private PlaylistModel $playlistModel;
 
     public function __construct()
     {
         $this->client = new Client([
             'base_uri' => 'https://api.jamendo.com/v3.0/',
         ]);
+        $this->playlistModel = new PlaylistModel();
     }
 
     private function getAlbum($id)
@@ -105,7 +110,25 @@ class Album extends BaseController
         if (empty($album)){
             return redirect()->to(base_url(route_to('home_view')));
         }
-        $album->tracks = $this->getAlbumTracks($id);
+
+        $preTracks = $this->getAlbumTracks($id);
+        $album->tracks = [];
+        foreach ($preTracks as $track) {
+            $album->tracks[] = new TrackEntity(
+                $track->id,
+                $track->name,
+                $track->album_image,
+                $track->artist_name,
+                $track->artist_id,
+                $track->album_name,
+                $track->album_id,
+                (int) $track->duration,
+                $track->audio,
+                $track->releasedate,
+                $track->license_ccurl
+            );
+        }
+
         $album->similarAlbums = $this->getArtistAlbums($album->artist_id, $album->id);
         $album->artist_image = $this->getAlbumArtist($album->artist_id);
         if (empty($album->artist_image)) {
@@ -117,7 +140,7 @@ class Album extends BaseController
                 $album->totalDuration += $track->duration;
             }
         }
-
+        $album->playlists = $this->playlistModel->getPlaylistsByUserId(session()->get('user')['id']) ?? [];
         return view('albums', ['album' => $album]);
     }
 }
