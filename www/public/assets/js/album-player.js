@@ -169,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ----- DROPDOWN MANAGEMENT -----
 
-    // Cerrar todos los menús desplegables
     function closeAllDropdowns() {
         document.querySelectorAll('.dropdown-menu').forEach(menu => {
             menu.classList.remove('show');
@@ -202,36 +201,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Manejar específicamente los botones "Add to playlist" que abren submenús
     document.querySelectorAll('[id^="addPlaylistDropdown"]').forEach(addToPlaylistToggle => {
         addToPlaylistToggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
-            // Encontrar el submenú de playlists
             const playlistMenu = this.nextElementSibling;
 
             if (playlistMenu) {
-                // Mostrar/ocultar el submenú
                 if (playlistMenu.style.display === 'block') {
                     playlistMenu.style.display = 'none';
                     playlistMenu.classList.remove('show');
                 } else {
-                    // Posicionamiento del submenú
                     playlistMenu.style.display = 'block';
                     playlistMenu.classList.add('show');
 
-                    // En pantallas pequeñas, mostrar debajo en lugar de al lado
                     if (window.innerWidth < 768) {
                         playlistMenu.style.left = '0';
                         playlistMenu.style.right = 'auto';
                         playlistMenu.style.top = '100%';
                     } else {
-                        // En pantallas grandes, mostrar a la derecha
                         playlistMenu.style.left = '100%';
                         playlistMenu.style.top = '0';
 
-                        // Verificar si se sale del viewport
                         const rect = playlistMenu.getBoundingClientRect();
                         if (rect.right > window.innerWidth) {
                             playlistMenu.style.left = 'auto';
@@ -243,27 +235,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Implementar la función addToPlaylist (ya definida en el HTML)
-    window.addToPlaylist = function(playlistId, trackId) {
-        console.log(`Track ${trackId} added to playlist ${playlistId}`);
 
-        // Aquí implementarías el llamado AJAX para añadir la canción a la playlist
-
-        // Cerrar todos los menús después de la acción
-        closeAllDropdowns();
-
-        // Feedback al usuario
-        alert(`Canción añadida a la playlist ${playlistId}`);
-    };
-
-    // Cerrar dropdowns al hacer clic fuera
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.dropdown-toggle') && !e.target.closest('.dropdown-menu')) {
             closeAllDropdowns();
         }
     });
 
-    // Fix for click on track items (avoid accidental clicks on dropdowns)
     document.querySelectorAll('.track-item').forEach(item => {
         item.addEventListener('click', function(e) {
             // If the clicked element is not within the dropdown or actions area
@@ -276,7 +254,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add click handler for more albums section
     document.querySelectorAll('.card.card-plain').forEach(card => {
         card.addEventListener('click', function() {
             const albumId = this.getAttribute('data-album-id');
@@ -286,7 +263,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Share track functionality
     document.querySelectorAll('[data-track-id]').forEach(shareLink => {
         if (shareLink.textContent.includes('Share track')) {
             shareLink.addEventListener('click', function(e) {
@@ -316,7 +292,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert('Track link copied to clipboard!');
                 }
 
-                // Cerrar menú después de compartir
                 closeAllDropdowns();
             });
         }

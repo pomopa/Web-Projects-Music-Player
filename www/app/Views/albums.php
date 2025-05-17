@@ -113,8 +113,8 @@
                                         <?php if (!empty($album->playlists)): ?>
                                             <?php foreach ($album->playlists as $playlist): ?>
                                                 <li>
-                                                    <a class="dropdown-item" href="#" onclick="addToPlaylist(<?= $playlist->id ?>, <?= $trackId ?>)">
-                                                        <i class="fa fa-plus me-2"></i><?= esc($playlist->name) ?>
+                                                    <a class="dropdown-item" href="#" onclick="addToPlaylist(<?= $playlist['id'] ?>, <?= $trackId ?>)">
+                                                        <i class="fa fa-plus me-2"></i><?= esc($playlist['name']) ?>
                                                     </a>
                                                 </li>
                                             <?php endforeach; ?>
@@ -204,7 +204,15 @@
 </footer>
 
 <script>
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.classList.remove('show');
+            menu.style.display = 'none';
+        });
+    }
     function addToPlaylist(playlistId, trackId) {
+        console.log(`/my-playlists/${playlistId}/track/${trackId}`)
+        closeAllDropdowns()
         fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
             method: 'PUT',
             headers: {
@@ -215,16 +223,20 @@
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Error adding track to playlist');
+                    throw new Error('Error en la respuesta del servidor');
                 }
                 return response.json();
             })
             .then(data => {
-                alert('Track added to playlist!');
+                if (data.status === 'success') {
+                    alert('Track added to playlist!');
+                } else {
+                    throw new Error(data.message || 'Error adding track to playlist');
+                }
             })
             .catch(error => {
                 console.error(error);
-                alert('Failed to add track to playlist.');
+                alert('Failed to add track to playlist: ' + error.message);
             });
     }
 </script>

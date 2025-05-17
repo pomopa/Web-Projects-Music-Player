@@ -44,6 +44,7 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     });
 
     $routes->post('create-playlist', 'MyPlaylist::createPlaylist', ['filter' => ['notlogged', 'images'], 'as' => 'my-playlist_create']);
+    $routes->get('create-playlist', 'MyPlaylist::index', ['as' => 'my-playlist_create']);
 
     $routes->group('track', ['filter' => 'notlogged'], function($routes) {
         $routes->get('(:segment)', 'Track::index/$1',  ['as' => 'tracks_view']);

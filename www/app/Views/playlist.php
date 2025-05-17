@@ -123,8 +123,8 @@
                                         <?php if (!empty($playlist->playlists)): ?>
                                             <?php foreach ($playlist->playlists as $userPlaylist): ?>
                                                 <li>
-                                                    <a class="dropdown-item" href="#" onclick="addToPlaylist(<?= $userPlaylist->id ?>, <?= $track->id ?>)">
-                                                        <i class="fa fa-plus me-2"></i><?= esc($userPlaylist->name) ?>
+                                                    <a class="dropdown-item" href="#" onclick="addToPlaylist(<?= $userPlaylist['id'] ?>, <?= $track->id ?>)">
+                                                        <i class="fa fa-plus me-2"></i><?= esc($userPlaylist['name']) ?>
                                                     </a>
                                                 </li>
                                             <?php endforeach; ?>
