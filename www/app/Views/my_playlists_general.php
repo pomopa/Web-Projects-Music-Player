@@ -85,7 +85,7 @@
                                 <?php else: ?>
                                     <div class="rounded bg-secondary d-flex align-items-center justify-content-center border border-success"
                                          style="width: 40px; height: 40px;">
-                                        <i class="fa fa-music fa-3x text-light"></i>
+                                        <i class="fa fa-music fa-1x text-light2"></i>
                                     </div>
                                 <?php endif; ?>
                             </div>
