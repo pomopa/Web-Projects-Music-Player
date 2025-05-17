@@ -154,7 +154,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     url: currentUrl
                 }).catch(error => console.log('Error sharing:', error));
             } else {
-                // Fallback for browsers that don't support the Web Share API
                 const tempInput = document.createElement('input');
                 document.body.appendChild(tempInput);
                 tempInput.value = currentUrl;

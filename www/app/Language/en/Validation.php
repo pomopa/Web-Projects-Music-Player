@@ -1,4 +1,25 @@
 <?php
 
-// override core en language system validation or define your own en language validation message
-return [];
+return [
+    'invalid_category'  => 'Invalid category. Must be one of: ',
+    'search_empty' => 'Search query cannot be empty',
+    'error_while_searching' => 'An error occured while searching: ',
+    'playlist_permissions' => 'The provided playlist does not exist or does not belong to the current user.',
+    'removal_successfully' => 'The user data has been deleted successfully.',
+    'min_length' => 'The password must contain at least 8 characters.',
+    'special_password_rule' => 'The password must contain both upper and lower case letters and numbers.',
+    'max_length' => 'The {0} must be less than {1} characters long.',
+    'integer' => 'The age must be an integer.',
+    'greater_than_equal_to' => 'The age must be greater or equal to 0.',
+    'less_than_equal_to' => 'The age must be less than or equal to 125.',
+    'matches'     => 'Passwords do not match.',
+    'error_uploading' => 'There was an error uploading your file.',
+    'user_updated_successfully' => 'The user data was updated successfully.',
+    'error_while_updating' => 'There was an error updating the data.',
+    'required'    => 'The {0} field is required.',
+    'valid_email' => 'The email address is not valid.',
+    'is_email_in_system'   => 'User with this email address does not exist.',
+    'is_from_domain' => 'Only emails from the domain @students.salle.url.edu, @ext.salle.url.edu or @salle.url.edu are accepted.',
+    'email_password_incorrect' => 'The given email and/or password are incorrect.',
+    'unique_email' => 'The email address is already registered.',
+];

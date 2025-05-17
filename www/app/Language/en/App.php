@@ -75,4 +75,12 @@ return [
     'duration' => 'Duration',
     'license' => 'License',
     'visit_artist' => 'Visit Artist',
+    'play_album' => 'Play Album',
+    'more_albums_by' => 'More albums by ',
+    'share_track' => 'Share track',
+    'no_tracks_for_album' => 'No tracks available for this album.',
+    'no_albums_for_artist' => 'No other albums found for this artist.',
+    'website' => 'Website',
+    'joined' => 'Joined',
+    'no_albums_yet' => 'No albums available for this artist yet.',
 ];
