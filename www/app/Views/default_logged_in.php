@@ -24,9 +24,11 @@
             <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="<?= base_url(route_to('home_view')) ?>">LSpoty</a>
 
             <div class="d-flex align-items-center ms-auto gap-2">
+                <?php if (current_url(true) != base_url(route_to('my-playlist_view'))): ?>
                 <a href="<?= base_url(route_to('my-playlist_view')) ?>" title="my-playlists-page" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 !important;">
                     <i class="fa fa-music"></i>
                 </a>
+                <?php endif; ?>
                 <?php if (current_url(true) != base_url(route_to('profile_view'))): ?>
                     <a href="<?= base_url(route_to('profile_view')) ?>" title="profile-page" class="d-flex align-items-center justify-content-center btn btn-link btn-just-icon text-white me-2" style="margin: 0 5px 0 5px !important;">
                         <i class="fa fa-user-circle"></i>
