@@ -24,9 +24,13 @@
     </div>
 
     <div class="row playlist-header">
-        <div class="col-lg-3 col-md-4 col-sm-12 d-flex justify-content-center justify-content-md-start mb-4 mb-md-0">
-            <img src="" alt="Profile Pic" class="playlist-cover">
-        </div>
+        <?php if(!empty($user['profile_pic']) && file_exists(WRITEPATH . 'uploads/' . $user['id'] . '/profile/' . $user['profile_pic'])): ?>
+            <img src="<?= base_url(route_to('profile_picture')) ?>" class="rounded-circle img-fluid border border-success" style="width: 150px; height: 150px; object-fit: cover;" alt="Profile Picture">
+        <?php else: ?>
+            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center border border-success" style="width: 150px; height: 150px;">
+                <i class="fa fa-user fa-4x text-light"></i>
+            </div>
+        <?php endif; ?>
         <div class="col-lg-9 col-md-8 col-sm-12 playlist-details">
             <h1 class="text-white display-5 fw-bold mb-1">My Playlists</h1>
             <h2 class="text-secondary fs-4 mb-3 d-block text-decoration-none hover-text-success">
@@ -67,11 +71,23 @@
                             $trackId = null;
                             $player_url = null;
                         }
+                        $coverPath = WRITEPATH . 'uploads/' . $playlist['user_id'] . '/playlists/' . $playlist['cover'];
+                        $hasCover = !empty($playlist['cover']) && file_exists($coverPath);
                         ?>
                         <div class="playlist-item">
                             <div class="track-number"><?= $playlistNumber ?></div>
                             <div class="track-image">
-                                <img src="<?= base_url('assets/img/default-cover.png') ?>" alt="Playlist cover" class="playlist-cover-small">
+                                <?php if ($hasCover): ?>
+                                    <img src="<?= base_url(route_to('my-playlist_picture', $playlist['id'])) ?>"
+                                         alt="Playlist Cover"
+                                         class="rounded img-fluid border border-success"
+                                         style="width: 40px; height: 40px; object-fit: cover;">
+                                <?php else: ?>
+                                    <div class="rounded bg-secondary d-flex align-items-center justify-content-center border border-success"
+                                         style="width: 40px; height: 40px;">
+                                        <i class="fa fa-music fa-3x text-light"></i>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                             <button class="track-play-btn" onclick="window.location.href='<?= base_url(route_to('my-playlist_exact_view', $playlistId)) ?>'">
                                 <i class="fa fa-play"></i>

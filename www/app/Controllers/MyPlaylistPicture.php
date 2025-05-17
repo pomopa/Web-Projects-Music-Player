@@ -26,7 +26,7 @@ class MyPlaylistPicture extends BaseController
             ]);
         }
 
-        $cover = $this->playlistModel->where('id', $playlistID)->first()->cover;
+        $cover = $this->playlistModel->where('id', $playlistID)->first()['cover'];
 
         $path = self::UPLOADS_DIR . $userID['id'] . '/playlists/' . $cover;
 

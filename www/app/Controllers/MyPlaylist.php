@@ -77,6 +77,7 @@ class MyPlaylist extends BaseController
 
         return view('my_playlists_general', [
             'myPlaylists' => $myPlaylists,
+            'user' => $user,
             'username' => $username,
             'totalDuration' => $totalDuration,
         ]);

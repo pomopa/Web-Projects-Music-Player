@@ -35,7 +35,7 @@ $routes->group('/', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->group('my-playlists', ['filter' => 'notlogged'], function ($routes) {
         $routes->get('', 'MyPlaylist::index', ['as' => 'my-playlist_view']);
         $routes->get('(:num)', 'MyPlaylist::viewPlaylist/$1', ['as' => 'my-playlist_exact_view']);
-        $routes->get('picture/(:num)', 'MyPlaylistPicture::playlistImage', ['as' => 'my-playlist_picture']);
+        $routes->get('picture/(:num)', 'MyPlaylistPicture::playlistImage/$1', ['as' => 'my-playlist_picture']);
 
         $routes->put('(:num)', 'MyPlaylist::putPlaylist/$1', ['as' => 'my-playlist_put']);
         $routes->put('(:num)/track/(:segment)', 'MyPlaylist::putTrack/$1/$2', ['as' => 'my-playlist_put_song']);

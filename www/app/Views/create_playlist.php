@@ -4,6 +4,10 @@
 <title>LSpoty - Create Playlist</title>
 <?= $this->endSection() ?>
 
+<?= $this->section('styles') ?>
+<link rel="stylesheet" href="<?= site_url('/assets/propis/styles.css') ?>">
+<?= $this->endSection() ?>
+
 <?= $this->section('content') ?>
 <div class="row">
     <div class="col-lg-8 mx-auto">
@@ -32,8 +36,9 @@
                     <!-- Cover Image -->
                     <div class="col-12 text-center mb-4">
                         <div class="mx-auto position-relative" style="width: 150px; height: 150px;">
+
                             <div class="rounded bg-secondary d-flex align-items-center justify-content-center border border-success" style="width: 150px; height: 150px;">
-                                <i class="fa fa-music fa-3x text-light"></i>
+                                <i class="fa fa-music fa-4x text-light2"></i>
                             </div>
 
                             <label for="picture" class="position-absolute bottom-0 end-0 btn btn-sm btn-success rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; padding: 0;">
