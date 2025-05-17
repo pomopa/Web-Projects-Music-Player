@@ -22,4 +22,18 @@ return [
     'is_from_domain' => 'Only emails from the domain @students.salle.url.edu, @ext.salle.url.edu or @salle.url.edu are accepted.',
     'email_password_incorrect' => 'The given email and/or password are incorrect.',
     'unique_email' => 'The email address is already registered.',
+    'playlist_not_found' => 'Playlist not found.',
+    'playlist_already_exist' => 'This playlist with this track already exist in the system.',
+    'playlist_not_exists' => 'The provided playlist does not exist or does not belong to the current user.',
+    'track_not_exists' => 'The given track id does not exist in our system.',
+    'connection_error' => 'Connection error.',
+    'track_success' => 'Track added successfully to the playlist.',
+    'no_data' => 'No data provided to update.',
+    'fail_update' => 'Failed to update the playlist.',
+    'playlist_success' => 'Playlist updated successfully.',
+    'playlist_not_with_track' => 'A playlist with this track does not exist in the system.',
+    'track_delete_error' => 'The track could not be deleted from the playlist.',
+    'track_delete_success' => 'The track was deleted successfully.',
+    'playlist_error_delete' => 'The playlist could not be deleted.',
+    'playlist_success_delete' => 'Playlist deleted successfully.'
 ];
