@@ -93,8 +93,6 @@ class MyPlaylist extends BaseController
             return redirect()->to(base_url(route_to('my-playlist_view')))->with('error', 'Playlist not found.');
         }
 
-        $playlistImage = base_url('assets/img/default-cover.png');
-
         $userModel = new UserModel();
         $creator = $userModel->find($playlist['user_id']);
         $playlistCreator = $creator['username'] ?? 'Unknown';
@@ -131,7 +129,6 @@ class MyPlaylist extends BaseController
             'playlist' => $playlist,
             'playlistId' => $playlist['id'],
             'playlistName' => $playlist['name'],
-            'playlistImage' => $playlistImage,
             'playlistCreator' => $playlistCreator,
             'playlistCreatorId' => $playlistCreatorId,
             'creationDate' => $creationDate,
