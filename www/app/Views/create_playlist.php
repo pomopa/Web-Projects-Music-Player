@@ -6,9 +6,23 @@
 
 <?= $this->section('styles') ?>
 <link rel="stylesheet" href="<?= site_url('/assets/propis/styles.css') ?>">
+<link id="pagestyle" href="<?= site_url('/assets/css/material-dashboard.css?v=3.1.0') ?>" rel="stylesheet" />
+<!-- Custom CSS -->
+<link rel="stylesheet" href="<?= site_url('/assets/css/spoty.css') ?>">
+<!-- Playlist Detail CSS -->
+<link rel="stylesheet" href="<?= site_url('/assets/css/playlist-details.css') ?>">
+<link rel="stylesheet" href="<?= site_url('/assets/css/playlist-detail.css') ?>">
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+<div class="row mt-4">
+    <div class="col-12">
+        <button class="back-button" onclick="history.back()">
+            <i class="fa fa-arrow-left"></i> Back
+        </button>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-lg-8 mx-auto">
         <div class="card bg-dark border border-success">
