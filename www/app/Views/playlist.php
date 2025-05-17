@@ -171,12 +171,20 @@
         </div>
     </div>
 </div>
+
 <?= $this->endSection() ?>
 
-<?= $this->section('scripts') ?>
-
+<?= $this->section('javascript') ?>
+    <script src="<?= site_url('/assets/js/playlist-player.js') ?>"></script>
 <script>
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.classList.remove('show');
+            menu.style.display = 'none';
+        });
+    }
     function addToPlaylist(playlistId, trackId) {
+        closeAllDropdowns()
         fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
             method: 'PUT',
             headers: {
@@ -185,18 +193,13 @@
             },
             body: JSON.stringify({})
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error adding track to playlist');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                alert('Track added to playlist!');
+                alert(data.message ?? 'Unexpected response');
             })
             .catch(error => {
-                console.error(error);
-                alert('Failed to add track to playlist.');
+                console.error('Error adding track:', error);
+                alert('An error occurred while adding the track.');
             });
     }
 </script>

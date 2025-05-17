@@ -211,7 +211,6 @@
         });
     }
     function addToPlaylist(playlistId, trackId) {
-        console.log(`/my-playlists/${playlistId}/track/${trackId}`)
         closeAllDropdowns()
         fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
             method: 'PUT',
@@ -221,22 +220,13 @@
             },
             body: JSON.stringify({})
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta del servidor');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                if (data.status === 'success') {
-                    alert('Track added to playlist!');
-                } else {
-                    throw new Error(data.message || 'Error adding track to playlist');
-                }
+                alert(data.message ?? 'Unexpected response');
             })
             .catch(error => {
-                console.error(error);
-                alert('Failed to add track to playlist: ' + error.message);
+                console.error('Error adding track:', error);
+                alert('An error occurred while adding the track.');
             });
     }
 </script>
