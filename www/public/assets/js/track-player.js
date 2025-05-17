@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         audioPlayer.addEventListener('error', function(e) {
             console.error("Audio error:", e);
-            alert("Error loading audio. Please try again later.");
+            alert(`${LANG.error_loading}`);
         });
     }
 
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.removeChild(tempInput);
 
                 // Show a message to the user
-                alert('Link copied to clipboard!');
+                alert(`${LANG.link}`);
             }
         });
     }
@@ -149,14 +149,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(data => {
                     if (data.status === 'success') {
-                        alert('Track added to playlist!');
+                        alert(`${LANG.track_added}`);
                     } else {
                         throw new Error(data.message || 'Error adding track to playlist');
                     }
                 })
                 .catch(error => {
                     console.error(error);
-                    alert('Failed to add track to playlist: ' + error.message);
+                    alert(`${LANG.failed_to_add_track}` + error.message);
                 });
         });
     });

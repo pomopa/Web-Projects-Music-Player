@@ -132,5 +132,13 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('javascript') ?>
-<script src="<?= site_url('/assets/js/track-player.js') ?>"></script>
+    <script>
+        const LANG = {
+            error_loading: "<?= lang('App.error_loading_audio') ?>",
+            link: "<?= lang('App.track_link') ?>",
+            track_added: "<?= lang('App.track_added') ?>",
+            failed_to_add_track: "<?= lang('App.failed_to_add_track') ?>"
+        };
+    </script>
+    <script src="<?= site_url('/assets/js/track-player.js') ?>"></script>
 <?= $this->endSection() ?>

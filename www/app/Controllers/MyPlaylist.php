@@ -73,7 +73,7 @@ class MyPlaylist extends BaseController
         }
         $userModel = new UserModel();
         $user = $userModel->find($currentUserId);
-        $username = $user['username'] ?? 'Usuario';
+        $username = $user['username'];
 
         return view('my_playlists_general', [
             'myPlaylists' => $myPlaylists,
@@ -90,17 +90,15 @@ class MyPlaylist extends BaseController
         $playlist = $this->playlistModel->find($playlistId);
 
         if (!$playlist) {
-            return redirect()->to(base_url(route_to('my-playlist_view')))->with('error', 'Playlist not found.');
+            return redirect()->to(base_url(route_to('my-playlist_view')))->with('error', lang('Validation.playlist_not_found'));
         }
 
         $userModel = new UserModel();
         $creator = $userModel->find($playlist['user_id']);
-        $playlistCreator = $creator['username'] ?? 'Unknown';
+        $playlistCreator = $creator['username'];
         $playlistCreatorId = $creator['id'] ?? 0;
 
-        $creationDate = isset($playlist['created_at'])
-            ? date('Y-m-d', strtotime($playlist['created_at']))
-            : 'Unknown';
+        $creationDate = date('Y-m-d', strtotime($playlist['created_at']));
 
         $trackPlaylistModel = new TrackPlaylistModel();
         $trackModel = new TrackModel();
@@ -190,14 +188,14 @@ class MyPlaylist extends BaseController
         if ($this->trackPlaylistModel->where('playlist_id', $playlistID)->where('track_id', $trackID)->first()) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
-                'message' => 'This playlist with this track already exist in the system.'
+                'message' => lang('Validation.playlist_already_exist')
             ]);
         }
 
         if (!$this->checkIfPlaylistFromUser($playlistID)) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
-                'message' => 'The provided playlist does not exist or does not belong to the current user.'
+                'message' => lang('Validation.playlist_not_exists')
             ]);
         }
 
@@ -216,7 +214,7 @@ class MyPlaylist extends BaseController
                 if (empty($data['results'])) {
                     return $this->response->setStatusCode(404)->setJSON([
                         'status' => 'error',
-                        'message' => 'The given track id does not exist in our system.'
+                        'message' => lang('Validation.track_not_exists')
                     ]);
                 }
 
@@ -245,7 +243,7 @@ class MyPlaylist extends BaseController
             } catch (\Exception $e) {
                 return $this->response->setStatusCode(500)->setJSON([
                     'status' => 'error',
-                    'message' => 'Connection error.'
+                    'message' => lang('Validation.connection_error')
                 ]);
             }
         }
@@ -254,7 +252,7 @@ class MyPlaylist extends BaseController
 
         return $this->response->setStatusCode(200)->setJSON([
             'status'  => 'success',
-            'message' => 'Track added successfully to the playlist.'
+            'message' => lang('Validation.track_success')
         ]);
     }
 
@@ -263,7 +261,7 @@ class MyPlaylist extends BaseController
         if (!$this->checkIfPlaylistFromUser($playlistID)) {
             return $this->response->setStatusCode(403)->setJSON([
                 'status'  => 'error',
-                'message' => 'The provided playlist does not exist or does not belong to the current user.'
+                'message' => lang('Validation.playlist_not_exists')
             ]);
         }
 
@@ -303,21 +301,21 @@ class MyPlaylist extends BaseController
 
         if (empty($updateData)) {
             return $this->response->setStatusCode(400)->setJSON([
-                'status' => 'error',
-                'message' => 'No valid data to update.'
+                'status'  => 'error',
+                'message' => lang('Validation.no_data')
             ]);
         }
 
         if (!$this->playlistModel->update($playlistID, $updateData)) {
             return $this->response->setStatusCode(500)->setJSON([
                 'status'  => 'error',
-                'message' => 'Failed to update the playlist.'
+                'message' => lang('Validation.fail_update')
             ]);
         }
 
         return $this->response->setJSON([
             'status'  => 'success',
-            'message' => 'Playlist updated successfully.',
+            'message' => lang('Validation.playlist_success'),
             'data'    => $updateData
         ]);
     }
@@ -327,21 +325,21 @@ class MyPlaylist extends BaseController
         if (!$this->trackPlaylistModel->where('playlist_id', $playlistID)->where('track_id', $trackID)->first()) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
-                'message' => 'A playlist with this track does not exist in the system.'
+                'message' => lang('Validation.playlist_not_with_track')
             ]);
         }
 
         if (!$this->checkIfPlaylistFromUser($playlistID)) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
-                'message' => 'The provided playlist does not exist or does not belong to the current user.'
+                'message' => lang('Validation.playlist_not_exists')
             ]);
         }
 
         if (!$this->trackPlaylistModel->where('playlist_id', $playlistID)->where('track_id', $trackID)->delete()) {
             return $this->response->setStatusCode(400)->setJSON([
                 'status'  => 'error',
-                'message' => 'The track could not be deleted from the playlist.',
+                'message' => lang('Validation.track_delete_error'),
                 'errors'  => $this->trackModel->errors()
             ]);
         }
@@ -357,7 +355,7 @@ class MyPlaylist extends BaseController
 
         return $this->response->setStatusCode(200)->setJSON([
             'status'  => 'success',
-            'message' => 'Track deleted successfully from the playlist.'
+            'message' => lang('Validation.track_delete_success')
         ]);
     }
 
@@ -365,14 +363,14 @@ class MyPlaylist extends BaseController
         if (!$this->playlistModel->find($playlistID)) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
-                'message' => 'Playlist does not exists.'
+                'message' => lang('Validation.playlist_not_exists')
             ]);
         }
 
         if (!$this->checkIfPlaylistFromUser($playlistID)) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status'  => 'error',
-                'message' => 'The provided playlist does not exist or does not belong to the current user.'
+                'message' => lang('Validation.playlist_not_exists')
             ]);
         }
 
@@ -402,7 +400,7 @@ class MyPlaylist extends BaseController
         if (!$this->playlistModel->delete($playlistID)) {
             return $this->response->setStatusCode(400)->setJSON([
                 'status'  => 'error',
-                'message' => 'The playlist could not be deleted.',
+                'message' => lang('Validation.playlist_error_delete'),
                 'errors'  => $this->playlistModel->errors()
             ]);
         }
@@ -414,7 +412,7 @@ class MyPlaylist extends BaseController
 
         return $this->response->setStatusCode(200)->setJSON([
             'status'  => 'success',
-            'message' => 'Playlist deleted successfully.'
+            'message' => lang('Validation.playlist_success_delete')
         ]);
     }
 }

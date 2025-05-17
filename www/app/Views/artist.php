@@ -94,5 +94,10 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('javascript') ?>
+    <script>
+        const LANG = {
+        link: "<?= lang('App.no_track_link') ?>"
+        };
+    </script>
     <script src="<?= site_url('/assets/js/artist-page.js') ?>"></script>
 <?= $this->endSection() ?>

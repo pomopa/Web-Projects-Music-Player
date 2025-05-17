@@ -21,7 +21,7 @@ class ImageFilter implements FilterInterface
 
         if (count($files) > 1) {
             return redirect()->back()
-                ->with('errorImage', 'Only one profile image file is allowed.')
+                ->with('errorImage', lang('Validation.only_one_file'))
                 ->withInput();
         }
 
@@ -34,19 +34,19 @@ class ImageFilter implements FilterInterface
         // Aquesta comprovació no acostuma a saltar però comprova que el fitxer s'hagi penjat correctament. No treure.
         if (!$file->isValid()) {
             return redirect()->back()
-                ->with('errorImage', 'The file could not be uploaded, try again later.')
+                ->with('errorImage', lang('Validation.file_can_not_be_uploaded'))
                 ->withInput();
         }
 
         if ($file->getSize() > self::MAX_FILE_SIZE) {
             return redirect()->back()
-                ->with('errorImage', "The provided file is too big (maximum size allowed: 2MB)")
+                ->with('errorImage', lang('Validation.file_too_big'))
                 ->withInput();
         }
 
         if (strpos($file->getMimeType(), 'image/') !== 0) {
             return redirect()->back()
-                ->with('errorImage', 'The uploaded file must be an image file.')
+                ->with('errorImage', lang('Validation.upload_type_error'))
                 ->withInput();
         }
 
@@ -74,7 +74,7 @@ class ImageFilter implements FilterInterface
 
         if ($correctExtension === null) {
             return redirect()->back()
-                ->with('errorImage', 'The uploaded file extension must either be png, jpg, jpeg or gif.')
+                ->with('errorImage', lang('Validation.error_file_extension'))
                 ->withInput();
         }
 
@@ -85,7 +85,7 @@ class ImageFilter implements FilterInterface
 
         if (!$isValid) {
             return redirect()->back()
-                ->with('errorImage', 'The file extension is unexpected.')
+                ->with('errorImage', lang('Validation.unexpected_file_extension'))
                 ->withInput();
         }
 

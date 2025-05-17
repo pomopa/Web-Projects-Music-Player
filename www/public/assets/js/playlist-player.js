@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.execCommand('copy');
                 document.body.removeChild(tempInput);
 
-                alert('Album link copied to clipboard!');
+                alert(`${LANG.link}`);
             }
         });
     }
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.execCommand('copy');
                     document.body.removeChild(tempInput);
 
-                    alert('Track link copied to clipboard!');
+                    alert(`${LANG.link}`);
                 }
             }
         });
@@ -247,16 +247,16 @@ document.addEventListener('DOMContentLoaded', function() {
             })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Error adding playlist to your library');
+                        throw new Error(`${LANG.error_adding_playlist}`);
                     }
                     return response.json();
                 })
                 .then(data => {
-                    alert('Playlist added to your library!');
+                    alert(`${LANG.playlist_added}`);
                 })
                 .catch(error => {
                     console.error(error);
-                    alert('Failed to add playlist.');
+                    alert(`${LANG.failed_to_add_playlist}`);
                 });
         });
     }
