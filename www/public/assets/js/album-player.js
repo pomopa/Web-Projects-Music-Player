@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.execCommand('copy');
                 document.body.removeChild(tempInput);
 
-                alert('Album link copied to clipboard!');
+                alert(`${LANG.link}`);
             }
         });
     }
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.execCommand('copy');
                     document.body.removeChild(tempInput);
 
-                    alert('Track link copied to clipboard!');
+                    alert(`${LANG.link}`);
                 }
 
                 closeAllDropdowns();

@@ -170,32 +170,39 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('javascript') ?>
-    <script src="<?= site_url('/assets/js/playlist-player.js') ?>"></script>
-<script>
-    function closeAllDropdowns() {
-        document.querySelectorAll('.dropdown-menu').forEach(menu => {
-            menu.classList.remove('show');
-            menu.style.display = 'none';
-        });
-    }
-    function addToPlaylist(playlistId, trackId) {
-        closeAllDropdowns()
-        fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-            body: JSON.stringify({})
-        })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message ?? 'Unexpected response');
-            })
-            .catch(error => {
-                console.error('Error adding track:', error);
-                alert('An error occurred while adding the track.');
+    <script>
+        function closeAllDropdowns() {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.classList.remove('show');
+                menu.style.display = 'none';
             });
-    }
-</script>
+        }
+        function addToPlaylist(playlistId, trackId) {
+            closeAllDropdowns()
+            fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message ?? "<?= lang('App.unexpected_response') ?>");
+                })
+                .catch(error => {
+                    console.error("<?= lang('App.error_adding_track') ?>", error);
+                    alert("<?= lang('App.error_adding_track') ?>");
+                });
+        }
+
+        const LANG = {
+            link: "<?= lang('App.track_link') ?>",
+            playlist_added: "<?= lang('App.playlist_added') ?>",
+            failed_to_add_playlist: "<?= lang('App.failed_to_add_playlist') ?>",
+            error_adding_playlist: "<?= lang('App.error_adding_playlist') ?>"
+        };
+    </script>
+    <script src="<?= site_url('/assets/js/playlist-player.js') ?>"></script>
 <?= $this->endSection() ?>

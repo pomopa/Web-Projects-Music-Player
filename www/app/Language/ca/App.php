@@ -96,4 +96,13 @@ return [
     'more_playlists_by' => 'Més llistes de reproducció de ',
     'no_other_playlists' => 'No hi ha més llistes de reproducció creades per aquest usuari.',
     'no_playlists_available' => 'No hi ha llistes de reproducció disponibles.',
+    'unexpected_response' => 'Resposta inesperada',
+    'error_adding_track' => 'Error afegint la cançó:',
+    'error_adding_track2' => 'Ha sorgit un error afegint la cançó',
+    'track_link' => 'Enllaç copiat al porta papers!',
+    'no_track_link' => 'No s\'ha pogut copiar l\'enllaç.Torna-ho a intentar.',
+    'error_loading_audio' => 'Error carregant l\'audio. Torna-ho a intentar més tard.',
+    'track_added' => 'Track added to playlist!',
+    'failed_to_add_track' => 'No s\'ha pogut afegir la cançó a la llista: ',
+    'error_adding_playlist' => 'Hi ha hagut un error afegint la llista al àlbum',
 ];
