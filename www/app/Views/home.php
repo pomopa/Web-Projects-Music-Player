@@ -9,7 +9,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-    <div class="row justify-content-center mt-4 mb-3">
+    <div class="row justify-content-center mb-3">
         <div class="col-lg-8">
             <form id="searchForm" class="input-group bg-gray-800 rounded-pill">
                 <input type="text" id="searchInput" name="query" placeholder="<?= lang('App.search') ?>" class="form-control border-0 bg-transparent text-white">
