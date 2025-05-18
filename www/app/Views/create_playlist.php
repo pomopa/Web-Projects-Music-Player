@@ -51,9 +51,10 @@
                     <div class="col-12 text-center mb-4">
                         <div class="mx-auto position-relative" style="width: 150px; height: 150px;">
 
-                            <div class="rounded bg-secondary d-flex align-items-center justify-content-center border border-success" style="width: 150px; height: 150px;">
+                            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center border border-success" style="width: 150px; height: 150px;">
                                 <i class="fa fa-music fa-4x text-light2"></i>
                             </div>
+
 
                             <label for="picture" class="position-absolute bottom-0 end-0 btn btn-sm btn-success rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; padding: 0;">
                                 <i class="fa fa-camera"></i>
@@ -88,4 +89,8 @@
         </div>
     </div>
 </div>
+<?= $this->endSection() ?>
+
+<?= $this->section('javascript') ?>
+    <script src="<?= site_url('/assets/js/profile.js') ?>"></script>
 <?= $this->endSection() ?>
