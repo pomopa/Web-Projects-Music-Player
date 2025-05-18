@@ -112,4 +112,6 @@ return [
     'rename_playlist_placeholder' => 'New Name...',
     'update_playlist_button' => 'Update Playlist',
     'no_playlists_found' => 'No playlists found.',
+    'error_deleting_track' => 'Error deleting track',
+    'are_you_sure_delete_track' => 'Are you sure you want to remove this track from the playlist?',
 ];

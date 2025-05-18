@@ -109,5 +109,7 @@ return [
     'rename_playlist_title' => 'Nou nom de la Llista de Reproducció',
     'rename_playlist_placeholder' => 'Nou Nom...',
     'update_playlist_button' => 'Actualitzar Llista',
+    'error_deleting_track' => 'Error eliminant la cançó',
+    'are_you_sure_delete_track' => 'Estàs segur de que vols eliminar la Cançó de la teva Llista de Reproducció? ',
     'no_playlists_found' => 'No s\'han trobat llistes de reproducció.',
 ];

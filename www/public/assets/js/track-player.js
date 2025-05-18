@@ -1,8 +1,3 @@
-/**
- * LSpoty Track Player JavaScript
- * Handles audio playback, progress tracking, and playlist management
- **/
-
 document.addEventListener('DOMContentLoaded', function() {
     const audioPlayer = document.getElementById('audioPlayer');
     const playPauseBtn = document.getElementById('playPauseBtn');
@@ -102,7 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.execCommand('copy');
                 document.body.removeChild(tempInput);
 
-                // Show a message to the user
                 alert(`${LANG.link}`);
             }
         });
@@ -131,8 +125,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const playlistId = this.dataset.playlistId;
             const trackId = this.closest('ul').dataset.trackId;
 
-            console.log(`/my-playlists/${playlistId}/track/${trackId}`);
-
             fetch(`/my-playlists/${playlistId}/track/${trackId}`, {
                 method: 'PUT',
                 headers: {
@@ -141,17 +133,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify({})
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error en la respuesta del servidor');
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
                         alert(`${LANG.track_added}`);
                     } else {
-                        throw new Error(data.message || 'Error adding track to playlist');
+                        alert(`${LANG.failed_to_add_track}` + data.message);
                     }
                 })
                 .catch(error => {

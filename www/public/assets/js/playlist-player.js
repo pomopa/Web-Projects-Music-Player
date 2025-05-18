@@ -149,7 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const dropdownMenu = this.nextElementSibling;
 
-            // Cierra otros menús
             document.querySelectorAll('.dropdown-menu').forEach(menu => {
                 if (menu !== dropdownMenu) {
                     menu.style.display = 'none';
@@ -196,68 +195,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add click handlers for the dropdown items
-    document.querySelectorAll('.dropdown-item').forEach(item => {
+    document.querySelectorAll('.dropdown-item.share-track-item').forEach(item => {
         item.addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
-
-            const dropdownMenu = this.closest('.dropdown-menu');
-            if (dropdownMenu) {
-                dropdownMenu.style.display = 'none';
-            }
-
+            closeAllDropdowns();
             const trackId = this.getAttribute('data-track-id');
+            const trackTitle = this.closest('.track-item').querySelector('.track-title a').textContent.trim();
+            const currentUrl = `${window.location.origin}/track/${trackId}`;
 
-            if (this.textContent.includes('Share track')) {
-                const trackTitle = this.closest('.track-item').querySelector('.track-title a').textContent.trim();
-                const currentUrl = `${window.location.origin}/track/${trackId}`;
+            if (navigator.share) {
+                navigator.share({
+                    title: trackTitle,
+                    text: `Check out this track: ${trackTitle}`,
+                    url: currentUrl
+                }).catch(error => console.log('Error sharing:', error));
+            } else {
+                const tempInput = document.createElement('input');
+                document.body.appendChild(tempInput);
+                tempInput.value = currentUrl;
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
 
-                if (navigator.share) {
-                    navigator.share({
-                        title: trackTitle,
-                        text: `Check out this track: ${trackTitle}`,
-                        url: currentUrl
-                    }).catch(error => console.log('Error sharing:', error));
-                } else {
-                    const tempInput = document.createElement('input');
-                    document.body.appendChild(tempInput);
-                    tempInput.value = currentUrl;
-                    tempInput.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(tempInput);
-
-                    alert(`${LANG.link}`);
-                }
+                alert(LANG.link);
             }
         });
     });
 
-    const addPlaylistButton = document.getElementById('addPlaylistButton');
-    if (addPlaylistButton) {
-        addPlaylistButton.addEventListener('click', function() {
-            const playlistId = window.location.pathname.split('/').pop();
-            console.log(`/my-playlist/${playlistId}`)
-            fetch(`/my-playlist/${playlistId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: JSON.stringify({})
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`${LANG.error_adding_playlist}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    alert(`${LANG.playlist_added}`);
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert(`${LANG.failed_to_add_playlist}`);
-                });
-        });
-    }
 });

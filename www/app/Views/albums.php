@@ -9,7 +9,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-    <div class="row mt-4">
+    <div class="row">
         <div class="col-12">
             <button class="back-button" onclick="history.back()">
                 <i class="fa fa-arrow-left"></i> <?= lang('App.back') ?>
@@ -95,7 +95,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>">
+                                            <a class="dropdown-item share-track-item" href="#" data-track-id="<?= $track->id ?>">
                                                 <i class="fa fa-share-alt me-2"></i><?= lang('App.share_track') ?>
                                             </a>
                                         </li>

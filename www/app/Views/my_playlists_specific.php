@@ -123,9 +123,14 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="trackDropdown<?= $trackId ?>">
                                     <li><a class="dropdown-item" href="/track/<?= $trackId ?>"><i class="fa fa-info-circle me-2"></i><?= lang('App.track_information') ?></a></li>
-                                    <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-plus me-2"></i><?= lang('App.add_to_playlist') ?></a></li>
-                                    <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-share-alt me-2"></i><?= lang('App.share_track') ?></a></li>
-                                    <li><a class="dropdown-item" href="#" data-track-id="<?= $trackId ?>"><i class="fa fa-times me-2"></i><?= lang('App.remove_from_playlist') ?></a></li>
+                                    <li>
+                                        <a class="dropdown-item remove-track"
+                                           href="#"
+                                           data-playlist-id="<?= $playlist['id'] ?>"
+                                           data-track-id="<?= $trackId ?>">
+                                            <i class="fa fa-times me-2"></i><?= lang('App.remove_from_playlist') ?>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -294,5 +299,45 @@
         //updatePlaylistPicture(playListID);
     }
 
-    </script>
+    const deleteTrackPlaylistBaseURL = "<?= base_url(route_to('my-playlist_delete_song', 0, 1)) ?>";
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.remove-track').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const playlistId = this.getAttribute('data-playlist-id');
+                const trackId = this.getAttribute('data-track-id');
+
+                if (!confirm('<?= lang('App.are_you_sure_delete_track') ?>')) return;
+
+                const url = deleteTrackPlaylistBaseURL.replace('/0', '/'+playlistId).replace('/1', '/' + trackId);
+                console.log(url);
+
+                fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('<?= lang('App.error_deleting_track') ?>');
+                    });
+            });
+        });
+    });
+
+
+</script>
 <?= $this->endSection() ?>
