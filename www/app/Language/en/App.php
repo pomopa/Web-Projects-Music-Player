@@ -110,4 +110,6 @@ return [
     'rename_playlist_title' => 'New Playlist Name',
     'rename_playlist_placeholder' => 'New Name...',
     'update_playlist_button' => 'Update Playlist',
+    'error_deleting_track' => 'Error deleting track',
+    'are_you_sure_delete_track' => 'Are you sure you want to remove this track from the playlist?',
 ];

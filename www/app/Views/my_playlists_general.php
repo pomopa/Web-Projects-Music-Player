@@ -138,3 +138,7 @@
 
 
 <?= $this->endSection() ?>
+
+<?= $this->section('javascript') ?>
+<script src="<?= site_url('/assets/js/playlist-player.js') ?>"></script>
+<?= $this->endSection() ?>
