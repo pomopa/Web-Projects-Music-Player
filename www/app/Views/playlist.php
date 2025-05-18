@@ -243,11 +243,11 @@
 
             Promise.all(addPromises).then(() => {
                 if (addedCount === totalTracks) {
-                    alert("All tracks have been successfully added to your playlist.");
+                    alert("<?= lang('App.all_tracks_added') ?>");
                 } else if (addedCount > 0) {
-                    alert("Only new tracks were added. Some tracks were already in your playlist.");
+                    alert("<?= lang('App.partial_tracks_added') ?>");
                 } else {
-                    alert("This playlist is already fully added to the selected playlist.");
+                    alert("<?= lang('App.already_added') ?>");
                 }
             });
         }
