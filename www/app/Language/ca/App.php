@@ -110,9 +110,13 @@ return [
     'rename_playlist_placeholder' => 'Nou Nom...',
     'update_playlist_button' => 'Actualitzar Llista',
     'error_deleting_track' => 'Error eliminant la cançó',
+    'error_deleting_playlist' => 'Error eliminant la llista de reproducció: ',
+    'error_while_deleting_playlist' => 'Hi ha hagut un error mentres s\'eliminava la llista de reproducció.',
     'are_you_sure_delete_track' => 'Estàs segur de que vols eliminar la Cançó de la teva Llista de Reproducció? ',
     'no_playlists_found' => 'No s\'han trobat llistes de reproducció.',
     'all_tracks_added' => 'Totes les cançons s\'han afegit correctament a la llista de reproducció.',
     'partial_tracks_added' => 'Només s\'han afegit cançons noves. Algunes cançons ja estaven a la teva llista de reproducció.',
     'already_added' => 'Totes les cançons d\'aquesta llista ja estan afegides a la llista seleccionada.',
+    'sure_to_delete' => 'Estàs segur que vols eliminar la llista de reproducció ',
+    'error_editing_name' => 'Error al editar el nom.',
 ];

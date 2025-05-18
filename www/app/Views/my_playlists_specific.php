@@ -69,7 +69,7 @@
         </div>
         <div id="wantToUpdate" class="hidden">
             <label for="update_name" class="form-label text-light"><?= lang('App.rename_playlist_title') ?></label>
-            <input type="text" id="update_name" class="form-control border border-light ps-2 mb-3" placeholder="<?= lang('App.rename_playlist_placeholder') ?>">
+            <input type="text" id="update_name" class="form-control border border-light ps-2 mb-3" placeholder="<?= lang('App.rename_playlist_placeholder') ?>" style="color: white;">
 
             <?php /*<div class="input-group input-group-outline my-3" id="fileInputGroup">
                 <label for="update_name" class="form-label text-light">New Cover (Leave blank to not modify)</label>
@@ -196,7 +196,7 @@
 
 
     function deletePlaylist(playListID, playListName) {
-        if (!confirm('Are you sure you want to delete playlist ' + playListName + '?')) {
+        if (!confirm('<?= lang('App.sure_to_delete') ?>' + playListName + '?')) {
             return;
         }
 
@@ -209,14 +209,14 @@
         })
             .then(response => response.json())
             .then(data => {
-                alert(data.message ?? 'Unexpected response');
+                alert(data.message ?? '<?= lang('App.unexpected_response') ?>');
                 if (data.status === 'success') {
                     window.location.href = "<?= base_url(route_to('my-playlist_view')) ?>";
                 }
             })
             .catch(error => {
-                console.error('Error deleting playlist:', error);
-                alert('An error occurred while deleting the playlist.');
+                console.error('<?= lang('App.error_deleting_playlist') ?>', error);
+                alert('<?= lang('App.error_while_deleting_playlist') ?>');
             });
     }
 
@@ -256,43 +256,9 @@
             })
             .catch(error => {
                 console.error(error);
-                alert("Error al editar el nom.");
+                alert('<?= lang('App.error_editing_name') ?>');
             });
     }
-
-    /*
-    function updatePlaylistPicture(playListId) {
-        const pictureInput = document.getElementById('picture');
-        if (!pictureInput.files.length) {
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('picture', pictureInput.files[0]);
-
-        console.log(pictureInput.files[0]);
-
-        fetch(updatePlaylistBaseURL + '/' + playListId, {
-            method: 'PUT',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: formData
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    location.reload();
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                alert("Error updating image.");
-            });
-    }
-    */
 
     function updatePlaylist(playListID) {
         updatePlaylistName(playListID);

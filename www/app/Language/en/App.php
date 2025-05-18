@@ -113,8 +113,12 @@ return [
     'update_playlist_button' => 'Update Playlist',
     'no_playlists_found' => 'No playlists found.',
     'error_deleting_track' => 'Error deleting track',
+    'error_deleting_playlist' => 'Error deleting playlist: ',
+    'error_while_deleting_playlist' => 'An error occurred while deleting the playlist.',
     'are_you_sure_delete_track' => 'Are you sure you want to remove this track from the playlist?',
     'all_tracks_added' => 'All tracks have been successfully added to your playlist.',
     'partial_tracks_added' => 'Only new tracks were added. Some tracks were already in your playlist.',
     'already_added' => 'This playlist is already fully added to the selected playlist.',
+    'sure_to_delete' => 'Are you sure you want to delete playlist ',
+    'error_editing_name' => 'Error editing the name.',
 ];
