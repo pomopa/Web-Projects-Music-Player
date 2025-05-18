@@ -137,8 +137,4 @@
     </div>
 
 
-
-
-
-
 <?= $this->endSection() ?>

@@ -44,9 +44,24 @@
             <button class="action-btn primary" id="playPlaylistButton">
                 <i class="fa fa-play me-1"></i> <?= lang('App.play_playlist') ?>
             </button>
-            <button class="action-btn" id="addPlaylistButton">
-                <i class="fa fa-plus me-1"></i> <?= lang('App.add_to_playlist') ?>
-            </button>
+            <div class="dropdown d-inline-block">
+                <button class="action-btn dropdown-toggle" type="button" id="generalAddPlaylistDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-plus me-1"></i> <?= lang('App.add_to_playlist') ?>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="generalAddPlaylistDropdown">
+                    <?php if (!empty($playlist->playlists)): ?>
+                        <?php foreach ($playlist->playlists as $userPlaylist): ?>
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="addWholePlaylistToPlaylist(<?= $userPlaylist['id'] ?>)">
+                                    <i class="fa fa-plus me-2"></i><?= esc($userPlaylist['name']) ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <li><span class="dropdown-item text-muted"><?= lang('App.no_playlists_available') ?></span></li>
+                    <?php endif; ?>
+                </ul>
+            </div>
             <button class="action-btn" id="shareButton">
                 <i class="fa fa-share-alt me-1"></i> <?= lang('App.share') ?>
             </button>
@@ -195,6 +210,46 @@
                     console.error("<?= lang('App.error_adding_track') ?>", error);
                     alert("<?= lang('App.error_adding_track') ?>");
                 });
+        }
+
+        function addWholePlaylistToPlaylist(playlistId) {
+            closeAllDropdowns()
+            const tracks = <?= json_encode($playlist->tracks) ?>;
+            const totalTracks = tracks.length;
+            let addedCount = 0;
+
+            if (totalTracks === 0) {
+                alert("<?= lang('App.no_tracks_for_playlist') ?>");
+                return;
+            }
+
+            let addPromises = tracks.map(track => {
+                return fetch(`/my-playlists/${playlistId}/track/${track.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: JSON.stringify({})
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            addedCount++;
+                        }
+                        return response.json().catch(() => ({}));
+                    })
+                    .catch(() => {});
+            });
+
+            Promise.all(addPromises).then(() => {
+                if (addedCount === totalTracks) {
+                    alert("All tracks have been successfully added to your playlist.");
+                } else if (addedCount > 0) {
+                    alert("Only new tracks were added. Some tracks were already in your playlist.");
+                } else {
+                    alert("This playlist is already fully added to the selected playlist.");
+                }
+            });
         }
 
         const LANG = {
