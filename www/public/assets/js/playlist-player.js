@@ -149,7 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const dropdownMenu = this.nextElementSibling;
 
-            // Cierra otros menús
             document.querySelectorAll('.dropdown-menu').forEach(menu => {
                 if (menu !== dropdownMenu) {
                     menu.style.display = 'none';
