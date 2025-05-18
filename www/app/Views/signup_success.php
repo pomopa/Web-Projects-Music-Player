@@ -9,12 +9,14 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<br>
-<label class="form-check-label mb-0 ms-3"><?= lang('App.signup_success') ?></label>
-<br>
-<p class="mt-4 text-sm text-center">
-    <?= lang('App.auto_redirect') ?>
-    <a href="<?= base_url(route_to('landing_view')) ?>" class="text-primary text-gradient font-weight-bold"><?= lang('App.link') ?></a>
+<p class="text-sm text-center">
+    <br>
+        <label class="form-check-label mb-0 ms-3"><?= lang('App.signup_success') ?></label>
+    <br>
+    <p class="mt-4 text-sm text-center">
+        <?= lang('App.auto_redirect') ?>
+        <a href="<?= base_url(route_to('landing_view')) ?>" class="text-primary text-gradient font-weight-bold"><?= lang('App.link') ?></a>
+    </p>
 </p>
 <?= $this->endSection() ?>
 
@@ -22,6 +24,6 @@
 <script>
     setTimeout(function() {
         window.location.href = "../..";
-    }, 4000);
+    }, 40000);
 </script>
 <?= $this->endSection() ?>
