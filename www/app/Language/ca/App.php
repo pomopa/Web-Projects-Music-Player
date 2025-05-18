@@ -67,6 +67,7 @@ return [
     'no_category2' => 'que coincideixi amb',
     'back' => 'Enrere',
     'play' => 'Reproduir',
+    'pause' => 'Pausar',
     'add_to_playlist' => 'Afegir a una llista de reproducció',
     'create_new_playlist' => 'Crear nova llista de reproducció',
     'share' => 'Compartir',
@@ -108,4 +109,5 @@ return [
     'rename_playlist_title' => 'Nou nom de la Llista de Reproducció',
     'rename_playlist_placeholder' => 'Nou Nom...',
     'update_playlist_button' => 'Actualitzar Llista',
+    'no_playlists_found' => 'No s\'han trobat llistes de reproducció.',
 ];

@@ -47,7 +47,7 @@
                                 </li>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <li><span class="dropdown-item text-muted">No playlists found</span></li>
+                            <li><span class="dropdown-item text-muted"><?= lang('App.no_playlists_found') ?></span></li>
                         <?php endif; ?>
                         <li><div class="dropdown-divider"></div></li>
                         <li><a class="dropdown-item" href="/create-playlist"><i class="fa fa-plus-circle me-2"></i><?= lang('App.create_new_playlist') ?></a></li>
@@ -137,7 +137,9 @@
             error_loading: "<?= lang('App.error_loading_audio') ?>",
             link: "<?= lang('App.track_link') ?>",
             track_added: "<?= lang('App.track_added') ?>",
-            failed_to_add_track: "<?= lang('App.failed_to_add_track') ?>"
+            failed_to_add_track: "<?= lang('App.failed_to_add_track') ?>",
+            pause: "<?= lang('App.pause') ?>",
+            play: "<?= lang('App.play') ?>"
         };
     </script>
     <script src="<?= site_url('/assets/js/track-player.js') ?>"></script>

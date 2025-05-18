@@ -38,11 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error("Error playing audio:", error);
             });
             playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
-            playButton.innerHTML = '<i class="fa fa-pause me-1"></i> Pause';
+            playButton.innerHTML = `<i class="fa fa-pause me-1"></i> ${LANG.pause}`;
         } else {
             audioPlayer.pause();
             playPauseBtn.innerHTML = '<i class="fa fa-play"></i>';
-            playButton.innerHTML = '<i class="fa fa-play me-1"></i> Play';
+            playButton.innerHTML = `<i class="fa fa-play me-1"></i> ${LANG.play}`;
         }
     }
 

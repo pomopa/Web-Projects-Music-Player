@@ -67,6 +67,7 @@ return [
     'no_category2' => 'found matching',
     'back' => 'Back',
     'play' => 'Play',
+    'pause' => 'Pause',
     'add_to_playlist' => 'Add to playlist',
     'create_new_playlist' => 'Create new playlist',
     'share' => 'Share',
@@ -110,4 +111,5 @@ return [
     'rename_playlist_title' => 'New Playlist Name',
     'rename_playlist_placeholder' => 'New Name...',
     'update_playlist_button' => 'Update Playlist',
+    'no_playlists_found' => 'No playlists found.',
 ];
