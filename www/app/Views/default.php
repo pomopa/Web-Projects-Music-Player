@@ -50,40 +50,43 @@
 </head>
 
 <body class="bg-gray-200">
-<!-- Navbar -->
-<header>
-    <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
-        <div class="containerCentrat">
-            <a href="<?= base_url(route_to('landing_view')) ?>" title="Go to Home Page" class="navbar-brand text-center text-white text-decoration-none logo-big">
-                LSpoty
-            </a>
-        </div>
-</header>
-<!-- End Navbar -->
-<main class="main-content  mt-0">
-    <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
-        <span class="mask bg-gradient-dark opacity-6"></span>
-        <div class="container my-auto">
-            <div class="row">
-                <?= $this->renderSection('container') ?>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
+            <div class="containerCentrat">
+                <a href="<?= base_url(route_to('landing_view')) ?>" title="Go to Home Page" class="navbar-brand text-center text-white text-decoration-none logo-big">
+                    LSpoty
+                </a>
             </div>
-        </div>
-        <footer class="footer position-absolute bottom-2 py-2 w-100">
-            <div class="container">
-                <div class="row2 align-items-center justify-content-lg-evenly">
-                    <div class="col-12 col-md-6 my-auto">
-                        <div class="copyright text-center text-sm text-white">
-                            © <script>
-                                document.write(new Date().getFullYear())
-                            </script>
-                            <?= lang('App.copyright') ?> <i class="fa fa-heart" aria-hidden="true"></i>
-                        </div>
-                    </div>
+    </header>
+    <!-- End Navbar -->
+    <main class="main-content  mt-0">
+        <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
+            <span class="mask bg-gradient-dark opacity-6"></span>
+            <div class="container my-auto">
+                <div class="row">
+                    <?= $this->renderSection('container') ?>
                 </div>
             </div>
-        </footer>
+        </div>
+    </main>
+</body>
+
+<footer class="footer position-absolute bottom-2 py-2 w-100">
+    <div class="container">
+        <div class="row2 align-items-center justify-content-lg-evenly">
+            <div class="col-12 col-md-6 my-auto">
+                <div class="copyright text-center text-sm text-white">
+                    © <script>
+                        document.write(new Date().getFullYear())
+                    </script>
+                    <?= lang('App.copyright') ?> <i class="fa fa-heart" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
     </div>
-</main>
+</footer>
+
 <!--   Core JS Files   -->
 <script src="../../../assets/js/core/popper.min.js"></script>
 <script src="../../../assets/js/core/bootstrap.min.js"></script>
@@ -107,6 +110,6 @@
 <script src="../../../assets/js/material-dashboard.min.js?v=3.1.0"></script>
 <script src="<?= site_url('/assets/js/commons.js') ?>"></script>
 <?= $this->renderSection('scripts') ?>
-</body>
-x
+
+
 </html>

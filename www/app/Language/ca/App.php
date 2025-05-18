@@ -114,5 +114,5 @@ return [
     'no_playlists_found' => 'No s\'han trobat llistes de reproducció.',
     'all_tracks_added' => 'Totes les cançons s\'han afegit correctament a la llista de reproducció.',
     'partial_tracks_added' => 'Només s\'han afegit cançons noves. Algunes cançons ja estaven a la teva llista de reproducció.',
-    'already_added' => 'Totes les cançons d\'aquesta llista ja estan afegides a la llista seleccionada.'
+    'already_added' => 'Totes les cançons d\'aquesta llista ja estan afegides a la llista seleccionada.',
 ];

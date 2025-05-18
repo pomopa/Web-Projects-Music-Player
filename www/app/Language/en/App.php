@@ -116,5 +116,5 @@ return [
     'are_you_sure_delete_track' => 'Are you sure you want to remove this track from the playlist?',
     'all_tracks_added' => 'All tracks have been successfully added to your playlist.',
     'partial_tracks_added' => 'Only new tracks were added. Some tracks were already in your playlist.',
-    'already_added' => 'This playlist is already fully added to the selected playlist.'
+    'already_added' => 'This playlist is already fully added to the selected playlist.',
 ];

@@ -12,7 +12,8 @@
 
 <div class="text-center p-4">
     <h1 class="fw-bold text-primary-emphasis"><?= lang('App.welcome') ?></h1>
-    </br>
+    <small><?= esc($now) ?></small>
+    <br><br>
     <p class="text-muted">
         <?= lang('App.consider') ?><a href="<?= base_url(route_to('sign-in_view')) ?>" class="text-decoration-none text-primary fw-semibold"><?= lang('App.logging_in') ?></a>
         <?= lang('App.or') ?><a href="<?= base_url(route_to('sign-up_view')) ?>" class="text-decoration-none text-primary fw-semibold"><?= lang('App.registering') ?></a>

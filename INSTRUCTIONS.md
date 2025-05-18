@@ -11,13 +11,16 @@ Aquest projecte simula una plataforma de gestió musical, desenvolupada amb un e
 
 ---
 
-## Índex
+## 📑 Índex
 
 1. [Com iniciar el projecte](#com-iniciar-el-projecte)
 2. [Implementació d'endpoints](#implementació-dendpoints)
 3. [Aliases de rutes](#aliases-de-rutes)
-4. [Traducció del codi](#traducció-del-codi)
+4. [Traducció del projecte](#traducció-del-projecte)
 5. [Validacions de seguretat](#validacions-de-seguretat)
+6. [Carbon](#carbon)
+7. [Endpoint `/track/{id}`](#endpoint-trackid)
+
 
 ---
 
