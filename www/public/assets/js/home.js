@@ -1,22 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
     window.swiperInstances = {};
 
-    // Search elements
     const searchForm = document.getElementById('searchForm');
     const searchInput = document.getElementById('searchInput');
     const searchResults = document.getElementById('searchResults');
     const resultsContainer = document.getElementById('resultsContainer');
     const homeContent = document.getElementById('homeContent');
 
-    // Navigation elements
     const filterButtons = document.querySelectorAll('[data-filter]');
     const categorySections = document.querySelectorAll('.category-section');
 
-    // Track current active filter
     let currentFilter = 'tracks';
 
 
-    // Configuration factory function to create consistent Swiper configs
     const createSwiperConfig = (navigationSelectors) => {
         return {
             slidesPerView: 'auto',
@@ -63,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             on: {
                 beforeInit: function() {
-                    // Ensure there are enough slides for the loop
                     const swiper = this;
                     if (swiper.slides && swiper.slides.length < 10) {
                         const slides = Array.from(swiper.el.querySelectorAll('.swiper-slide'));
@@ -75,8 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 },
                 init: function() {
-                    // Store this Swiper instance for later reference
-                    const swiperId = this.el.classList[1]; // Get the class name that identifies this swiper
+                    const swiperId = this.el.classList[1];
                     window.swiperInstances[swiperId] = this;
                 }
             }
@@ -130,16 +124,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }));
     };
 
-    // Function to refresh swipers when tab becomes visible
     const refreshSwipers = () => {
-        // Get the currently visible tab
         const visibleSection = document.querySelector('.category-section:not(.d-none)');
         if (!visibleSection) return;
 
-        // Find all swipers in the visible section
         const swipers = visibleSection.querySelectorAll('.swiper');
 
-        // Update each swiper
         swipers.forEach(swiperEl => {
             const swiperId = swiperEl.classList[1];
             if (window.swiperInstances[swiperId]) {
@@ -149,25 +139,21 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
 
-    // Function to fetch search results
     async function performSearch(query, category) {
         try {
             resultsContainer.innerHTML = `<div class="text-center text-white"><p>${LANG.searching}</p></div>`;
-            // Fetch results from server
             const response = await fetch(`/home/${category}/${query}`);
 
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Error with the network.');
             }
 
             let data = await response.json();
             console.log(data);
-            // Clear results container
             resultsContainer.innerHTML = '';
 
             data = data['results'];
             if (data && data.length > 0) {
-                // Display results based on category
                 data.forEach(item => {
                     let html = '';
 
@@ -255,7 +241,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 initializeTooltips();
 
             } else {
-                // No results found
                 resultsContainer.innerHTML = `
                     <div class="text-center text-white py-4">
                         <p>${LANG.no_category1} ${category} ${LANG.no_category2} "${query}"</p>
@@ -282,17 +267,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    // Function to show the appropriate category section
     const showCategorySection = (filter) => {
-        // Hide all category sections first
         categorySections.forEach(section => {
             section.classList.add('d-none');
         });
 
-        // Update current filter
         currentFilter = filter;
 
-        // Show the selected section
         const sectionToShow = document.getElementById(`${filter}Section`);
         if (sectionToShow) {
             sectionToShow.classList.remove('d-none');
@@ -304,7 +285,6 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
 
-    // Function to initialize tooltips
     const initializeTooltips = () => {
         try {
             const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -317,52 +297,41 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
 
-    // Handle search form submission
     searchForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
         const query = searchInput.value.trim();
 
         if (query !== '') {
-            // Show search results section and hide home content
             searchResults.classList.remove('d-none');
             homeContent.classList.add('d-none');
 
-            // Get currently active filter
             const activeFilterBtn = document.querySelector('[data-filter].active');
             currentFilter = activeFilterBtn ? activeFilterBtn.dataset.filter : 'tracks';
 
-            // Perform search with current filter
             performSearch(query, currentFilter);
         } else {
-            // If search box is empty, show home content
             searchResults.classList.add('d-none');
             homeContent.classList.remove('d-none');
             showCategorySection(currentFilter);
         }
     });
 
-    // Handle filter buttons click
     filterButtons.forEach(button => {
         button.addEventListener('click', function(e) {
-            // Stop event propagation
             e.preventDefault();
             e.stopPropagation();
 
-            // Remove active class from all buttons
             filterButtons.forEach(btn => btn.classList.remove('active'));
 
-            // Add active class to clicked button
             this.classList.add('active');
 
             const selectedFilter = this.dataset.filter;
             currentFilter = selectedFilter;
 
-            // If there's a search query active, re-run the search with the new filter
             if (!searchResults.classList.contains('d-none') && searchInput.value.trim() !== '') {
                 performSearch(searchInput.value.trim(), selectedFilter);
             } else {
-                // Show the relevant content section based on filter
                 showCategorySection(selectedFilter);
             }
 
@@ -370,7 +339,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Clear search button functionality
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('clear-search')) {
             searchInput.value = '';
@@ -381,7 +349,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Handle window resize to refresh swipers
     window.addEventListener('resize', refreshSwipers);
 
     document.querySelectorAll('.swiper .card[data-url]').forEach(card => {
@@ -394,12 +361,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize all swipers
     initializeSwipers();
 
-    // Initialize tooltips
     initializeTooltips();
 
-    // By default, show the tracks section (since 'tracks' button is active by default)
     showCategorySection('tracks');
 });

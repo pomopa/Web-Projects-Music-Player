@@ -1,13 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Handle Share button
     const shareButton = document.getElementById('shareButton');
     if (shareButton) {
         shareButton.addEventListener('click', function() {
             const artistId = this.getAttribute('data-artist-id');
             const shareUrl = `${window.location.origin}/artist/${artistId}`;
 
-            // Check if Web Share API is supported
             if (navigator.share) {
                 navigator.share({
                     title: document.title,
@@ -16,15 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log('Thanks for sharing!');
                 }).catch(console.error);
             } else {
-                // Fallback - copy to clipboard
                 navigator.clipboard.writeText(shareUrl).then(function() {
-                    // Create a temporary toast notification
                     const toast = document.createElement('div');
                     toast.classList.add('toast-notification');
                     toast.textContent = 'Artist profile link copied to clipboard!';
                     document.body.appendChild(toast);
 
-                    // Remove the toast after 3 seconds
                     setTimeout(() => {
                         toast.classList.add('toast-hide');
                         setTimeout(() => toast.remove(), 300);
@@ -36,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // CSS for toast notifications
     const style = document.createElement('style');
     style.textContent = `
         @keyframes pulse {

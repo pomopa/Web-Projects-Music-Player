@@ -231,33 +231,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    const addPlaylistButton = document.getElementById('addPlaylistButton');
-    if (addPlaylistButton) {
-        addPlaylistButton.addEventListener('click', function() {
-            const playlistId = window.location.pathname.split('/').pop();
-            console.log(`/my-playlist/${playlistId}`)
-            fetch(`/my-playlist/${playlistId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: JSON.stringify({})
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`${LANG.error_adding_playlist}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    alert(`${LANG.playlist_added}`);
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert(`${LANG.failed_to_add_playlist}`);
-                });
-        });
-    }
 });

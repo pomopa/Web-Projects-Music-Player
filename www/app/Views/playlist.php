@@ -9,7 +9,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<div class="row mt-4">
+<div class="row">
     <div class="col-12">
         <button class="back-button" onclick="history.back()">
             <i class="fa fa-arrow-left"></i> <?= lang('App.back') ?>
