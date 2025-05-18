@@ -1,17 +1,14 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Global audio player
     let currentAudio = null;
     let currentTrackItem = null;
     let progressIntervals = {};
 
-    // Function to stop any currently playing audio
     function stopCurrentAudio() {
         if (currentAudio) {
             currentAudio.pause();
             currentAudio.currentTime = 0;
 
-            // Clear progress interval for the track
             if (currentTrackItem) {
                 const trackId = currentTrackItem.querySelector('.track-play-btn').getAttribute('data-track-id');
                 if (progressIntervals[trackId]) {
@@ -19,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     delete progressIntervals[trackId];
                 }
 
-                // Reset progress display
                 const progressContainer = currentTrackItem.querySelector('.track-progress-container');
                 if (progressContainer) {
                     const progressBar = progressContainer.querySelector('.track-progress-bar');
@@ -28,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
-                // Change icon back to play
                 const playIcon = currentTrackItem.querySelector('.track-play-btn i');
                 if (playIcon) {
                     playIcon.classList.remove('fa-pause');
@@ -41,52 +36,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to format seconds to MM:SS
     function formatTime(seconds) {
         const mins = Math.floor(seconds / 60);
         const secs = Math.floor(seconds % 60);
         return `${mins}:${secs < 10 ? '0' + secs : secs}`;
     }
 
-    // Function to play a track
     function playTrack(trackItem) {
         const playBtn = trackItem.querySelector('.track-play-btn');
         const trackId = playBtn.getAttribute('data-track-id');
         const trackUrl = playBtn.getAttribute('data-track-url');
         const playIcon = playBtn.querySelector('i');
 
-        // If this is already playing, pause it
         if (currentAudio && currentTrackItem === trackItem) {
             stopCurrentAudio();
             return;
         }
 
-        // Stop any currently playing audio
         stopCurrentAudio();
 
-        // Create new audio element
         currentAudio = new Audio(trackUrl);
         currentTrackItem = trackItem;
 
-        // Change icon to pause
         playIcon.classList.remove('fa-play');
         playIcon.classList.add('fa-pause');
 
-        // Play the audio
         currentAudio.play().catch(error => {
             console.error('Error playing audio:', error);
-            // Reset on error
             stopCurrentAudio();
         });
 
-        // Create or update progress element
         let progressContainer = trackItem.querySelector('.track-progress-container');
         if (!progressContainer) {
-            // Create progress container
             progressContainer = document.createElement('div');
             progressContainer.className = 'track-progress-container';
 
-            // Create progress bar
             const progressBar = document.createElement('div');
             progressBar.className = 'track-progress-bar';
             progressContainer.appendChild(progressBar);
@@ -97,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const progressBar = progressContainer.querySelector('.track-progress-bar');
 
-        // Update progress regularly
         progressIntervals[trackId] = setInterval(() => {
             if (currentAudio && !currentAudio.paused) {
                 const currentTime = currentAudio.currentTime;
@@ -108,19 +91,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     progressBar.style.width = `${progressPercent}%`;
                 }
             }
-        }, 250); // Update more frequently for smoother progress
+        }, 250);
 
-        // Set up ended event handler
         currentAudio.addEventListener('ended', function() {
             stopCurrentAudio();
         });
     }
 
-    // Handle play album button
     const playAlbumButton = document.getElementById('playAlbumButton');
     if (playAlbumButton) {
         playAlbumButton.addEventListener('click', function() {
-            // Get first track and play it
             const firstTrackItem = document.querySelector('.track-item');
             if (firstTrackItem) {
                 playTrack(firstTrackItem);
@@ -128,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle individual track play buttons
     const trackPlayButtons = document.querySelectorAll('.track-play-btn');
     trackPlayButtons.forEach(button => {
         button.addEventListener('click', function(e) {
@@ -138,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Share button functionality
     const shareButton = document.getElementById('shareButton');
     if (shareButton) {
         shareButton.addEventListener('click', function() {
@@ -146,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const artistName = document.querySelector('.album-details a').textContent.trim();
             const currentUrl = window.location.href;
 
-            // Check if Web Share API is available
             if (navigator.share) {
                 navigator.share({
                     title: `${albumTitle} by ${artistName}`,
@@ -166,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ----- DROPDOWN MANAGEMENT -----
 
     function closeAllDropdowns() {
         document.querySelectorAll('.dropdown-menu').forEach(menu => {
@@ -182,7 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const dropdownMenu = this.nextElementSibling;
 
-            // Cierra otros menús
             document.querySelectorAll('.dropdown-menu').forEach(menu => {
                 if (menu !== dropdownMenu) {
                     menu.style.display = 'none';
