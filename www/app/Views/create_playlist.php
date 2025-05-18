@@ -18,7 +18,7 @@
 <div class="row mt-4">
     <div class="col-12">
         <button class="back-button" onclick="history.back()">
-            <i class="fa fa-arrow-left"></i> Back
+            <i class="fa fa-arrow-left"></i> <?= lang('App.back') ?>
         </button>
     </div>
 </div>
