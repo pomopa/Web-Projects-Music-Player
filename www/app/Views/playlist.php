@@ -121,7 +121,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#" data-track-id="<?= $track->id ?>">
+                                            <a class="dropdown-item share-track-item" href="#" data-track-id="<?= $track->id ?>">
                                                 <i class="fa fa-share-alt me-2"></i><?= lang('App.share_track') ?>
                                             </a>
                                         </li>

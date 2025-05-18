@@ -237,37 +237,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    document.querySelectorAll('[data-track-id]').forEach(shareLink => {
-        if (shareLink.textContent.includes('Share track')) {
-            shareLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
+    document.querySelectorAll('.dropdown-item.share-track-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeAllDropdowns();
+            const trackId = this.getAttribute('data-track-id');
+            const trackTitle = this.closest('.track-item').querySelector('.track-title a').textContent.trim();
+            const currentUrl = `${window.location.origin}/track/${trackId}`;
 
-                const trackId = this.getAttribute('data-track-id');
-                if (!trackId) return;
+            if (navigator.share) {
+                navigator.share({
+                    title: trackTitle,
+                    text: `Check out this track: ${trackTitle}`,
+                    url: currentUrl
+                }).catch(error => console.log('Error sharing:', error));
+            } else {
+                const tempInput = document.createElement('input');
+                document.body.appendChild(tempInput);
+                tempInput.value = currentUrl;
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
 
-                const trackTitle = this.closest('.track-item').querySelector('.track-title a').textContent.trim();
-                const currentUrl = `${window.location.origin}/track/${trackId}`;
-
-                if (navigator.share) {
-                    navigator.share({
-                        title: trackTitle,
-                        text: `Check out this track: ${trackTitle}`,
-                        url: currentUrl
-                    }).catch(error => console.log('Error sharing:', error));
-                } else {
-                    const tempInput = document.createElement('input');
-                    document.body.appendChild(tempInput);
-                    tempInput.value = currentUrl;
-                    tempInput.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(tempInput);
-
-                    alert(`${LANG.link}`);
-                }
-
-                closeAllDropdowns();
-            });
-        }
+                alert(LANG.link);
+            }
+        });
     });
 });

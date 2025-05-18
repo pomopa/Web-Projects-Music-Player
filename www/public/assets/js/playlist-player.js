@@ -195,39 +195,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add click handlers for the dropdown items
-    document.querySelectorAll('.dropdown-item').forEach(item => {
+    document.querySelectorAll('.dropdown-item.share-track-item').forEach(item => {
         item.addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
-
-            const dropdownMenu = this.closest('.dropdown-menu');
-            if (dropdownMenu) {
-                dropdownMenu.style.display = 'none';
-            }
-
+            closeAllDropdowns();
             const trackId = this.getAttribute('data-track-id');
+            const trackTitle = this.closest('.track-item').querySelector('.track-title a').textContent.trim();
+            const currentUrl = `${window.location.origin}/track/${trackId}`;
 
-            if (this.textContent.includes('Share track')) {
-                const trackTitle = this.closest('.track-item').querySelector('.track-title a').textContent.trim();
-                const currentUrl = `${window.location.origin}/track/${trackId}`;
+            if (navigator.share) {
+                navigator.share({
+                    title: trackTitle,
+                    text: `Check out this track: ${trackTitle}`,
+                    url: currentUrl
+                }).catch(error => console.log('Error sharing:', error));
+            } else {
+                const tempInput = document.createElement('input');
+                document.body.appendChild(tempInput);
+                tempInput.value = currentUrl;
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
 
-                if (navigator.share) {
-                    navigator.share({
-                        title: trackTitle,
-                        text: `Check out this track: ${trackTitle}`,
-                        url: currentUrl
-                    }).catch(error => console.log('Error sharing:', error));
-                } else {
-                    const tempInput = document.createElement('input');
-                    document.body.appendChild(tempInput);
-                    tempInput.value = currentUrl;
-                    tempInput.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(tempInput);
-
-                    alert(`${LANG.link}`);
-                }
+                alert(LANG.link);
             }
         });
     });
+
 });
