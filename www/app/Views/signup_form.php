@@ -43,7 +43,7 @@
     </div>
 
     <?php if (session()->getFlashdata('errorImage')): ?>
-        <div class="missatgeError"><?= esc(session()->getFlashdata('error')) ?></div>
+        <div class="missatgeError"><?= esc(session()->getFlashdata('errorImage')) ?></div>
     <?php endif ?>
 
     <div class="input-group input-group-outline my-3">

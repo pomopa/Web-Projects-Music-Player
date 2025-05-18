@@ -91,7 +91,7 @@ class SignUp extends BaseController
                 }
                 return redirect()->to(base_url(route_to('sign-up_success')));
             } else {
-                return redirect()->back()->withInput()->with('errors', $userModel->errors());
+                return redirect()->back()->withInput()->with('error', $userModel->errors());
             }
         } else {
             return view('signup_form');

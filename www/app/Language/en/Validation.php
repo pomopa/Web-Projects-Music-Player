@@ -39,10 +39,10 @@ return [
     'bad_intents_file' => 'Well, well, well... look who just tried to be clever. You must be real proud of yourself.',
     'only_one_file' => 'Only one image file is allowed.',
     'file_can_not_be_uploaded' => 'The file could not be uploaded, try again later.',
-    'file_to_big' => 'The provided file is too big (maximum size allowed: 2MB)',
+    'file_too_big' => 'The provided file is too big (maximum size allowed: 2MB)',
     'upload_type_error' => 'The uploaded file must be an image file.',
     'error_file_extension' => 'The uploaded file extension must either be png, jpg, jpeg or gif.',
     'unexpected_file_extension' => 'The file extension is unexpected.',
     'already_logged_in' => 'You are already logged in.',
-    'log_in_permission' => 'You must be logged in to access the previous page.'
+    'log_in_permission' => 'You must be logged in to access the previous page.',
 ];

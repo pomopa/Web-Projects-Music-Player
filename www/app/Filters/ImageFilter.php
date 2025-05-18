@@ -46,7 +46,7 @@ class ImageFilter implements FilterInterface
 
         if (strpos($file->getMimeType(), 'image/') !== 0) {
             return redirect()->back()
-                ->with('errorImage', lang('Validation.upload_type_error'))
+                ->with('errorImage', 'a' . lang('Validation.upload_type_error'))
                 ->withInput();
         }
 

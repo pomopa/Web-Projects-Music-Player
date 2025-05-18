@@ -11,9 +11,9 @@
 <?= $this->section('content') ?>
 
 <?php $session = session();
-    if ($session->getFlashdata('error_message')): ?>
+    if ($session->getFlashdata('error')): ?>
     <h6 class="missatgeError">
-        <?= $session->getFlashdata('error_message'); ?>
+        <?= $session->getFlashdata('error'); ?>
     </h6>
 <?php endif; ?>
 

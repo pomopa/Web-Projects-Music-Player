@@ -39,7 +39,7 @@ return [
     'bad_intents_file' => 'Ai, ai, ai... mira qui ha provat de fer-se el llest. Has d\'estar molt orgullós de tu mateix.',
     'only_one_file' => 'Només es permet pujar un fitxer.',
     'file_can_not_be_uploaded' => 'El fitxer no s\'ha pogut pujar, prova-ho més tard.',
-    'file_to_big' => 'El fitxer proporcionat és massa gran (mida màxima permesa: 2MB)',
+    'file_too_big' => 'El fitxer proporcionat és massa gran (mida màxima permesa: 2MB)',
     'upload_type_error' => 'El fitxer proporcionat ha de ser una imatge.',
     'error_file_extension' => 'L\'extensió del fitxer penjat has de ser png, jpg, jpeg o gif.',
     'unexpected_file_extension' => 'L\'extensió del fitxer penjat és inesperada.',
