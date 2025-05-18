@@ -102,6 +102,9 @@ class Album extends BaseController
                 'id'        => $id,
             ]
         ]);
+        if (empty(json_decode($response->getBody(), false)->results[0])) {
+            return [];
+        }
         return json_decode($response->getBody(), false)->results[0]->image;
     }
 
