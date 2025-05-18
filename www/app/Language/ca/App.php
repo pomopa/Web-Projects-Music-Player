@@ -103,7 +103,7 @@ return [
     'track_link' => 'Enllaç copiat al porta papers!',
     'no_track_link' => 'No s\'ha pogut copiar l\'enllaç.Torna-ho a intentar.',
     'error_loading_audio' => 'Error carregant l\'audio. Torna-ho a intentar més tard.',
-    'track_added' => 'Track added to playlist!',
+    'track_added' => 'La cançó s\'ha afegit al sistema!',
     'failed_to_add_track' => 'No s\'ha pogut afegir la cançó a la llista: ',
     'error_adding_playlist' => 'Hi ha hagut un error afegint la llista al àlbum',
     'rename_playlist_title' => 'Nou nom de la Llista de Reproducció',
@@ -112,4 +112,7 @@ return [
     'error_deleting_track' => 'Error eliminant la cançó',
     'are_you_sure_delete_track' => 'Estàs segur de que vols eliminar la Cançó de la teva Llista de Reproducció? ',
     'no_playlists_found' => 'No s\'han trobat llistes de reproducció.',
+    'all_tracks_added' => 'Totes les cançons s\'han afegit correctament a la llista de reproducció.',
+    'partial_tracks_added' => 'Només s\'han afegit cançons noves. Algunes cançons ja estaven a la teva llista de reproducció.',
+    'already_added' => 'Totes les cançons d\'aquesta llista ja estan afegides a la llista seleccionada.'
 ];
