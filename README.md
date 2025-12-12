@@ -1,4 +1,5 @@
-# LSpoty - Llenguatges de Programació II
+# 🎧 LSpoty
+## Web Projects II - La Salle BCN
 **Grup 06 - Curs 2024-2025**
 
 Aquest projecte simula una plataforma de gestió musical, desenvolupada amb un entorn de CodeIgniter.
