@@ -1,123 +1,104 @@
 # 🎧 LSpoty
 ## Web Projects II - La Salle BCN
-**Grup 06 - Curs 2024-2025**
 
-Aquest projecte simula una plataforma de gestió musical, desenvolupada amb un entorn de CodeIgniter.
+## 👥 Authors
+- [Pol Monné](https://github.com/pomopa)
+- [Roger Metaute](https://github.com/RogerMetaute) 
+- [Joan Enric Peiró](https://github.com/J0hnny22)
+  
+---
 
-**Membres de l’equip:**
-
-1. Joan Enric Peiró Vidal (<joanenric.peiro@salle.url.edu>)
-2. Roger Metaute Carrillo (<roger.metaute@salle.url.edu>)
-3. Pol Monné Parera (<pol.monne@salle.url.edu>)
+## 🧠 Project Description
+This project provides a complete web application, including both front end and back end, designed to offer users a free and accessible music platform. After registering and logging in, users can explore playlists, albums, artists, and many other interactive features. The application is developed using the CodeIgniter framework and is fully open for anyone to deploy by following the setup steps described below.
 
 ---
 
-## 📑 Índex
+## 📑 Table of Contents
 
-1. [Com iniciar el projecte](#com-iniciar-el-projecte)
-2. [Implementació d'endpoints](#implementació-dendpoints)
-3. [Aliases de rutes](#aliases-de-rutes)
-4. [Traducció del projecte](#traducció-del-projecte)
-5. [Validacions de seguretat](#validacions-de-seguretat)
-6. [Carbon](#carbon)
-7. [Endpoint `/track/{id}`](#endpoint-trackid)
-
+1. [How to Start the Project](#how-to-start-the-project)
+2. [Endpoint Implementation](#endpoint-implementation)
+3. [Route Aliases](#route-aliases)
+4. [Project Translation](#project-translation)
+5. [Security Validations](#security-validations)
 
 ---
 
-## Com iniciar el projecte
+## How to Start the Project
 
-Per tal d'iniciar el projecte es necessari configurar els fitxers d'environment del docker i del CodeIgniter.
-La configuració utilitzada durant el seu desenvolupament esta penjada en el git i es la implementada pels membres del
-grup. Segueix les següents instruccions per configurar el projecte i la BBDD:
+To start the project, it is necessary to configure the Docker and CodeIgniter environment files.  
+The configuration used during development is included in the repository and is the same one used by all group members.  
+Follow these steps to configure the project and the database:
 
-1. Configurar .env del docker
-2. docker compose up -d
+1. Configure the Docker `.env` file  
+2. Start Docker containers  
     ```bash
     docker compose up -d
-   ```
-3. docker compose exec app composer install
+    ```
+3. Install Composer dependencies  
     ```bash
     docker compose exec app composer install
     ```
-4. Configurar .env del projecte
-5. docker compose exec app php spark migrate
-   ```bash
+4. Configure the project `.env` file  
+5. Run migrations  
+    ```bash
     docker compose exec app php spark migrate
     ```
 
 ---
 
-## Implementació d'endpoints
+## Endpoint Implementation
 
-Els endpoints implementats són els requerits per l'enunciat però es voldrien destacar els següents
-degut a incoherencies en aquest els següents enpoints no s'han implementat sota les instruccions del professorat:
+All required endpoints from the assignment were implemented, but the following ones were **not implemented exactly as instructed by the teaching staff**, due to inconsistencies in the specifications:
 
 - `POST /artist/{id}`
 - `POST /album/{id}`
 - `POST /playlist/{id}`
 - `POST /my-playlist/{id}`
 
-També es vol remarcar que en el cas de `PUT /my-playlist/{id}`, i també sota les ordres del professorat,
-s'ha modificat la funcionalitat que esmentava l'enunciat. Tot i que l'enunciat comentava que aquest endpoint
-havia de servir per crear una nova playlist això no tenia sentit degut a que ja existeix el endpoint
-`POST /create-playlist` i que l'ús del mètode PUT està pensat per actualitzar dades i no crear-les. Conseqüentment,
-aquest enpoint ha implementat la funcionalitat d'actualització de les dades d'una playlist.
+It is also important to highlight that for the `PUT /my-playlist/{id}` endpoint, and following the professor’s instructions, the functionality was modified from what the assignment originally described.  
+Although the assignment stated that this endpoint should create a new playlist, this was illogical because the endpoint `POST /create-playlist` already exists, and the PUT method is intended for updating resources, not creating them.  
+Therefore, this endpoint has been implemented to **update an existing playlist**.
 
 ---
 
-## Aliases de rutes
+## Route Aliases
 
-S’han definit aliases per facilitar la lectura i ús de les rutes. Cada ruta té un alias definit que permet
-identificar-la i enrutar-la de manera única dins del sistema. Alguns exemples són els següents:
+Aliases were created to improve readability and simplify route usage.  
+Each route has a unique alias that identifies it throughout the system.  
+Some examples include:
 
-- `landing_view` → Alias de `/`
-- `sign-up_success` → Alias de `/sign-up/success`
+- `landing_view` → Alias for `/`
+- `sign-up_success` → Alias for `/sign-up/success`
 - ...
 
-Tots els aliases estan documentats en el fitxer de rutes.
+All aliases are documented in the route file.
 
 ---
 
-## Traducció del projecte
+## Project Translation
 
-El projecte ha estat traduït completament al **català**, incloent:
+The project has been fully translated into **Catalan**, including:
 
-- Textos del frontend
-- Comentaris explicatius
-- Respostes d’error i validació
-- Alerts del JavaScript
+- Frontend text
+- Explanatory comments
+- Error and validation messages
+- JavaScript alerts
 
-Aquesta traducció s'implementa de manera automàtica en el sistema sempre que l'usuari
-tingui el navegador configurat en aquest idioma. En cas contrari, l'idioma per defecte de la pàgina és
-el anglès.
----
-
-## Validacions de seguretat
-
-Durant el desenvolupament del projecte s'ha vetllat per implementar una pàgina segura i robusta en front
-d'atacs maliciosos, reforçant tant com s'ha pogut tots els aspectes del Frontend i Backend. Alguns exemples
-de seguretat implementada són:
-
-- **Sanitització d’inputs**: totes les entrades són validades tant en el frontend com en el backend.
-- **Control d’autenticació**: accés restringit a certes rutes per usuari registrat mitjançant l'ús de filtres.
-- **Validacions de les imatges**: es valida que els fitxers penjats siguin del tipus permès, que el mimetype coincideix amb l'extensió i únicament es provi de penjar-ne un.
-- **Verificació de fitxers**: En qualsevol ruta POST no controlada pel filtre d'imatges es fa un control per comprovar que l'usuari no prova d'enviar un fitxer al servidor.
-- **Emmagatzematge d'imatges**: Les imatges s'emmagatzemen a la carpeta `/writable` i són retornades per un controlador per tal de ser accedides de manera segura des del frontend. Un usuari únicament pot accedir a les seves imatges un cop registrat.
-- **Estructura de carpetes**: Les carpetes dins de `writable/uploads` s'han estructurat de manera que cada usuari té un directori amb el seu id i dins d'aquest les carpetes `/profile` i `/playlists`. Això s'ha fet per modular l'emmagatzematge i en cas d'escalar evitar repeticions de noms.
-
-Aquestes mesures, entre altres, garanteixen un entorn mínimament segur per a l’execució del servei.
+The system automatically applies this translation whenever the user's browser is set to Catalan.  
+If not, the default language is English.
 
 ---
 
-## Carbon
+## Security Validations
 
-Per complir amb el requisit de l'enunciat d'implementar una dependència més fent ús de Composer s'ha optat per l'implementació de Carbon. Aquesta API permet obtenir l'hora actual del sistema i mostrar-la als usuaris.
+Throughout the development of the project, we focused on creating a safe and robust application, protecting both the frontend and the backend against malicious attacks.  
+Some implemented security measures include:
 
----
+- **Input sanitization**: all inputs are validated on both frontend and backend.
+- **Authentication control**: certain routes are restricted to registered users using filters.
+- **Image validation**: uploaded files are checked for allowed types, matching mimetypes, and ensuring only one image is uploaded.
+- **File verification**: any POST route not controlled by the image filter checks that users are not sending files to the server.
+- **Image storage**: images are stored in the `/writable` directory and served through a controller for secure frontend access. A user can access only their own images after registering.
+- **Folder structure**: inside `writable/uploads`, each user has a folder named after their ID with `/profile` and `/playlists` subfolders. This structure modularizes storage and prevents filename collisions when scaling.
 
-## Endpoint `/track/{id}`
-
-Tot i no ser requerit per l'enunciat aquest enpoint s'ha implementat per tal de poder visualitzar el detall
-d'una cançó. Permetent des de múltiples punts de la pàgina un accés directe a l'informació detallada de cançons
-concretes d'àlbums o playlists.
+These measures, among others, ensure a sufficiently secure environment for running the service.
