@@ -46,6 +46,32 @@ Follow these steps to configure the project and the database:
 
 ---
 
+## 📸 Demo Screenshots
+
+Below are some preview images showcasing the main pages of the application.
+
+### 🏠 Home Page
+![Home Page Screenshot](demo/Homepage.png)
+
+### 🎶 Main View Page
+![Main View Page Screenshot](demo/Main_View.png)
+
+### 📁 Playlists Page
+![Playlists Page Screenshot](demo/My_Playlists.png)
+
+### ☕️ Personal Profile Page
+![Personal Profile Page Screenshot](demo/Profile_View.png)
+
+### 🔎 Search Detail
+![Search Detail Screenshot](demo/Search.png)
+
+### 🎤 Song Detail
+![Song Detail Screenshot](demo/Song_View.png)
+
+
+---
+
+
 ## Endpoint Implementation
 
 All required endpoints from the assignment were implemented, but the following ones were **not implemented exactly as instructed by the teaching staff**, due to inconsistencies in the specifications:
