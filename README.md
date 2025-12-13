@@ -1,4 +1,4 @@
-# 🎧 LSpoty
+# 🎧 LSMusic
 ## Web Projects II - La Salle BCN
 
 ## 👥 Authors
