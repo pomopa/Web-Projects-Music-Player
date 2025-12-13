@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <p class="card-text text-secondary mb-0 small">${item.artist_name} · ${item.album_name || 'Album'}</p>
                                         </div>
                                         <div>
-                                            <button class="btn btn-sm btn-outline-light view-btn" data-url="/track/${item.id}" data-bs-toggle="tooltip" title="View track">
+                                            <button class="btn btn-sm btn-outline-light view-btn" data-url="/track/${item.id}" data-bs-toggle="tooltip" title="View track" style="margin-bottom: 0">
                                                 <i class="fa fa-eye"></i>
                                             </button>
                                         </div>
