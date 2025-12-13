@@ -1,13 +1,13 @@
 <?php
 
 return [
-    'welcome'  => 'Benvingut a LSpoty!',
+    'welcome'  => 'Benvingut a LSMusic!',
     'consider'  => 'Si us plau, considera ',
     'logging_in'    => 'iniciar sessió',
     'or'   => 'o ',
     'registering' => 'registrar-te',
-    'to_access' => 'per accedir a LSpoty i gaudir de la millor música!',
-    'possibilities' => 'Amb LSpoty podràs:',
+    'to_access' => 'per accedir a LSMusic i gaudir de la millor música!',
+    'possibilities' => 'Amb LSMusic podràs:',
     'feature1' => 'Cercar música dels teus artistes preferits',
     'feature2' => 'Descobrir què escolta tothom',
     'feature3' => 'Crear les teves pròpies llistes de reproducció per gaudir-ne allà on siguis',

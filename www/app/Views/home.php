@@ -1,7 +1,7 @@
 <?= $this->extend('default_logged_in') ?>
 
 <?= $this->section('title') ?>
-    <title>LSpoty - <?= lang('App.companion') ?></title>
+    <title>LSMusic - <?= lang('App.companion') ?></title>
 <?= $this->endSection() ?>
 
 <?= $this->section('styles') ?>

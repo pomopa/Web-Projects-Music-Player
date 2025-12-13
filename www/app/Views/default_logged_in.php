@@ -21,7 +21,7 @@
 <body class="bg-dark">
     <nav class="navbar navbar-expand-lg navbar-dark bg-black position-sticky top-0" style="z-index: 1000;">
         <div class="container">
-            <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="<?= base_url(route_to('home_view')) ?>">LSpoty</a>
+            <a class="navbar-brand text-success fw-bold fs-4" style="margin: 0px !important;" href="<?= base_url(route_to('home_view')) ?>">LSMusic</a>
 
             <div class="d-flex align-items-center ms-auto gap-2">
                 <?php if (current_url(true) != base_url(route_to('my-playlist_view'))): ?>

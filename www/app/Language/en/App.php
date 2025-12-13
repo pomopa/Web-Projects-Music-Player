@@ -1,13 +1,13 @@
 <?php
 
 return [
-    'welcome'  => 'Welcome to LSpoty!',
+    'welcome'  => 'Welcome to LSMusic!',
     'consider'  => 'Please consider ',
     'logging_in'    => 'logging in',
     'or'   => 'or ',
     'registering' => 'registering',
-    'to_access' => 'to access LSpoty and enjoy music at its finest!',
-    'possibilities' => 'With LSpoty you will be able to:',
+    'to_access' => 'to access LSMusic and enjoy music at its finest!',
+    'possibilities' => 'With LSMusic you will be able to:',
     'feature1' => 'Search for music from your favorite artists',
     'feature2' => 'Discover what everyone is listening to',
     'feature3' => 'Create your own playlists to enjoy on the go',

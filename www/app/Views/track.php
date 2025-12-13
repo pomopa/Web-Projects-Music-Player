@@ -1,7 +1,7 @@
 <?= $this->extend('default_logged_in') ?>
 
 <?= $this->section('title') ?>
-<title>LSpoty - <?= esc($track->name) ?></title>
+<title>LSMusic - <?= esc($track->name) ?></title>
 <?= $this->endSection() ?>
 
 <?= $this->section('styles') ?>
