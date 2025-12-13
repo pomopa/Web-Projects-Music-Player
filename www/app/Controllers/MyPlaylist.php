@@ -15,7 +15,7 @@ class MyPlaylist extends BaseController
     private PlaylistModel $playlistModel;
     private TrackPlaylistModel $trackPlaylistModel;
     private Client $client;
-    private string $apiKey = "aab3b83e";
+    private string $apiKey;
     private const UPLOADS_DIR = WRITEPATH . 'uploads/';
 
     public function __construct()
@@ -26,6 +26,7 @@ class MyPlaylist extends BaseController
         $this->client = new Client([
             'base_uri' => 'https://api.jamendo.com/v3.0/',
         ]);
+        $this->apiKey = getenv('JAMENDO_API_KEY') ?: '';
     }
 
     private function checkIfPlaylistFromUser(int $playlistID): bool

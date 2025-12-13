@@ -7,12 +7,13 @@ use GuzzleHttp\Client;
 class Home extends BaseController
 {
     private Client $client;
-    private string $apiKey = "aab3b83e";
+    private string $apiKey;
 
     public function __construct(){
         $this->client = new Client([
             'base_uri' => 'https://api.jamendo.com/v3.0/',
         ]);
+        $this->apiKey = getenv('JAMENDO_API_KEY') ?: '';
     }
 
     private function getTopTracks() {

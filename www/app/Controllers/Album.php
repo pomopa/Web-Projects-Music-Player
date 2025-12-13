@@ -12,7 +12,7 @@ use App\Entities\TrackEntity;
 class Album extends BaseController
 {
     private Client $client;
-    private string $apiKey = "aab3b83e";
+    private string $apiKey;
     private PlaylistModel $playlistModel;
 
     public function __construct()
@@ -21,6 +21,7 @@ class Album extends BaseController
             'base_uri' => 'https://api.jamendo.com/v3.0/',
         ]);
         $this->playlistModel = new PlaylistModel();
+        $this->apiKey = getenv('JAMENDO_API_KEY') ?: '';
     }
 
     private function getAlbum($id)

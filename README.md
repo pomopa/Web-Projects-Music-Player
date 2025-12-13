@@ -38,7 +38,11 @@ Follow these steps to configure the project and the database:
     ```bash
     docker compose exec app composer install
     ```
-4. Configure the project `.env` file  
+4. Configure the project `.env` file. You must place your own private API key inside.
+   ```
+   CI_ENVIRONMENT=production
+   JAMENDO_API_KEY=your_api_key
+   ```
 5. Run migrations  
     ```bash
     docker compose exec app php spark migrate
