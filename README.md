@@ -16,10 +16,11 @@ This project provides a complete web application, including both front end and b
 ## 📑 Table of Contents
 
 1. [How to Start the Project](#how-to-start-the-project)
-2. [Endpoint Implementation](#endpoint-implementation)
-3. [Route Aliases](#route-aliases)
-4. [Project Translation](#project-translation)
-5. [Security Validations](#security-validations)
+2. [Demo Screenshots](#-demo-screenshots)
+3. [Endpoint Implementation](#endpoint-implementation)
+4. [Route Aliases](#route-aliases)
+5. [Project Translation](#project-translation)
+6. [Security Validations](#security-validations)
 
 ---
 
